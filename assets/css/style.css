@@ -1,0 +1,214 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #999999;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#editorAndPluginVersionInfo {
+    z-index: 1041;
+    position: fixed;
+    padding: 0 15px;
+    background-color: black;
+    bottom: 0;
+    border-radius: 7px 7px 0 0;
+    margin-left: 5px
+}
+#editorAndPluginVersionInfo > span {
+    color: rgb(175, 175, 175);
+    font-size: 12px;
+}    
+
+.pureInput {
+    border-width: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+#particleImagePreviewDiv {
+    width: 2rem;
+    height: 2rem;
+    float: right;
+    padding: 3px;
+}
+
+#particleImagePreview {
+    width: 100%;
+    height: 100%;
+    background: no-repeat center;
+    background-size: contain
+}
+
+#modalProjectInfo {
+    margin-top: 2vh;
+    display: none;
+}
+
+.link, a, span, i {
+    color: black;
+    text-decoration-color: black;
+}
+
+.link:hover, a:hover, span:hover, i:hover {
+    color: black;
+}
+
+.nav-border {
+    outline-width: 1px;
+    border-width: thick;
+}
+
+/*Main Containers*/
+div#sandboxContainer {
+    max-width: 70vw;
+    position: fixed;
+    max-height: 100%;
+}
+
+div#controlsContainer {
+    background-color: #fafafa;
+    max-width: 30vw;
+    min-width: 30vw;
+    min-height: 100vh;
+    float: right;
+    visibility: hidden;
+}
+
+div.container-fluid {
+    padding: 0.5vw;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.modal-body {
+    padding-left: 1vw;
+    padding-right: 1vw;
+}
+
+#createSandboxModal .col-md-12 {
+    margin-bottom: 1vh;
+}
+
+.hidden {
+    display: none;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+/*Top Buttons*/
+.main-buttons .btn {
+    flex: 1;
+}
+
+.btn-group.main-buttons {
+    display: flex;
+}
+
+.btn-group.main-buttons > a {
+    padding: 0.6vh;
+}
+
+.btn-group.main-buttons > a > span {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/*Navigation Panel*/
+.emitterTabContainer {
+    margin-top: 1vh;
+    margin-bottom: 1px;
+}
+
+fieldset {
+    border: 1px solid #ddd !important;
+    margin: 0.5rem 0 0.5rem 0;
+    xmin-width: 0;
+    padding: 0 10px 0 10px;
+    position: relative;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+}
+
+fieldset > fieldset > legend {
+    font-size: 12px;
+}
+
+fieldset > fieldset > fieldset > legend {
+    font-size: 11px;
+}
+
+legend {
+    font-size: 13px;
+    font-weight: bold;
+    width: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 2px 10px 3px 10px;
+    background-color: #ffffff;
+}
+
+.accordion {
+    margin-top: 0.5rem;
+}
+
+.accordion .card-header {
+    padding: 0.5rem 1rem 0.5rem 1rem;
+}
+
+/*!*Accordion*!*/
+.accordion .card-header > p > a {
+    font-size: 18px;
+    color: black;
+}
+
+.accordion .card-header > p > a:after {
+    font-family: 'FontAwesome';
+    content: "\f068";
+    float: right;
+}
+
+.accordion .card-header > p > a.collapsed:after {
+    content: "\f067";
+}
+
+.option {
+    margin-bottom: 10px;
+}
+
+div.dropdown > a {
+    background-color: #E9ECEF;
+    border-color: #C9CCCF;
+}
+
+label.custom-file {
+    width: 100%;
+}
+
+input.btn-secondary {
+    width: 100%;
+    border-radius: 3px;
+}
+
+.btn {
+    cursor: pointer;
+}
+.btn-file {
+    width: 100%;
+}
+
+.close {
+    border-width: 10px;
+    border-radius: 1vh;
+}
+
+#removeBgImage {
+    width:100%;
+}

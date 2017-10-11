@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <!--JQuery Min-->
+    <script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <!--Bootstrap Min-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+    <!--Bootstrap Colorpicker Min-->
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.1/css/bootstrap-colorpicker.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.1/js/bootstrap-colorpicker.min.js"></script>
+    <!--Font Awesome-->
+    <script src="https://use.fontawesome.com/4f9103c56a.js"></script>
+    <!--Local Resources-->
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <script src="index.js"></script>
+</head>
+<body>
+<div id="sandboxContainer" class="col-md-12"></div>
+<div id="controlsContainer">
+    <div class="container-fluid">
+        <div class="col-md-12 no-padding">
+            <!-- Main Buttons Group -->
+            <div class="btn-group main-buttons" role="group">
+                <a type="button" class="btn btn-default" data-toggle="modal" data-target="#newProjectModal">
+                    <i class="fa fa-file" aria-hidden="true"></i>
+                    <span class="button-title">New</span>
+                </a>
+                <a type="button" class="btn btn-default downloadProject">
+                    <i class="fa fa-save" aria-hidden="true"></i>
+                    <span class="button-title">Save</span>
+                </a>
+                <a type="button" class="btn btn-default" id="downloadEmitters">
+                    <i class="fa fa-download" aria-hidden="true"></i>
+                    <span class="button-title">Download</span>
+                </a>
+            </div>
+        </div>
+        <div class="row justify-content-center align-items-center">
+            <input id="projectName" type="text" class="pureInput"
+                   oninput="this.style.width = ((this.value.length + 1) * 8) + 'px';"
+                   style="margin-top: 1vh;">
+        </div>
+        <!-- Emitters Tabs -->
+        <div class="emitterTabContainer">
+            <ul id="emittersTabsGroup" class="nav nav-tabs" role="tablist">
+                <li id="addEmitterButtonLi" class="nav-item" data-toggle="modal" data-target="#createEmitterModal">
+                    <a id="addEmitterButton" class="nav-link" data-toggle="tab" role="tab">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- Emitter Options Accordion -->
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="emitterContent" role="tabpanel">
+                <div id="emitter-accordion" class="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="card">
+                        <div class="card-header" role="tab" id="headingOne">
+                            <p class="mb-0">
+                                <a data-toggle="collapse" data-parent="#emitter-accordion" href="#collapseOne"
+                                   aria-expanded="false" aria-controls="collapseOne">
+                                    Emitter Options
+                                </a>
+                            </p>
+                        </div>
+                        <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="card-block">
+                                <div class="col-md-12">
+                                    <fieldset class="option-group-fieldset">
+                                        <legend class="option-group-title"><span>Options</span></legend>
+                                        <div class="row">
+                                            <div class="col-md-6 option">
+                                                <div class="input-group">
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input id="flow" type="checkbox" class="custom-control-input">
+                                                        <span class="custom-control-indicator"></span>
+                                                        <span class="custom-control-description">Flow</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 option">
+                                                <div class="input-group">
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input id="explode" type="checkbox"
+                                                               class="custom-control-input">
+                                                        <span class="custom-control-indicator"></span>
+                                                        <span class="custom-control-description">Explode</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 option">
+                                                <div class="input-group input-group-sm">
+                                                    <span class="input-group-addon">Lifespan</span>
+                                                    <input id="lifespan" type="number" class="form-control"
+                                                           placeholder="Lifespan">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 option">
+                                                <div class="input-group input-group-sm">
+                                                    <span class="input-group-addon">Frequency</span>
+                                                    <input id="frequency" type="text" class="form-control"
+                                                           placeholder="Frequency">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 option">
+                                                <div class="input-group input-group-sm">
+                                                    <span class="input-group-addon">Total</span>
+                                                    <input id="total" type="text" class="form-control"
+                                                           placeholder="Total">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 option">
+                                                <div class="input-group input-group-sm">
+                                                    <span class="input-group-addon">Quantity</span>
+                                                    <input id="quantity" type="text" class="form-control"
+                                                           placeholder="Quantity">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 option">
+                                                <div class="input-group input-group-sm">
+                                                    <span class="input-group-addon">Max Particles</span>
+                                                    <input id="maxParticles" type="text" class="form-control"
+                                                           placeholder="Max particles">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 option">
+                                                <div class="input-group">
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input id="immediate" type="checkbox"
+                                                               class="custom-control-input">
+                                                        <span class="custom-control-indicator"></span>
+                                                        <span class="custom-control-description">Immediate</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 option">
+                                                <div class="input-group">
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input id="collide" type="checkbox"
+                                                               class="custom-control-input">
+                                                        <span class="custom-control-indicator"></span>
+                                                        <span class="custom-control-description">Collide</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 option">
+                                                <div class="input-group">
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input id="collideWorldBounds" type="checkbox"
+                                                               class="custom-control-input">
+                                                        <span class="custom-control-indicator"></span>
+                                                        <span class="custom-control-description">Collide World Bounds</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset class="option-group-fieldset">
+                                        <legend class="option-group-title"><span>Offset</span></legend>
+                                        <div class="row">
+                                            <div class="col-md-6 option">
+                                                <div class="input-group input-group-sm">
+                                                    <span class="input-group-addon">X</span>
+                                                    <input id="offsetX" type="number" class="form-control"
+                                                           placeholder="OffsetX">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 option">
+                                                <div class="input-group input-group-sm">
+                                                    <span class="input-group-addon">Y</span>
+                                                    <input id="offsetY" type="number" class="form-control"
+                                                           placeholder="OffsetX">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset class="option-group-fieldset">
+                                        <legend class="option-group-title"><span>Gravity</span></legend>
+                                        <div class="row">
+                                            <div class="col-md-6 option">
+                                                <div class="input-group input-group-sm">
+                                                    <span class="input-group-addon">X</span>
+                                                    <input id="gravityX" type="number" class="form-control"
+                                                           placeholder="GravityX">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 option">
+                                                <div class="input-group input-group-sm">
+                                                    <span class="input-group-addon">Y</span>
+                                                    <input id="gravityY" type="number" class="form-control"
+                                                           placeholder="GravityY">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset class="option-group-fieldset">
+                                        <legend class="option-group-title"><span>Bounce</span></legend>
+                                        <div class="row">
+                                            <div class="col-md-6 option">
+                                                <div class="input-group input-group-sm">
+                                                    <span class="input-group-addon">X</span>
+                                                    <input id="bounceX" type="number" class="form-control"
+                                                           placeholder="BounceX">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 option">
+                                                <div class="input-group input-group-sm">
+                                                    <span class="input-group-addon">Y</span>
+                                                    <input id="bounceY" type="number" class="form-control"
+                                                           placeholder="BounceY">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset class="option-group-fieldset">
+                                        <legend class="option-group-title"><span>Height & Width</span></legend>
+                                        <div class="row">
+                                            <div class="col-md-6 option">
+                                                <div class="input-group input-group-sm">
+                                                    <span class="input-group-addon">Width</span>
+                                                    <input id="width" type="number" class="form-control"
+                                                           placeholder="width">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 option">
+                                                <div class="input-group input-group-sm">
+                                                    <span class="input-group-addon">Height</span>
+                                                    <input id="height" type="number" class="form-control"
+                                                           placeholder="height">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset class="option-group-fieldset">
+                                        <legend class="option-group-title"><span>Scale</span></legend>
+                                        <div class="col-md-12 option">
+                                            <div class="input-group">
+                                                <label class="custom-control custom-checkbox">
+                                                    <input id="proportionalScale" type="checkbox"
+                                                           class="custom-control-input">
+                                                    <span class="custom-control-indicator"></span>
+                                                    <span class="custom-control-description">Proportional</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <fieldset class="option-group-fieldset option-group-nested-fieldset">
+                                            <legend class="option-group-title">Proportional</legend>
+                                            <div class="row">
+                                                <div class="col-md-6 option">
+                                                    <div class="input-group input-group-sm">
+                                                        <span class="input-group-addon">Min</span>
+                                                        <input id="minScale" type="number" class="form-control"
+                                                               placeholder="min" step="0.1">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 option">
+                                                    <div class="input-group  input-group-sm">
+                                                        <span class="input-group-addon">Max</span>
+                                                        <input id="maxScale" type="number" class="form-control"
+                                                               placeholder="max" step="0.1">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset class="option-group-fieldset option-group-nested-fieldset">
+                                            <legend class="option-group-title"><span>Disproportional</span>
+                                            </legend>
+                                            <fieldset class="option-group-fieldset option-group-nested-fieldset">
+                                                <legend class="option-group-title"><span>X</span></legend>
+                                                <div class="row">
+                                                    <div class="col-md-6 option">
+                                                        <div class="input-group  input-group-sm">
+                                                            <span class="input-group-addon">From</span>
+                                                            <input id="scaleFromX" type="number"
+                                                                   class="form-control" placeholder="X"
+                                                                   step="0.1">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 option">
+                                                        <div class="input-group input-group-sm">
+                                                            <span class="input-group-addon">To</span>
+                                                            <input id="scaleToX" type="number"
+                                                                   class="form-control"
+                                                                   placeholder="X" step="0.1">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                            <fieldset class="option-group-fieldset option-group-nested-fieldset">
+                                                <legend class="option-group-title"><span>Y</span></legend>
+                                                <div class="row">
+                                                    <div class="col-md-6 option">
+                                                        <div class="input-group input-group-sm">
+                                                            <span class="input-group-addon">From</span>
+                                                            <input id="scaleFromY" type="number"
+                                                                   class="form-control" placeholder="Y" step="0.1">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 option">
+                                                        <div class="input-group input-group-sm">
+                                                            <span class="input-group-addon">To</span>
+                                                            <input id="scaleToY" type="number" class="form-control"
+                                                                   placeholder="Y" step="0.1">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                            <fieldset class="option-group-fieldset option-group-nested-fieldset">
+                                                <legend class="option-group-title"><span>Easing</span></legend>
+                                                <div class="row">
+                                                    <div class="col-md-6 option">
+                                                        <div class="dropdown">
+                                                            <a class="btn btn-secondary btn-sm dropdown-toggle form-control"
+                                                               id="scaleEasing"
+                                                               data-toggle="dropdown"
+                                                               aria-expanded="false">Easing</a>
+                                                            <div class="dropdown-menu" aria-labelledby="scaleEasing">
+                                                                <a class="dropdown-item scaleEase">Back</a>
+                                                                <a class="dropdown-item scaleEase">Bounce</a>
+                                                                <a class="dropdown-item scaleEase">Circular</a>
+                                                                <a class="dropdown-item scaleEase">Cubic</a>
+                                                                <a class="dropdown-item scaleEase">Elastic</a>
+                                                                <a class="dropdown-item scaleEase">Exponential</a>
+                                                                <a class="dropdown-item scaleEase">Linear</a>
+                                                                <a class="dropdown-item scaleEase">Quadratic</a>
+                                                                <a class="dropdown-item scaleEase">Quartic</a>
+                                                                <a class="dropdown-item scaleEase">Quintic</a>
+                                                                <a class="dropdown-item scaleEase">Sinusoidal</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 option">
+                                                        <div class="dropdown">
+                                                            <a class="btn btn-secondary btn-sm dropdown-toggle form-control"
+                                                               id="scaleEasingMode"
+                                                               data-toggle="dropdown"
+                                                               aria-expanded="false">Mode</a>
+                                                            <div class="dropdown-menu"
+                                                                 aria-labelledby="scaleEasingMode">
+                                                                <a class="dropdown-item scaleEaseMode">In</a>
+                                                                <a class="dropdown-item scaleEaseMode">Out</a>
+                                                                <a class="dropdown-item scaleEaseMode">InOut</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 option">
+                                                        <div class="input-group input-group-sm">
+                                                            <span class="input-group-addon">Rate</span>
+                                                            <input id="scaleRate" type="number" class="form-control"
+                                                                   placeholder="rate">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-5 option">
+                                                        <div class="col-md-2"></div>
+                                                        <label class="custom-control custom-checkbox">
+                                                            <input id="scaleYoyo" type="checkbox"
+                                                                   class="custom-control-input">
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description">Yoyo</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </fieldset>
+                                    </fieldset>
+                                    <fieldset class="option-group-fieldset">
+                                        <legend class="option-group-title"><span>Rotation</span></legend>
+                                        <div class="row">
+                                            <div class="col-md-6 option">
+                                                <div class="input-group input-group-sm">
+                                                    <span class="input-group-addon">Min</span>
+                                                    <input id="rotationMin" type="number" class="form-control"
+                                                           placeholder="min">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 option">
+                                                <div class="input-group input-group-sm">
+                                                    <span class="input-group-addon">Max</span>
+                                                    <input id="rotationMax" type="number" class="form-control"
+                                                           placeholder="max">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 option">
+                                                <div class="input-group input-group-sm">
+                                                    <span class="input-group-addon">Angular Drag</span>
+                                                    <input id="angularDrag" type="number" class="form-control"
+                                                           placeholder="Angular Drag">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset class="option-group-fieldset">
+                                        <legend class="option-group-title"><span>Speed</span></legend>
+                                        <fieldset class="option-group-fieldset option-group-nested-fieldset">
+                                            <legend class="option-group-title"><span>X</span></legend>
+                                            <div class="row">
+                                                <div class="col-md-6 option">
+                                                    <div class="input-group  input-group-sm">
+                                                        <span class="input-group-addon">Min</span>
+                                                        <input id="minSpeedX" type="number" class="form-control"
+                                                               placeholder="min">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 option">
+                                                    <div class="input-group  input-group-sm">
+                                                        <span class="input-group-addon">Max</span>
+                                                        <input id="maxSpeedX" type="number" class="form-control"
+                                                               placeholder="max">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset class="option-group-fieldset option-group-nested-fieldset">
+                                            <legend class="option-group-title"><span>Y</span></legend>
+                                            <div class="row">
+                                                <div class="col-md-6 option">
+                                                    <div class="input-group  input-group-sm">
+                                                        <span class="input-group-addon">Min</span>
+                                                        <input id="minSpeedY" type="number" class="form-control"
+                                                               placeholder="min">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 option">
+                                                    <div class="input-group input-group-sm">
+                                                        <span class="input-group-addon">Max</span>
+                                                        <input id="maxSpeedY" type="number" class="form-control"
+                                                               placeholder="max">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </fieldset>
+                                    <fieldset class="option-group-fieldset">
+                                        <legend class="option-group-title"><span>Alpha</span></legend>
+                                        <div class="row">
+                                            <div class="col-md-6 option">
+                                                <div class="input-group input-group-sm">
+                                                    <span class="input-group-addon">Min</span>
+                                                    <input id="alphaMin" type="number" class="form-control"
+                                                           placeholder="alpha">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 option">
+                                                <div class="input-group  input-group-sm">
+                                                    <span class="input-group-addon">Max</span>
+                                                    <input id="alphaMax" type="number" class="form-control"
+                                                           placeholder="alpha">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <fieldset class="option-group-fieldset option-group-nested-fieldset">
+                                            <legend class="option-group-title"><span>Easing</span></legend>
+                                            <div class="row">
+                                                <div class="col-md-6 option">
+                                                    <div class="dropdown">
+                                                        <a class="btn btn-secondary btn-sm dropdown-toggle form-control"
+                                                           id="alphaEasing"
+                                                           data-toggle="dropdown"
+                                                           aria-expanded="false">Easing</a>
+                                                        <div class="dropdown-menu" aria-labelledby="alphaEasing">
+                                                            <a class="dropdown-item">Back</a>
+                                                            <a class="dropdown-item">Bounce</a>
+                                                            <a class="dropdown-item">Circular</a>
+                                                            <a class="dropdown-item">Cubic</a>
+                                                            <a class="dropdown-item">Elastic</a>
+                                                            <a class="dropdown-item">Exponential</a>
+                                                            <a class="dropdown-item">Linear</a>
+                                                            <a class="dropdown-item">Quadratic</a>
+                                                            <a class="dropdown-item">Quartic</a>
+                                                            <a class="dropdown-item">Quintic</a>
+                                                            <a class="dropdown-item">Sinusoidal</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 option">
+                                                    <div class="dropdown">
+                                                        <a class="btn btn-secondary btn-sm dropdown-toggle form-control"
+                                                           id="alphaEasingMode"
+                                                           data-toggle="dropdown"
+                                                           aria-expanded="false">Mode</a>
+                                                        <div class="dropdown-menu" aria-labelledby="alphaEasingMode">
+
+                                                            <a class="dropdown-item">In</a>
+                                                            <a class="dropdown-item">Out</a>
+                                                            <a class="dropdown-item">InOut</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 option">
+                                                    <div class="input-group input-group-sm">
+                                                        <span class="input-group-addon">Rate</span>
+                                                        <input id="alphaRate" type="number" class="form-control"
+                                                               placeholder="rate">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5 option">
+                                                    <div class="col-md-2"></div>
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input id="alphaYoyo" type="checkbox"
+                                                               class="custom-control-input">
+                                                        <span class="custom-control-indicator"></span>
+                                                        <span class="custom-control-description">Yoyo</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </fieldset>
+                                    <fieldset class="option-group-fieldset">
+                                        <legend class="option-group-title"><span>Image</span></legend>
+                                        <div class="row">
+                                            <div class="col-md-8 option">
+                                                <div class="input-group">
+                                                    <label class="btn btn-outline-dark btn-sm btn-file">
+                                                        Choose emitter image <input id="particleImageBrowser" type="file" style="display: none;">
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div id="particleImagePreviewDiv">
+                                                    <div id="particleImagePreview">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Editor Options-->
+        <div id="editor-accordion" class="accordion" role="tablist" aria-multiselectable="true">
+            <div class="card">
+                <div class="card-header" role="tab" id="headingOne">
+                    <p class="mb-0">
+                        <a data-toggle="collapse" data-parent="#editor-accordion" href="#collapseTwo"
+                           aria-expanded="true" aria-controls="collapseTwo">
+                            Editor Options
+                        </a>
+                    </p>
+                </div>
+                <div id="collapseTwo" class="collapse show" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="card-block">
+                        <div class="col-md-12">
+                            <fieldset class="option-group-fieldset">
+                                <legend class="option-group-title"><span>Stage Preperties</span></legend>
+                                <div class="row">
+                                    <div class="col-md-12 option">
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-addon">BG Color</span>
+                                            <div id="canvasBgColorDiv"
+                                                 class="input-group input-group-sm colorpicker-component">
+                                                <input id="canvasBGColorInput" type="text" class="form-control">
+                                                <span class="input-group-addon"><i></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-8 option">
+                                        <div class="input-group">
+                                            <label class="btn btn-outline-dark btn-sm btn-file">
+                                                Choose sandbox image <input id="canvasBgImage" type="file" style="display: none;">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 option">
+                                        <div class="input-group input-group-sm">
+                                            <button id="removeBgImage" class="btn btn-outline-secondary btn-sm" disabled>Remove
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Bootstrap Modals-->
+<!--create canvas modal-->
+<div class="modal fade" id="createSandboxModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="createProjectTabContainer">
+                    <ul id="createProjectTabGroup" class="nav nav-tabs" role="tablist">
+                        <li class="nav-item" id="modalCreateProject">
+                            <a id="createTab" class="nav-link active" data-toggle="tab" href="#createProject"
+                               role="tab">
+                                <i class="fa fa-file" aria-hidden="true"></i>
+                                <span>Create</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" id="modalChooseProject">
+                            <a id="chooseTab" class="nav-link" href="#chooseProject" data-toggle="tab" role="tab">
+                                <i class="fa fa-folder-open" aria-hidden="true"></i>
+                                <span>Choose</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-body tab-content">
+                <div class="tab-pane active" id="createProject" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon">Name</span>
+                                <input id="createProjectName" type="text" class="form-control" placeholder="Project Name">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <fieldset class="option-group-fieldset">
+                                <legend class="option-group-title"><span>Sandbox Size</span></legend>
+                                <div class="col-md-12">
+                                    <div class="input-group input-group-sm">
+                                        <span class="input-group-addon">Height</span>
+                                        <input id="sandboxHeight" type="number"
+                                               class="form-control hide-number-type-input-arrows" placeholder="Sandbox Height">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="input-group input-group-sm">
+                                        <span class="input-group-addon">Width</span>
+                                        <input id="sandboxWidth" type="number"
+                                               class="form-control input-sm hide-number-type-input-arrows" placeholder="Sandbox Width">
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="chooseProject" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-12 option">
+                            <div class="input-group input-group-sm">
+                                <label class="btn btn-outline-dark btn-sm btn-file">
+                                    Choose Project <input id="projectChoose" type="file" style="display: none;" accept=".ppe">
+                                </label>
+                            </div>
+                        </div>
+                        <div id="modalProjectInfo" class="col-md-12">
+                            <fieldset class="option-group-fieldset">
+                                <legend class="option-group-title"><span>Selected project</span></legend>
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Name</span>
+                                        <input id="openedProjectName" type="text" class="form-control"
+                                               placeholder="Project Name"
+                                               disabled>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Height</span>
+                                        <input id="openedSandboxHeight" type="number"
+                                               class="form-control input-sm hide-number-type-input-arrows"
+                                               placeholder="Sandbox Height" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Width</span>
+                                        <input id="openedSandboxWidth" type="number"
+                                               class="form-control input-sm hide-number-type-input-arrows"
+                                               placeholder="Sandbox Width" disabled>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-6">
+                            <button class="btn btn-outline-success btn-sm" id="createSandboxModalButtonOK">Create</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--create new emitter modal-->
+<div class="modal fade" id="createEmitterModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="createEmitterTabContainer">
+                    <ul id="createEmitterTabGroup" class="nav nav-tabs" role="tablist">
+                        <li class="nav-item" id="modalCreateEmitter">
+                            <a id="createEmitterTab" class="nav-link active" data-toggle="tab" href="#createEmitter"
+                               role="tab">
+                                <i class="fa fa-file" aria-hidden="true"></i>
+                                <span>Create</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" id="modalChooseEmitter">
+                            <a id="chooseEmitterTab" class="nav-link" href="#chooseEmitter" data-toggle="tab"
+                               role="tab">
+                                <i class="fa fa-folder-open" aria-hidden="true"></i>
+                                <span>Choose</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="createEmitter" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-12 option-group">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-addon">Name</span>
+                                    <input id="emitterName" type="text" class="form-control" placeholder="Emitter Name">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="chooseEmitter" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-12 option">
+                                <div class="input-group input-group-sm">
+                                    <label class="btn btn-outline-dark btn-sm btn-file">
+                                        Choose emitters <input id="emittersChoose" type="file" style="display: none;" accept=".json">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-6">
+                        <button class="btn btn-outline-success" id="createEmitterModalButtonOK">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--remove emitter modal-->
+<div class="modal fade" id="removeEmitterModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Remove Emitter</h4>
+            </div>
+            <div class="modal-body">
+                <h5>Are you sure, that you want to remove emitter named:</h5><span></span>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-danger" data-dismiss="modal" id="removeEmitter">Yes</a>
+                <a class="btn btn-default" data-dismiss="modal">No</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--start new project question modal-->
+<div class="modal fade" id="newProjectModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Start New Project</h4>
+            </div>
+            <div class="modal-body">
+                <h5>Do you want to save project before starting new?</h5>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-outline-success btn-sm downloadProject refresh" href="#" role="button">Save</a>
+                <a class="btn btn-outline-danger btn-sm refresh" href="#" role="button">Don't Save</a>
+                <a class="btn btn-outline-secondary btn-sm" data-dismiss="modal" href="#" role="button">Cancel</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!---->
+<div id="editorAndPluginVersionInfo">
+    <span>Editor: v<%= htmlWebpackPlugin.options.editorVersion %></span>|
+    <span>|</span>
+    <span>Plugin: v<%= htmlWebpackPlugin.options.pluginVersion %></span>
+</div>
+</body>
+</html>

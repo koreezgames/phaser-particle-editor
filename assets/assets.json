@@ -1,0 +1,10 @@
+{
+  "initial": [
+    {
+      "type": "image",
+      "key": "particle",
+      "url": "assets/images/particle.png",
+      "overwrite": false
+    }
+  ]
+}

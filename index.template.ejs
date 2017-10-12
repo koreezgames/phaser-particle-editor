@@ -23,7 +23,7 @@
     <script src="index.js"></script>
 </head>
 <body>
-<div id="sandboxContainer" class="col-md-12"></div>
+<div id="sandboxContainer" class="col-md-12 no-padding"></div>
 <div id="controlsContainer">
     <div class="container-fluid">
         <div class="col-md-12 no-padding">
@@ -44,9 +44,8 @@
             </div>
         </div>
         <div class="row justify-content-center align-items-center">
-            <input id="projectName" type="text" class="pureInput"
-                   oninput="this.style.width = ((this.value.length + 1) * 8) + 'px';"
-                   style="margin-top: 1vh;">
+            <input id="projectName" type="text" class="pureInput" title=""
+                   oninput="this.style.width = ((this.value.length + 1) * 8) + 'px'">
         </div>
         <!-- Emitters Tabs -->
         <div class="emitterTabContainer">
@@ -75,7 +74,9 @@
                             <div class="card-block">
                                 <div class="col-md-12">
                                     <fieldset class="option-group-fieldset">
-                                        <legend class="option-group-title"><span>Options</span></legend>
+                                        <legend class="option-group-title">
+                                            <span>Options</span>
+                                        </legend>
                                         <div class="row">
                                             <div class="col-md-6 option">
                                                 <div class="input-group">
@@ -164,7 +165,9 @@
                                         </div>
                                     </fieldset>
                                     <fieldset class="option-group-fieldset">
-                                        <legend class="option-group-title"><span>Offset</span></legend>
+                                        <legend class="option-group-title">
+                                            <span>Offset</span>
+                                        </legend>
                                         <div class="row">
                                             <div class="col-md-6 option">
                                                 <div class="input-group input-group-sm">
@@ -183,7 +186,9 @@
                                         </div>
                                     </fieldset>
                                     <fieldset class="option-group-fieldset">
-                                        <legend class="option-group-title"><span>Gravity</span></legend>
+                                        <legend class="option-group-title">
+                                            <span>Gravity</span>
+                                        </legend>
                                         <div class="row">
                                             <div class="col-md-6 option">
                                                 <div class="input-group input-group-sm">
@@ -202,7 +207,9 @@
                                         </div>
                                     </fieldset>
                                     <fieldset class="option-group-fieldset">
-                                        <legend class="option-group-title"><span>Bounce</span></legend>
+                                        <legend class="option-group-title">
+                                            <span>Bounce</span>
+                                        </legend>
                                         <div class="row">
                                             <div class="col-md-6 option">
                                                 <div class="input-group input-group-sm">
@@ -221,7 +228,9 @@
                                         </div>
                                     </fieldset>
                                     <fieldset class="option-group-fieldset">
-                                        <legend class="option-group-title"><span>Height & Width</span></legend>
+                                        <legend class="option-group-title">
+                                            <span>Height & Width</span>
+                                        </legend>
                                         <div class="row">
                                             <div class="col-md-6 option">
                                                 <div class="input-group input-group-sm">
@@ -240,7 +249,9 @@
                                         </div>
                                     </fieldset>
                                     <fieldset class="option-group-fieldset">
-                                        <legend class="option-group-title"><span>Scale</span></legend>
+                                        <legend class="option-group-title">
+                                            <span>Scale</span>
+                                        </legend>
                                         <div class="col-md-12 option">
                                             <div class="input-group">
                                                 <label class="custom-control custom-checkbox">
@@ -271,37 +282,40 @@
                                             </div>
                                         </fieldset>
                                         <fieldset class="option-group-fieldset option-group-nested-fieldset">
-                                            <legend class="option-group-title"><span>Disproportional</span>
+                                            <legend class="option-group-title">
+                                                <span>Disproportional</span>
                                             </legend>
                                             <fieldset class="option-group-fieldset option-group-nested-fieldset">
-                                                <legend class="option-group-title"><span>X</span></legend>
+                                                <legend class="option-group-title">
+                                                    <span>X</span>
+                                                </legend>
                                                 <div class="row">
                                                     <div class="col-md-6 option">
                                                         <div class="input-group  input-group-sm">
                                                             <span class="input-group-addon">From</span>
-                                                            <input id="scaleFromX" type="number"
-                                                                   class="form-control" placeholder="X"
-                                                                   step="0.1">
+                                                            <input id="scaleFromX" type="number" class="form-control"
+                                                                   placeholder="X" step="0.1">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 option">
                                                         <div class="input-group input-group-sm">
                                                             <span class="input-group-addon">To</span>
-                                                            <input id="scaleToX" type="number"
-                                                                   class="form-control"
+                                                            <input id="scaleToX" type="number" class="form-control"
                                                                    placeholder="X" step="0.1">
                                                         </div>
                                                     </div>
                                                 </div>
                                             </fieldset>
                                             <fieldset class="option-group-fieldset option-group-nested-fieldset">
-                                                <legend class="option-group-title"><span>Y</span></legend>
+                                                <legend class="option-group-title">
+                                                    <span>Y</span>
+                                                </legend>
                                                 <div class="row">
                                                     <div class="col-md-6 option">
                                                         <div class="input-group input-group-sm">
                                                             <span class="input-group-addon">From</span>
-                                                            <input id="scaleFromY" type="number"
-                                                                   class="form-control" placeholder="Y" step="0.1">
+                                                            <input id="scaleFromY" type="number" class="form-control"
+                                                                   placeholder="Y" step="0.1">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 option">
@@ -314,13 +328,14 @@
                                                 </div>
                                             </fieldset>
                                             <fieldset class="option-group-fieldset option-group-nested-fieldset">
-                                                <legend class="option-group-title"><span>Easing</span></legend>
+                                                <legend class="option-group-title">
+                                                    <span>Easing</span>
+                                                </legend>
                                                 <div class="row">
                                                     <div class="col-md-6 option">
                                                         <div class="dropdown">
                                                             <a class="btn btn-secondary btn-sm dropdown-toggle form-control"
-                                                               id="scaleEasing"
-                                                               data-toggle="dropdown"
+                                                               id="scaleEasing" data-toggle="dropdown"
                                                                aria-expanded="false">Easing</a>
                                                             <div class="dropdown-menu" aria-labelledby="scaleEasing">
                                                                 <a class="dropdown-item scaleEase">Back</a>
@@ -340,8 +355,7 @@
                                                     <div class="col-md-6 option">
                                                         <div class="dropdown">
                                                             <a class="btn btn-secondary btn-sm dropdown-toggle form-control"
-                                                               id="scaleEasingMode"
-                                                               data-toggle="dropdown"
+                                                               id="scaleEasingMode" data-toggle="dropdown"
                                                                aria-expanded="false">Mode</a>
                                                             <div class="dropdown-menu"
                                                                  aria-labelledby="scaleEasingMode">
@@ -372,7 +386,9 @@
                                         </fieldset>
                                     </fieldset>
                                     <fieldset class="option-group-fieldset">
-                                        <legend class="option-group-title"><span>Rotation</span></legend>
+                                        <legend class="option-group-title">
+                                            <span>Rotation</span>
+                                        </legend>
                                         <div class="row">
                                             <div class="col-md-6 option">
                                                 <div class="input-group input-group-sm">
@@ -398,9 +414,13 @@
                                         </div>
                                     </fieldset>
                                     <fieldset class="option-group-fieldset">
-                                        <legend class="option-group-title"><span>Speed</span></legend>
+                                        <legend class="option-group-title">
+                                            <span>Speed</span>
+                                        </legend>
                                         <fieldset class="option-group-fieldset option-group-nested-fieldset">
-                                            <legend class="option-group-title"><span>X</span></legend>
+                                            <legend class="option-group-title">
+                                                <span>X</span>
+                                            </legend>
                                             <div class="row">
                                                 <div class="col-md-6 option">
                                                     <div class="input-group  input-group-sm">
@@ -419,7 +439,9 @@
                                             </div>
                                         </fieldset>
                                         <fieldset class="option-group-fieldset option-group-nested-fieldset">
-                                            <legend class="option-group-title"><span>Y</span></legend>
+                                            <legend class="option-group-title">
+                                                <span>Y</span>
+                                            </legend>
                                             <div class="row">
                                                 <div class="col-md-6 option">
                                                     <div class="input-group  input-group-sm">
@@ -439,7 +461,9 @@
                                         </fieldset>
                                     </fieldset>
                                     <fieldset class="option-group-fieldset">
-                                        <legend class="option-group-title"><span>Alpha</span></legend>
+                                        <legend class="option-group-title">
+                                            <span>Alpha</span>
+                                        </legend>
                                         <div class="row">
                                             <div class="col-md-6 option">
                                                 <div class="input-group input-group-sm">
@@ -457,13 +481,14 @@
                                             </div>
                                         </div>
                                         <fieldset class="option-group-fieldset option-group-nested-fieldset">
-                                            <legend class="option-group-title"><span>Easing</span></legend>
+                                            <legend class="option-group-title">
+                                                <span>Easing</span>
+                                            </legend>
                                             <div class="row">
                                                 <div class="col-md-6 option">
                                                     <div class="dropdown">
                                                         <a class="btn btn-secondary btn-sm dropdown-toggle form-control"
-                                                           id="alphaEasing"
-                                                           data-toggle="dropdown"
+                                                           id="alphaEasing" data-toggle="dropdown"
                                                            aria-expanded="false">Easing</a>
                                                         <div class="dropdown-menu" aria-labelledby="alphaEasing">
                                                             <a class="dropdown-item">Back</a>
@@ -483,8 +508,7 @@
                                                 <div class="col-md-6 option">
                                                     <div class="dropdown">
                                                         <a class="btn btn-secondary btn-sm dropdown-toggle form-control"
-                                                           id="alphaEasingMode"
-                                                           data-toggle="dropdown"
+                                                           id="alphaEasingMode" data-toggle="dropdown"
                                                            aria-expanded="false">Mode</a>
                                                         <div class="dropdown-menu" aria-labelledby="alphaEasingMode">
 
@@ -514,12 +538,15 @@
                                         </fieldset>
                                     </fieldset>
                                     <fieldset class="option-group-fieldset">
-                                        <legend class="option-group-title"><span>Image</span></legend>
+                                        <legend class="option-group-title">
+                                            <span>Image</span>
+                                        </legend>
                                         <div class="row">
                                             <div class="col-md-8 option">
                                                 <div class="input-group">
                                                     <label class="btn btn-outline-dark btn-sm btn-file">
-                                                        Choose emitter image <input id="particleImageBrowser" type="file" style="display: none;">
+                                                        Choose emitter image
+                                                        <input id="particleImageBrowser" type="file" hidden>
                                                     </label>
                                                 </div>
                                             </div>
@@ -553,28 +580,34 @@
                     <div class="card-block">
                         <div class="col-md-12">
                             <fieldset class="option-group-fieldset">
-                                <legend class="option-group-title"><span>Stage Preperties</span></legend>
+                                <legend class="option-group-title">
+                                    <span>Stage Preperties</span>
+                                </legend>
                                 <div class="row">
                                     <div class="col-md-12 option">
                                         <div class="input-group input-group-sm">
                                             <span class="input-group-addon">BG Color</span>
                                             <div id="canvasBgColorDiv"
                                                  class="input-group input-group-sm colorpicker-component">
-                                                <input id="canvasBGColorInput" type="text" class="form-control">
-                                                <span class="input-group-addon"><i></i></span>
+                                                <input id="canvasBGColorInput" type="text" class="form-control" title="">
+                                                <span class="input-group-addon">
+                                                        <i></i>
+                                                    </span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-8 option">
                                         <div class="input-group">
                                             <label class="btn btn-outline-dark btn-sm btn-file">
-                                                Choose sandbox image <input id="canvasBgImage" type="file" style="display: none;">
+                                                Choose sandbox image
+                                                <input id="canvasBgImage" type="file" hidden>
                                             </label>
                                         </div>
                                     </div>
                                     <div class="col-md-4 option">
                                         <div class="input-group input-group-sm">
-                                            <button id="removeBgImage" class="btn btn-outline-secondary btn-sm" disabled>Remove
+                                            <button id="removeBgImage" class="btn btn-outline-secondary btn-sm"
+                                                    disabled>Remove
                                             </button>
                                         </div>
                                     </div>
@@ -618,24 +651,29 @@
                         <div class="col-md-12">
                             <div class="input-group input-group-sm">
                                 <span class="input-group-addon">Name</span>
-                                <input id="createProjectName" type="text" class="form-control" placeholder="Project Name">
+                                <input id="createProjectName" type="text" class="form-control"
+                                       placeholder="Project Name">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <fieldset class="option-group-fieldset">
-                                <legend class="option-group-title"><span>Sandbox Size</span></legend>
+                                <legend class="option-group-title">
+                                    <span>Sandbox Size</span>
+                                </legend>
                                 <div class="col-md-12">
                                     <div class="input-group input-group-sm">
                                         <span class="input-group-addon">Height</span>
                                         <input id="sandboxHeight" type="number"
-                                               class="form-control hide-number-type-input-arrows" placeholder="Sandbox Height">
+                                               class="form-control hide-number-type-input-arrows"
+                                               placeholder="Sandbox Height">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="input-group input-group-sm">
                                         <span class="input-group-addon">Width</span>
                                         <input id="sandboxWidth" type="number"
-                                               class="form-control input-sm hide-number-type-input-arrows" placeholder="Sandbox Width">
+                                               class="form-control input-sm hide-number-type-input-arrows"
+                                               placeholder="Sandbox Width">
                                     </div>
                                 </div>
                             </fieldset>
@@ -647,19 +685,21 @@
                         <div class="col-md-12 option">
                             <div class="input-group input-group-sm">
                                 <label class="btn btn-outline-dark btn-sm btn-file">
-                                    Choose Project <input id="projectChoose" type="file" style="display: none;" accept=".ppe">
+                                    Choose Project
+                                    <input id="projectChoose" type="file" hidden accept=".ppe">
                                 </label>
                             </div>
                         </div>
                         <div id="modalProjectInfo" class="col-md-12">
                             <fieldset class="option-group-fieldset">
-                                <legend class="option-group-title"><span>Selected project</span></legend>
+                                <legend class="option-group-title">
+                                    <span>Selected project</span>
+                                </legend>
                                 <div class="col-md-12">
                                     <div class="input-group">
                                         <span class="input-group-addon">Name</span>
                                         <input id="openedProjectName" type="text" class="form-control"
-                                               placeholder="Project Name"
-                                               disabled>
+                                               placeholder="Project Name" disabled>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -667,7 +707,8 @@
                                         <span class="input-group-addon">Height</span>
                                         <input id="openedSandboxHeight" type="number"
                                                class="form-control input-sm hide-number-type-input-arrows"
-                                               placeholder="Sandbox Height" disabled>
+                                               placeholder="Sandbox Height"
+                                               disabled>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -675,7 +716,8 @@
                                         <span class="input-group-addon">Width</span>
                                         <input id="openedSandboxWidth" type="number"
                                                class="form-control input-sm hide-number-type-input-arrows"
-                                               placeholder="Sandbox Width" disabled>
+                                               placeholder="Sandbox Width"
+                                               disabled>
                                     </div>
                                 </div>
                             </fieldset>
@@ -685,7 +727,8 @@
                 <div class="modal-footer">
                     <div class="row">
                         <div class="col-6">
-                            <button class="btn btn-outline-success btn-sm" id="createSandboxModalButtonOK">Create</button>
+                            <button class="btn btn-outline-success btn-sm" id="createSandboxModalButtonOK">Create
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -736,7 +779,8 @@
                             <div class="col-md-12 option">
                                 <div class="input-group input-group-sm">
                                     <label class="btn btn-outline-dark btn-sm btn-file">
-                                        Choose emitters <input id="emittersChoose" type="file" style="display: none;" accept=".json">
+                                        Choose emitters
+                                        <input id="emittersChoose" type="file" hidden accept=".json">
                                     </label>
                                 </div>
                             </div>
@@ -764,7 +808,8 @@
                 <h4 class="modal-title">Remove Emitter</h4>
             </div>
             <div class="modal-body">
-                <h5>Are you sure, that you want to remove emitter named:</h5><span></span>
+                <h5>Are you sure, that you want to remove emitter named:</h5>
+                <span></span>
             </div>
             <div class="modal-footer">
                 <a class="btn btn-danger" data-dismiss="modal" id="removeEmitter">Yes</a>
@@ -793,11 +838,14 @@
         </div>
     </div>
 </div>
-<!---->
 <div id="editorAndPluginVersionInfo">
-    <span>Editor: v<%= htmlWebpackPlugin.options.editorVersion %></span>|
-    <span>|</span>
-    <span>Plugin: v<%= htmlWebpackPlugin.options.pluginVersion %></span>
+        <span>Editor: v
+            <%= htmlWebpackPlugin.options.editorVersion %>
+        </span>
+    <span id="versionsDivider">|</span>
+    <span>Plugin: v
+        <%= htmlWebpackPlugin.options.pluginVersion %>
+        </span>
 </div>
 </body>
 </html>

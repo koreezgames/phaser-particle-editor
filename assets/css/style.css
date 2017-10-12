@@ -24,6 +24,7 @@ body {
     color: rgb(175, 175, 175);
     font-size: 0.75rem;
 }
+
 #versionsDivider {
     margin: 0 0.3rem;
 }
@@ -222,4 +223,28 @@ input.btn-secondary {
 
 #projectName {
     margin-top: 1vh;
+}
+
+.nav-tab-dropdown {
+    display: inline
+}
+
+.nav-tab-dropdown-btn {
+    padding: 0.3rem;
+    background: none
+}
+
+.dropdown-menu {
+    min-width: 0px;
+}
+
+.dropdown-menu > i {
+    padding: 0.3rem 0.5rem;
+}
+
+.dropdown-menu > i > span {
+    margin-left: 10px;
+}
+.nav-tab-icons-divider {
+    margin-left: 0.25rem;
 }

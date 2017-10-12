@@ -182,13 +182,22 @@ export default class ParticleEditorView {
   addEmitterTab (emitterName) {
     $('#addEmitterButtonLi').before(
       `<li id="${emitterName}Li" class="nav-item">
-        <a id="${emitterName}" class="nav-link" data-toggle="tab" href="#emitterContent" role="tab">
-         <span id="${emitterName}Span"><input id="${emitterName}Field" type="text" class="pureInput" value="${emitterName}"
-         oninput="this.style.width = ((this.value.length) * 8) + 'px';" disabled ></span>
-         <i class="tabButtons"><i class="fa fa-eye" id="${emitterName}TabEye"></i>
-         <i class="tabButtons"><i class="fa fa-trash-o" id="${emitterName}Trash"></i>
+         <a id="${emitterName}" class="nav-link" data-toggle="tab" href="#emitterContent" role="tab">
+           <span id="${emitterName}Span"><input id="${emitterName}Field" type="text" class="pureInput" value="${emitterName}"
+           oninput="this.style.width = ((this.value.length) * 8) + 'px';" disabled ></span>
+           <span class="tabButtons"><span class="fa fa-eye" id="${emitterName}TabEye"></span>
+         <span class="nav-tab-icons-divider">|</span>
+         <div class="dropdown nav-tab-dropdown"> 
+          <button class="btn fa fa-ellipsis-v nav-tab-dropdown-btn" data-toggle="dropdown" aria-expanded="false">
+        </button>
+          <div class="dropdown-menu">
+          <i class="dropdown-item fa fa-trash-o tabButtons" id="${emitterName}Trash" aria-hidden="true"><span>delete</span></i>
+          <i class="dropdown-item fa fa-edit tabButtons" id="${emitterName}Trash" aria-hidden="true"><span>rename</span></i>
+          <i class="dropdown-item fa fa-copy tabButtons" id="${emitterName}Trash" aria-hidden="true"><span>duplicate</span></i>
+          </div>
+         </div>
         </a>
-        </li>`)
+      </li>`)
     this.onEmitterTabChange(emitterName)
     this.setEmitterTabListeners(emitterName)
   }

@@ -162,7 +162,7 @@ export default class ParticleEmitterView {
       toX: this._scale.toX.val(),
       toY: this._scale.toY.val(),
       rate: this._scale.rate.val(),
-      yoyo: this._scale.yoyo.val(),
+      yoyo: this._scale.yoyo.prop('checked'),
       ease: this._scale.ease.text(),
       easeMode: this._scale.easeMode.text()
     }
@@ -196,6 +196,7 @@ export default class ParticleEmitterView {
   }
 
   initProperties () {
+    this.temp = 1
     this._particleImage = $('#particleImageBrowser')
       .on('change', this.onEmitterPropertyValueChange.bind(this, this.onParticleImageChange))
     this._dimension = {}
@@ -266,9 +267,9 @@ export default class ParticleEmitterView {
     this._scale.yoyo = $('#scaleYoyo')
       .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onScaleYoyoChange))
     this._scale.ease = $('#scaleEasing')
-      .on('DOMSubtreeModified', this.onEmitterPropertyValueChange.bind(this, this.onScaleEaseChange))
+    $('#scaleEasingDropdown').on('hidden.bs.dropdown', this.onEmitterPropertyValueChange.bind(this, this.onScaleEaseChange))
     this._scale.easeMode = $('#scaleEasingMode')
-      .on('DOMSubtreeModified', this.onEmitterPropertyValueChange.bind(this, this.onScaleEaseModeChange))
+    $('#scaleEasingModeDropdown').on('hidden.bs.dropdown', this.onEmitterPropertyValueChange.bind(this, this.onScaleEaseModeChange))
     this._rotation = {}
     this._rotation.min = $('#rotationMin')
       .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onRotationMinChange))
@@ -284,16 +285,15 @@ export default class ParticleEmitterView {
       .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onMaxSpeedXChange))
     this._speed.maxY = $('#maxSpeedY')
       .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onMaxSpeedyChange))
-
     this._alpha = {}
     this._alpha.min = $('#alphaMin')
       .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onAlphaMinChange))
     this._alpha.max = $('#alphaMax')
       .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onAlphaMaxChange))
     this._alpha.ease = $('#alphaEasing')
-      .on('DOMSubtreeModified', this.onEmitterPropertyValueChange.bind(this, this.onAlphaEaseChange))
+    $('#alphaEasingDropdown').on('hidden.bs.dropdown', this.onEmitterPropertyValueChange.bind(this, this.onAlphaEaseChange))
     this._alpha.easeMode = $('#alphaEasingMode')
-      .on('DOMSubtreeModified', this.onEmitterPropertyValueChange.bind(this, this.onAlphaEaseModeChange))
+    $('#alphaEasingModeDropdown').on('hidden.bs.dropdown', this.onEmitterPropertyValueChange.bind(this, this.onAlphaEaseModeChange))
     this._alpha.rate = $('#alphaRate')
       .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onAlphaRateChange))
     this._alpha.yoyo = $('#alphaYoyo')

@@ -9,6 +9,6 @@ $(function () {
   $('.dropdown-menu').on('click', 'a', function (e) {
     let button = $('.btn:first-child', $(this).parent().parent())
     button.text($(this).text())
-    button.val($(this).text())
   })
+  $('#scaleEasing').off('click')
 })

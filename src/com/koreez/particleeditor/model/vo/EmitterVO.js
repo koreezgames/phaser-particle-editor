@@ -34,7 +34,7 @@ export default class EmitterVO {
     this.particleArguments = {
       color: {
         start: {r: 255, g: 0, b: 0},
-        end: {r: 0, g: 0, b: 255},
+        end: {r: 255, g: 0, b: 255},
         ease: 'Linear',
         easeMode: 'None',
         delay: 0,

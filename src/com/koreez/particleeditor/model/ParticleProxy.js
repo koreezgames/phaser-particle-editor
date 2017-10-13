@@ -250,7 +250,6 @@ export default class ParticleProxy extends Proxy {
     this.setEasing(this.currentEmitter.particleArguments.color, color, '')
     this.currentEmitter.particleArguments.color.delay = Number.parseFloat(color.delay)
     this.currentEmitter.particleArguments.color.rate = Number.parseFloat(color.rate)
-    console.info(this.currentEmitter)
     this.sendOptionChangeNotification()
   }
 

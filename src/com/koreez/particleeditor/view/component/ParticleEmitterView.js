@@ -321,9 +321,9 @@ export default class ParticleEmitterView {
 
     this._color = {}
     this._color.start = $('#startColor')
-      .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onStartColorChange))
+      .on('change', () => { this.onEmitterPropertyValueChange.bind(this, this.onStartColorChange) })
     this._color.end = $('#endColor')
-      .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onEndColorChange))
+      .on('change', () => { this.onEmitterPropertyValueChange.bind(this, this.onEndColorChange) })
     this._color.ease = $('#colorEasing')
     $('#colorEasingDropdown').on('hidden.bs.dropdown', this.onEmitterPropertyValueChange.bind(this, this.onColorEaseChange))
     this._color.easeMode = $('#colorEasingMode')
@@ -366,8 +366,8 @@ export default class ParticleEmitterView {
     this._scale.toY.val(currentEmitter.scaleToY)
     this._scale.rate.val(currentEmitter.scaleRate)
     this._scale.yoyo.val(currentEmitter.yoyo)
-    this._scale.ease.text(currentEmitter.ease)
-    this._scale.easeMode.text(currentEmitter.easeMode)
+    this._scale.ease.text(currentEmitter.scaleEase)
+    this._scale.easeMode.text(currentEmitter.scaleEaseMode)
     this._rotation.min.val(currentEmitter.rotationMin)
     this._rotation.max.val(currentEmitter.rotationMax)
     this._speed.minX.val(currentEmitter.minSpeedX)
@@ -380,22 +380,19 @@ export default class ParticleEmitterView {
     this._alpha.easeMode.text(currentEmitter.alphaEaseMode)
     this._alpha.rate.val(currentEmitter.alphaRate)
     this._alpha.yoyo.val(currentEmitter.alphaYoyo)
-    if (currentEmitter.particleArguments.color) {
-      // this._color.start.val(Phaser.Color.RGBtoString(currentEmitter.particleArguments.color.start.r,
-      //   currentEmitter.particleArguments.color.start.g, currentEmitter.particleArguments.color.start.b))
-      const val = Phaser.Color.RGBtoString(currentEmitter.particleArguments.color.start.r,
-        currentEmitter.particleArguments.color.start.g,
-        0)
-      console.log(val)
-      $('#startColorDiv').colorpicker('setValue', val)
-      // console.info(Phaser.Color.RGBtoString(currentEmitter.particleArguments.color.end.r,
-      //   currentEmitter.particleArguments.color.end.g, currentEmitter.particleArguments.color.end.b))
-      // this._color.end.val(Phaser.Color.RGBtoString(currentEmitter.particleArguments.color.end.r,
-      //   currentEmitter.particleArgumentscleArguments.color.end.g, currentEmitter.particleArguments.color.end.b))
-      this._color.ease.text(currentEmitter.particleArguments.color.ease)
-      this._color.easeMode.text(currentEmitter.particleArguments.color.easeMode)
-      this._color.delay.val(currentEmitter.particleArguments.color.delay)
-      this._color.rate.val(currentEmitter.particleArguments.color.rate)
+    const color = currentEmitter.particleArguments.color
+    if (color) {
+      let startColor = Phaser.Color.RGBtoString(color.start.r, color.start.g, color.start.b)
+      let endColor = Phaser.Color.RGBtoString(color.end.r, color.end.g, color.end.b)
+      $('#startColorDiv').colorpicker('setValue', startColor)
+      $('#endColorDiv').colorpicker('setValue', endColor)
+      this._color.ease.text(color.ease)
+      this._color.easeMode.text(color.easeMode)
+      this._color.delay.val(color.delay)
+      this._color.rate.val(color.rate)
+    } else {
+      $('#startColorDiv').colorpicker()
+      $('#endColorDiv').colorpicker()
     }
 
     $('#particleImagePreview').css('background-image', 'url(' + currentEmitter[currentEmitterName] + ')')

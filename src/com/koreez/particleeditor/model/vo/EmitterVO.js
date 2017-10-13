@@ -45,6 +45,7 @@ export default class EmitterVO {
     this.enabled = true
     this.explode = false
     this.flow = false
+    this.blendMode = 'NORMAL'
     this[name] = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAAHklEQVQ4jWP8////ZgYKAROlBow' +
       'aMmrIqCGjhkABADAjA9Lg9zWpAAAAAElFTkSuQmCC'
   }

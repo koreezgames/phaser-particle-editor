@@ -29,6 +29,7 @@ export default class ParticleEditorViewMediator extends Mediator {
       ParticleProxy.EMITTER_RENAME,
       ParticleProxy.EMITTER_REMOVE,
       ParticleProxy.PROPERTY_CHANGE,
+      ParticleProxy.CURRENT_EMITTER_CHANGE,
       SandboxState.STATE_READY,
       ParticleEmitterView.SCALE_TYPE_CHANGE,
       ParticleEmitterView.EXPLODE_CHANGE,
@@ -41,14 +42,16 @@ export default class ParticleEditorViewMediator extends Mediator {
     super.onRegister()
     this.particleEditorView = new ParticleEditorView()
     this.particleEditorView.onProjectChoose.add(this.onProjectChoose, this)
-    this.particleEditorView.onCreateEmitterTabClick.add(this.onEmitterTabClick, this)
+    this.particleEditorView.onCreateEmitterTabClick.add(this.onCreateEmitterTabClick, this)
     this.particleEditorView.onCreateSandbox.add(this.onCreateSandbox, this)
     this.particleEditorView.onDownload.add(this.onDownload, this)
     this.particleEditorView.onSave.add(this.onSave, this)
     this.particleEditorView.onProjectNameChange.add(this.onProjectNameChange, this)
     this.particleEditorView.onEmitterAdd.add(this.onEmitterAdd, this)
+    this.particleEditorView.onEmitterDuplicate.add(this.onEmitterDuplicate, this)
     this.particleEditorView.onEmitterChange.add(this.onEmitterChange, this)
     this.particleEditorView.onEmitterRename.add(this.onEmitterRename, this)
+    this.particleEditorView.onEmitterEdit.add(this.onEmitterEdit, this)
     this.particleEditorView.onEmitterRemove.add(this.onEmitterRemove, this)
     this.particleEditorView.onTurnEmitterOnOff.add(this.onEnableDisableEmitter, this)
     this.particleEditorView.onBgColorChange.add(this.onBgColorChange, this)
@@ -91,7 +94,7 @@ export default class ParticleEditorViewMediator extends Mediator {
         this.particleEditorView.cleanNewEmitterName()
         this.particleEditorView.hideCreateEmitterModal()
         break
-      case ParticleProxy.EMITTER_CURRENT_CHANGE:
+      case ParticleProxy.CURRENT_EMITTER_CHANGE:
         this.particleEditorView.setActiveEmitter(notification.getBody())
         break
       case ParticleProxy.EMITTER_RENAME:
@@ -125,8 +128,8 @@ export default class ParticleEditorViewMediator extends Mediator {
     this.sendNotification(ParticleEditorView.CHOSE_PROJECT, this.particleEditorView.choseProject)
   }
 
-  onEmitterTabClick () {
-    this.particleEditorView.clearEmitterChoose()
+  onCreateEmitterTabClick () {
+    this.particleEditorView.clearChooseEmitterTab()
   }
 
   onCreateSandbox () {
@@ -140,11 +143,14 @@ export default class ParticleEditorViewMediator extends Mediator {
   }
 
   onEmitterAdd () {
-    console.log(this.particleEditorView.choseEmitters)
     this.sendNotification(ParticleEditorView.ADD_EMITTER, {
       name: this.particleEditorView.newEmitterName,
       file: this.particleEditorView.choseEmitters
     })
+  }
+
+  onEmitterDuplicate () {
+    this.sendNotification(ParticleEditorView.DUPLICATE_EMITTER, this.particleEditorView.targetEmitterName)
   }
 
   onDownload () {
@@ -167,6 +173,9 @@ export default class ParticleEditorViewMediator extends Mediator {
     this.sendNotification(ParticleEditorView.CHANGE_EMITTER, this.particleEditorView.targetEmitterName)
   }
 
+  onEmitterEdit () {
+    this.particleEditorView.editEmitterTabName(this.particleEditorView.tabButtonTargetName)
+  }
   onEmitterRename () {
     this.sendNotification(ParticleEditorView.RENAME_EMITTER, {
       oldName: this.particleEditorView.targetEmitterName,

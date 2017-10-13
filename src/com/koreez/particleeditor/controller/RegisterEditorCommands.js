@@ -13,6 +13,7 @@ import EnableDisableEmitterCommand from './editor/EnableDisableEmitterCommand'
 import RenameEmitterCommand from './editor/RenameEmitterCommand'
 import ChoseProjectCommand from './editor/ChoseProjectCommand'
 import ChangeProjectNameCommand from './editor/ChangeProjectNameCommand'
+import DuplicateEmitterCommand from './editor/DuplicateEmitterCommand'
 
 export default class RegisterEditorCommands extends SimpleCommand {
   execute (notification) {
@@ -22,6 +23,7 @@ export default class RegisterEditorCommands extends SimpleCommand {
     this.facade.registerCommand(ParticleEditorView.CHOSE_PROJECT, ChoseProjectCommand)
     this.facade.registerCommand(ParticleEditorView.DOWNLOAD_EMITTERS, DownloadEmittersCommand)
     this.facade.registerCommand(ParticleEditorView.ADD_EMITTER, AddEmitterCommand)
+    this.facade.registerCommand(ParticleEditorView.DUPLICATE_EMITTER, DuplicateEmitterCommand)
     this.facade.registerCommand(ParticleEditorView.CHANGE_EMITTER, ChangeEmitterCommand)
     this.facade.registerCommand(ParticleEditorView.RENAME_EMITTER, RenameEmitterCommand)
     this.facade.registerCommand(ParticleEditorView.REMOVE_EMITTER, RemoveEmitterCommand)

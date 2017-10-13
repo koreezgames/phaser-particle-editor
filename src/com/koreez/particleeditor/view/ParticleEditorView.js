@@ -11,6 +11,7 @@ export default class ParticleEditorView {
   static CHOSE_EMITTERS = ParticleEditorView.NAME + 'EmittersChose'
   static CHANGE_PROJECT_NAME = ParticleEditorView.NAME + 'ProjectNameChange'
   static ADD_EMITTER = ParticleEditorView.NAME + 'EmitterAdd'
+  static DUPLICATE_EMITTER = ParticleEditorView.NAME + 'EmitterDuplicate'
   static RENAME_EMITTER = ParticleEditorView.NAME + 'EmitterRename'
   static REMOVE_EMITTER = ParticleEditorView.NAME + 'EmitterRemove'
   static CHANGE_EMITTER = ParticleEditorView.NAME + 'EmitterChange'
@@ -29,6 +30,8 @@ export default class ParticleEditorView {
     this.onCreateSandbox = new Phaser.Signal()
     this.onEmitterAdd = new Phaser.Signal()
     this.onEmitterRename = new Phaser.Signal()
+    this.onEmitterEdit = new Phaser.Signal()
+    this.onEmitterDuplicate = new Phaser.Signal()
     this.onEmitterChange = new Phaser.Signal()
     this.onEmitterRemove = new Phaser.Signal()
     this.onTurnEmitterOnOff = new Phaser.Signal()
@@ -154,6 +157,8 @@ export default class ParticleEditorView {
   }
 
   clearCreateTabFields () {
+    $('#projectChoose').val(null)
+    $('#modalProjectInfo').hide()
     $('#createCanvasModalButtonOK').text('Create')
   }
 
@@ -188,17 +193,17 @@ export default class ParticleEditorView {
            <span class="tabButtons"><span class="fa fa-eye" id="${emitterName}TabEye"></span>
          <span class="nav-tab-icons-divider">|</span>
          <div class="dropdown nav-tab-dropdown"> 
-          <button class="btn fa fa-ellipsis-v nav-tab-dropdown-btn" data-toggle="dropdown" aria-expanded="false">
+          <button class="btn fa fa-ellipsis-v nav-tab-dropdown-btn" id="${emitterName}Dropdown" data-toggle="dropdown" aria-expanded="false">
         </button>
           <div class="dropdown-menu">
           <i class="dropdown-item fa fa-trash-o tabButtons" id="${emitterName}Trash" aria-hidden="true"><span>delete</span></i>
-          <i class="dropdown-item fa fa-edit tabButtons" id="${emitterName}Trash" aria-hidden="true"><span>rename</span></i>
-          <i class="dropdown-item fa fa-copy tabButtons" id="${emitterName}Trash" aria-hidden="true"><span>duplicate</span></i>
+          <i class="dropdown-item fa fa-edit tabButtons" id="${emitterName}Rename" aria-hidden="true"><span>rename</span></i>
+          <i class="dropdown-item fa fa-copy tabButtons" id="${emitterName}Duplicate" aria-hidden="true"><span>duplicate</span></i>
           </div>
          </div>
         </a>
       </li>`)
-    this.onEmitterTabChange(emitterName)
+    this.targetEmitterName = emitterName
     this.setEmitterTabListeners(emitterName)
   }
 
@@ -207,15 +212,17 @@ export default class ParticleEditorView {
     $('#' + emitterName + 'TabEye')
       .on('click', this.onEmitterTabNestedButtonClick.bind(this, emitterName, this.onTurnEmitterOnOff, null))
     $('#' + emitterName + 'Field').on('change', this.onEmitterTabNestedButtonClick.bind(this, emitterName, this.onEmitterRename, null))
-    $('#' + emitterName + 'Span').on('click', e => {
-      this.tabButtonTargetName = emitterName
-      if (this.tabButtonTargetName !== this.targetEmitterName) { return }
-      $('#' + emitterName + 'Field').prop('disabled', false)
-    })
+    $('#' + emitterName + 'Span').on('click', this.onEmitterTabNestedButtonClick.bind(this, emitterName, this.onEmitterEdit, null))
     $('#' + emitterName + 'Field').on('focusout', e => {
       $('#' + e.target.id).prop('disabled', true)
       this.onEmitterTabNestedButtonClick.bind(this, emitterName, this.onEmitterRename, null)
     })
+    $('#' + emitterName + 'Rename')
+      .on('click',
+        this.onEmitterTabNestedButtonClick.bind(this, emitterName, null, this.onEmitterTabNestedButtonClick.bind(this, emitterName, this.onEmitterEdit), null))
+    $('#' + emitterName + 'Duplicate')
+      .on('click',
+        this.onEmitterTabNestedButtonClick.bind(this, emitterName, null, this.onEmitterTabNestedButtonClick.bind(this, emitterName, this.onEmitterDuplicate, null)))
     $('#' + emitterName + 'Trash')
       .on('click',
         this.onEmitterTabNestedButtonClick.bind(this, emitterName, null, this.updateRemoveEmitterModalText.bind(this)))
@@ -228,6 +235,8 @@ export default class ParticleEditorView {
     $('#' + emitterName + 'Field').off('change')
     $('#' + emitterName + 'Span').off('click')
     $('#' + emitterName + 'Field').off('focusout')
+    $('#' + emitterName + 'Rename').off('click')
+    $('#' + emitterName + 'Duplicate').off('click')
     $('#' + emitterName + 'Trash').off('click')
   }
 
@@ -241,23 +250,19 @@ export default class ParticleEditorView {
     $('#' + nameOld + 'Field').attr('id', nameNew + 'Field')
     $('#' + nameOld + 'Field').val(nameNew)
     $('#' + nameOld + 'TabEye').attr('id', nameNew + 'TabEye')
+    $('#' + nameOld + 'Edit').attr('id', nameNew + 'Edit')
+    $('#' + nameOld + 'Duplicate').attr('id', nameNew + 'Duplicate')
     $('#' + nameOld + 'Trash').attr('id', nameNew + 'Trash')
-    console.log($('#' + nameNew).attr('id'))
-    console.log($('#' + nameNew + 'Li').attr('id'))
-    console.log($('#' + nameNew + 'Span').attr('id'))
-    console.log($('#' + nameNew + 'Field').attr('id'))
-    console.log($('#' + nameNew + 'Field').val())
-    console.log($('#' + nameNew + 'TabEye').attr('id'))
-    console.log($('#' + nameNew + 'Trash').attr('id'))
+    $('#' + nameOld + 'Dropdown').attr('id', nameNew + 'Dropdown')
     this.setEmitterTabListeners(nameNew)
   }
 
   onEmitterTabChange (target) {
+    $('#' + this.targetEmitterName + 'Dropdown').prop('disabled', true)
     this.targetEmitterName = target
     this.toggleScaleMode()
     this.toggleFlow()
     this.toggleExplode()
-    this.setActiveEmitter(target)
     this.onEmitterChange.dispatch()
   }
 
@@ -275,8 +280,11 @@ export default class ParticleEditorView {
   }
 
   setActiveEmitter (emitterName) {
-    this.targetEmitterName = emitterName
-    $('#' + emitterName).tab('show')
+    if (emitterName) {
+      this.targetEmitterName = emitterName
+    }
+    $('#' + this.targetEmitterName + 'Dropdown').prop('disabled', false)
+    $('#' + this.targetEmitterName).tab('show')
   }
 
   onCreateEmitterButtonClick (eventToDispatch) {
@@ -413,5 +421,11 @@ export default class ParticleEditorView {
     $('#createProjectName').val(properties.name)
     $('#sandboxHeight').val(properties.height)
     $('#sandboxWidth').val(properties.width)
+  }
+
+  editEmitterTabName (emitterName) {
+    if (this.tabButtonTargetName !== this.targetEmitterName) { return }
+    $('#' + emitterName + 'Field').prop('disabled', false)
+    $('#' + emitterName + 'Field').focus()
   }
 }

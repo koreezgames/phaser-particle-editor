@@ -428,8 +428,10 @@ export default class ParticleEditorView {
 
   // Setters
 
-  setProjectName (name) {
-    $('#projectName').val(name)
+  setValues (vo) {
+    $('#projectName').val(vo.name)
+    console.log(vo)
+    $('#canvasBGColorInput').val(vo.bgColor)
   }
 
   showControls () {

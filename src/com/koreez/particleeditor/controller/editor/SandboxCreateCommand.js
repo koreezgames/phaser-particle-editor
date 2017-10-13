@@ -10,6 +10,7 @@ export default class SandboxCreateCommand extends EditorPropertyChangeCommand {
     const name = body.name
     const height = body.height
     const width = body.width
+    const color = body.color || '#000000'
     if (!(name && width && height) && !file) {
       super.execute(notification)
       return
@@ -25,7 +26,8 @@ export default class SandboxCreateCommand extends EditorPropertyChangeCommand {
       const config = {
         name: name,
         height: height,
-        width: width
+        width: width,
+        bgColor: color
       }
       this.createSandbox(config)
     }

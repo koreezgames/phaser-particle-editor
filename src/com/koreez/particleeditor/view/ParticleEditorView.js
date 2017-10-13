@@ -188,8 +188,8 @@ export default class ParticleEditorView {
     $('#addEmitterButtonLi').before(
       `<li id="${emitterName}Li" class="nav-item">
          <a id="${emitterName}" class="nav-link" data-toggle="tab" href="#emitterContent" role="tab">
-           <span id="${emitterName}Span"><input id="${emitterName}Field" type="text" class="pureInput" value="${emitterName}"
-           oninput="this.style.width = ((this.value.length) * 8) + 'px';" disabled ></span>
+           <input id="${emitterName}Field" type="text" class="pureInput" value="${emitterName}"
+           oninput="this.style.width = ((this.value.length) * 8) + 'px';" disabled >
            <span class="tabButtons"><span class="fa fa-eye" id="${emitterName}TabEye"></span>
          <span class="nav-tab-icons-divider">|</span>
          <div class="dropdown nav-tab-dropdown"> 
@@ -203,19 +203,23 @@ export default class ParticleEditorView {
          </div>
         </a>
       </li>`)
-    this.targetEmitterName = emitterName
     this.setEmitterTabListeners(emitterName)
+    this.setActiveEmitter(emitterName)
   }
 
   setEmitterTabListeners (emitterName) {
-    $('#' + emitterName + '').on('click', this.onEmitterTabChange.bind(this, emitterName))
+    $('#' + emitterName + '').on('click', () => {
+      if (emitterName !== this.targetEmitterName) {
+        this.onEmitterTabChange(emitterName)
+      }
+    })
+    // $('#' + emitterName + '').on('click', this.onEmitterTabChange.bind(this, emitterName))
     $('#' + emitterName + 'TabEye')
       .on('click', this.onEmitterTabNestedButtonClick.bind(this, emitterName, this.onTurnEmitterOnOff, null))
     $('#' + emitterName + 'Field').on('change', this.onEmitterTabNestedButtonClick.bind(this, emitterName, this.onEmitterRename, null))
-    $('#' + emitterName + 'Span').on('click', this.onEmitterTabNestedButtonClick.bind(this, emitterName, this.onEmitterEdit, null))
-    $('#' + emitterName + 'Field').on('focusout', e => {
-      $('#' + e.target.id).prop('disabled', true)
-      this.onEmitterTabNestedButtonClick.bind(this, emitterName, this.onEmitterRename, null)
+    $('#' + emitterName + 'Field').on('focusout', () => {
+      $('#' + emitterName + 'Field').prop('disabled', true)
+      this.onEditorPropertyValueChange.bind(this, this.onEmitterRename)
     })
     $('#' + emitterName + 'Rename')
       .on('click',
@@ -229,6 +233,14 @@ export default class ParticleEditorView {
         $('#' + emitterName + 'Dropdown').attr('aria-expanded', false)
         return false
       })
+    $('#' + emitterName + 'Dropdown').on('click', () => {
+      if (this.targetEmitterName !== this.tabButtonTargetName) {
+        $('.dropdown').removeClass('show')
+        $('.dropdown-menu').removeClass('show')
+        $('#' + emitterName + 'Dropdown').attr('aria-expanded', false)
+        return false
+      }
+    })
     $('#' + emitterName + 'Trash')
       .on('click',
         this.onEmitterTabNestedButtonClick.bind(this, emitterName, null, this.updateRemoveEmitterModalText.bind(this)))
@@ -252,7 +264,6 @@ export default class ParticleEditorView {
     this.removeEmitterTabListeners(nameOld)
     $('#' + nameOld).attr('id', nameNew)
     $('#' + nameOld + 'Li').attr('id', nameNew + 'Li')
-    $('#' + nameOld + 'Span').attr('id', nameNew + 'Span')
     $('#' + nameOld + 'Field').attr('id', nameNew + 'Field')
     $('#' + nameOld + 'Field').val(nameNew)
     $('#' + nameOld + 'TabEye').attr('id', nameNew + 'TabEye')
@@ -264,11 +275,8 @@ export default class ParticleEditorView {
   }
 
   onEmitterTabChange (target) {
-    $('#' + this.targetEmitterName + 'Dropdown').prop('disabled', true)
+    this.disableTabButons()
     this.targetEmitterName = target
-    this.toggleScaleMode()
-    this.toggleFlow()
-    this.toggleExplode()
     this.onEmitterChange.dispatch()
   }
 
@@ -286,10 +294,15 @@ export default class ParticleEditorView {
   }
 
   setActiveEmitter (emitterName) {
+    this.disableTabButons()
     if (emitterName) {
       this.targetEmitterName = emitterName
+      this.tabButtonTargetName = emitterName
     }
-    $('#' + this.targetEmitterName + 'Dropdown').prop('disabled', false)
+    this.toggleScaleMode()
+    this.toggleFlow()
+    this.toggleExplode()
+    this.enableTabButtons(emitterName)
     $('#' + this.targetEmitterName).tab('show')
   }
 
@@ -433,5 +446,14 @@ export default class ParticleEditorView {
     if (this.tabButtonTargetName !== this.targetEmitterName) { return }
     $('#' + emitterName + 'Field').prop('disabled', false)
     $('#' + emitterName + 'Field').focus()
+  }
+  disableTabButons () {
+    $('#' + this.targetEmitterName + 'Dropdown').prop('disabled', true)
+    $('#' + this.targetEmitterName + 'TabEye').prop('disabled', true)
+  }
+
+  enableTabButtons (emitterName) {
+    $('#' + emitterName + 'Dropdown').prop('disabled', false)
+    $('#' + emitterName + 'TabEye').prop('disabled', false)
   }
 }

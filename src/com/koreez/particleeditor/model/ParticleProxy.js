@@ -42,7 +42,10 @@ export default class ParticleProxy extends Proxy {
   }
 
   duplicateEmitter (name) {
-    const duplicateName = name + 'Copy'
+    let duplicateName = name + 'Copy'
+    while (this.isEmitterNameExist(duplicateName)) {
+      duplicateName += 'Copy'
+    }
     if (!this._internalDuplicateEmitter(name, duplicateName)) {
       return
     }
@@ -50,9 +53,13 @@ export default class ParticleProxy extends Proxy {
     this.changeCurrentEmitter(duplicateName)
   }
 
-  _internalDuplicateEmitter (name, newName) {
-    if (this.isEmitterNameExist(newName)) {
-      return false
+  _internalDuplicateEmitter (name, newName, force = false) {
+    while (this.isEmitterNameExist(newName)) {
+      if (force) {
+        newName += 'Copy'
+      } else {
+        return false
+      }
     }
     const duplicateEmitter = Object.assign({}, this.vo.emitters[name])
     duplicateEmitter[newName] = duplicateEmitter[name]

@@ -7,6 +7,7 @@ export default class RenameEmitterCommand extends SimpleCommand {
     const oldName = info.oldName
     const newName = info.newName
     this.proxy.renameEmitter(oldName, newName)
+    window.sandbox.cache.removeImage(oldName)
   }
   get proxy () {
     return this.facade.retrieveProxy(ParticleProxy.NAME)

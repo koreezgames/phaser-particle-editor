@@ -11,6 +11,7 @@ export default class ParticleEditorView {
   static CHOSE_EMITTERS = ParticleEditorView.NAME + 'EmittersChose'
   static CHANGE_PROJECT_NAME = ParticleEditorView.NAME + 'ProjectNameChange'
   static ADD_EMITTER = ParticleEditorView.NAME + 'EmitterAdd'
+  static DUPLICATE_EMITTER = ParticleEditorView.NAME + 'EmitterDuplicate'
   static RENAME_EMITTER = ParticleEditorView.NAME + 'EmitterRename'
   static REMOVE_EMITTER = ParticleEditorView.NAME + 'EmitterRemove'
   static CHANGE_EMITTER = ParticleEditorView.NAME + 'EmitterChange'
@@ -29,6 +30,8 @@ export default class ParticleEditorView {
     this.onCreateSandbox = new Phaser.Signal()
     this.onEmitterAdd = new Phaser.Signal()
     this.onEmitterRename = new Phaser.Signal()
+    this.onEmitterEdit = new Phaser.Signal()
+    this.onEmitterDuplicate = new Phaser.Signal()
     this.onEmitterChange = new Phaser.Signal()
     this.onEmitterRemove = new Phaser.Signal()
     this.onTurnEmitterOnOff = new Phaser.Signal()
@@ -154,6 +157,8 @@ export default class ParticleEditorView {
   }
 
   clearCreateTabFields () {
+    $('#projectChoose').val(null)
+    $('#modalProjectInfo').hide()
     $('#createCanvasModalButtonOK').text('Create')
   }
 
@@ -182,30 +187,59 @@ export default class ParticleEditorView {
   addEmitterTab (emitterName) {
     $('#addEmitterButtonLi').before(
       `<li id="${emitterName}Li" class="nav-item">
-        <a id="${emitterName}" class="nav-link" data-toggle="tab" href="#emitterContent" role="tab">
-         <span id="${emitterName}Span"><input id="${emitterName}Field" type="text" class="pureInput" value="${emitterName}"
-         oninput="this.style.width = ((this.value.length) * 8) + 'px';" disabled ></span>
-         <i class="tabButtons"><i class="fa fa-eye" id="${emitterName}TabEye"></i>
-         <i class="tabButtons"><i class="fa fa-trash-o" id="${emitterName}Trash"></i>
+         <a id="${emitterName}" class="nav-link" data-toggle="tab" href="#emitterContent" role="tab">
+           <input id="${emitterName}Field" type="text" class="pureInput" value="${emitterName}"
+           oninput="this.style.width = ((this.value.length) * 8) + 'px';" disabled >
+           <span class="tabButtons"><span class="fa fa-eye" id="${emitterName}TabEye"></span>
+         <span class="nav-tab-icons-divider">|</span>
+         <div class="dropdown nav-tab-dropdown"> 
+          <button class="btn fa fa-ellipsis-v nav-tab-dropdown-btn" id="${emitterName}Dropdown" data-toggle="dropdown" aria-expanded="false">
+        </button>
+          <div class="dropdown-menu">
+          <i class="dropdown-item fa fa-trash-o tabButtons" id="${emitterName}Trash" aria-hidden="true"><span>delete</span></i>
+          <i class="dropdown-item fa fa-edit tabButtons" id="${emitterName}Rename" aria-hidden="true"><span>rename</span></i>
+          <i class="dropdown-item fa fa-copy tabButtons" id="${emitterName}Duplicate" aria-hidden="true"><span>duplicate</span></i>
+          </div>
+         </div>
         </a>
-        </li>`)
-    this.onEmitterTabChange(emitterName)
+      </li>`)
     this.setEmitterTabListeners(emitterName)
+    this.setActiveEmitter(emitterName)
   }
 
   setEmitterTabListeners (emitterName) {
-    $('#' + emitterName + '').on('click', this.onEmitterTabChange.bind(this, emitterName))
+    $('#' + emitterName + '').on('click', () => {
+      if (emitterName !== this.targetEmitterName) {
+        this.onEmitterTabChange(emitterName)
+      }
+    })
+    // $('#' + emitterName + '').on('click', this.onEmitterTabChange.bind(this, emitterName))
     $('#' + emitterName + 'TabEye')
       .on('click', this.onEmitterTabNestedButtonClick.bind(this, emitterName, this.onTurnEmitterOnOff, null))
     $('#' + emitterName + 'Field').on('change', this.onEmitterTabNestedButtonClick.bind(this, emitterName, this.onEmitterRename, null))
-    $('#' + emitterName + 'Span').on('click', e => {
-      this.tabButtonTargetName = emitterName
-      if (this.tabButtonTargetName !== this.targetEmitterName) { return }
-      $('#' + emitterName + 'Field').prop('disabled', false)
+    $('#' + emitterName + 'Field').on('focusout', () => {
+      $('#' + emitterName + 'Field').prop('disabled', true)
+      this.onEditorPropertyValueChange.bind(this, this.onEmitterRename)
     })
-    $('#' + emitterName + 'Field').on('focusout', e => {
-      $('#' + e.target.id).prop('disabled', true)
-      this.onEmitterTabNestedButtonClick.bind(this, emitterName, this.onEmitterRename, null)
+    $('#' + emitterName + 'Rename')
+      .on('click',
+        this.onEmitterTabNestedButtonClick.bind(this, emitterName, null, this.onEmitterTabNestedButtonClick.bind(this, emitterName, this.onEmitterEdit), null))
+    $('#' + emitterName + 'Duplicate')
+      .on('click',
+        this.onEmitterTabNestedButtonClick.bind(this, emitterName, null, this.onEmitterTabNestedButtonClick.bind(this, emitterName, this.onEmitterDuplicate, null)))
+      .on('click', () => {
+        $('.dropdown').removeClass('show')
+        $('.dropdown-menu').removeClass('show')
+        $('#' + emitterName + 'Dropdown').attr('aria-expanded', false)
+        return false
+      })
+    $('#' + emitterName + 'Dropdown').on('click', () => {
+      if (this.targetEmitterName !== this.tabButtonTargetName) {
+        $('.dropdown').removeClass('show')
+        $('.dropdown-menu').removeClass('show')
+        $('#' + emitterName + 'Dropdown').attr('aria-expanded', false)
+        return false
+      }
     })
     $('#' + emitterName + 'Trash')
       .on('click',
@@ -219,6 +253,8 @@ export default class ParticleEditorView {
     $('#' + emitterName + 'Field').off('change')
     $('#' + emitterName + 'Span').off('click')
     $('#' + emitterName + 'Field').off('focusout')
+    $('#' + emitterName + 'Rename').off('click')
+    $('#' + emitterName + 'Duplicate').off('click')
     $('#' + emitterName + 'Trash').off('click')
   }
 
@@ -228,27 +264,19 @@ export default class ParticleEditorView {
     this.removeEmitterTabListeners(nameOld)
     $('#' + nameOld).attr('id', nameNew)
     $('#' + nameOld + 'Li').attr('id', nameNew + 'Li')
-    $('#' + nameOld + 'Span').attr('id', nameNew + 'Span')
     $('#' + nameOld + 'Field').attr('id', nameNew + 'Field')
     $('#' + nameOld + 'Field').val(nameNew)
     $('#' + nameOld + 'TabEye').attr('id', nameNew + 'TabEye')
+    $('#' + nameOld + 'Edit').attr('id', nameNew + 'Edit')
+    $('#' + nameOld + 'Duplicate').attr('id', nameNew + 'Duplicate')
     $('#' + nameOld + 'Trash').attr('id', nameNew + 'Trash')
-    console.log($('#' + nameNew).attr('id'))
-    console.log($('#' + nameNew + 'Li').attr('id'))
-    console.log($('#' + nameNew + 'Span').attr('id'))
-    console.log($('#' + nameNew + 'Field').attr('id'))
-    console.log($('#' + nameNew + 'Field').val())
-    console.log($('#' + nameNew + 'TabEye').attr('id'))
-    console.log($('#' + nameNew + 'Trash').attr('id'))
+    $('#' + nameOld + 'Dropdown').attr('id', nameNew + 'Dropdown')
     this.setEmitterTabListeners(nameNew)
   }
 
   onEmitterTabChange (target) {
+    this.disableTabButons()
     this.targetEmitterName = target
-    this.toggleScaleMode()
-    this.toggleFlow()
-    this.toggleExplode()
-    this.setActiveEmitter(target)
     this.onEmitterChange.dispatch()
   }
 
@@ -266,8 +294,16 @@ export default class ParticleEditorView {
   }
 
   setActiveEmitter (emitterName) {
-    this.targetEmitterName = emitterName
-    $('#' + emitterName).tab('show')
+    this.disableTabButons()
+    if (emitterName) {
+      this.targetEmitterName = emitterName
+      this.tabButtonTargetName = emitterName
+    }
+    this.toggleScaleMode()
+    this.toggleFlow()
+    this.toggleExplode()
+    this.enableTabButtons(emitterName)
+    $('#' + this.targetEmitterName).tab('show')
   }
 
   onCreateEmitterButtonClick (eventToDispatch) {
@@ -404,5 +440,20 @@ export default class ParticleEditorView {
     $('#createProjectName').val(properties.name)
     $('#sandboxHeight').val(properties.height)
     $('#sandboxWidth').val(properties.width)
+  }
+
+  editEmitterTabName (emitterName) {
+    if (this.tabButtonTargetName !== this.targetEmitterName) { return }
+    $('#' + emitterName + 'Field').prop('disabled', false)
+    $('#' + emitterName + 'Field').focus()
+  }
+  disableTabButons () {
+    $('#' + this.targetEmitterName + 'Dropdown').prop('disabled', true)
+    $('#' + this.targetEmitterName + 'TabEye').prop('disabled', true)
+  }
+
+  enableTabButtons (emitterName) {
+    $('#' + emitterName + 'Dropdown').prop('disabled', false)
+    $('#' + emitterName + 'TabEye').prop('disabled', false)
   }
 }

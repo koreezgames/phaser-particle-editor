@@ -7,7 +7,7 @@ export default class ParticleProxy extends Proxy {
   static PROPERTY_CHANGE = ParticleProxy.NAME + 'PropertyChange'
   static OPTION_CHANGE = ParticleProxy.NAME + 'OptionChange'
   static EMITTER_ADD = ParticleProxy.NAME + 'EmitterAdd'
-  static EMITTER_CURRENT_CHANGE = ParticleProxy.NAME + 'EmitterChange'
+  static CURRENT_EMITTER_CHANGE = ParticleProxy.NAME + 'CurrentEmitterChange'
   static EMITTER_RENAME = ParticleProxy.NAME + 'EmitterRename'
   static EMITTER_REMOVE = ParticleProxy.NAME + 'EmitterRemove'
   static EMITTER_IMAGE_CHANGE = ParticleProxy.NAME + 'EmitterImageChange'
@@ -25,10 +25,11 @@ export default class ParticleProxy extends Proxy {
   changeCurrentEmitter (emitterName) {
     this.currentEmitter = this.vo.emitters[emitterName]
     this.currentEmitterName = emitterName
+    this.sendChangedCurrentEmitter(emitterName)
   }
 
   addEmitter (name, properties) {
-    if (!this.isNotExist(name)) {
+    if (this.isEmitterNameExist(name)) {
       return
     }
     if (!properties) {
@@ -40,13 +41,40 @@ export default class ParticleProxy extends Proxy {
     this.changeCurrentEmitter(name)
   }
 
+  duplicateEmitter (name) {
+    let duplicateName = name + 'Copy'
+    while (this.isEmitterNameExist(duplicateName)) {
+      duplicateName += 'Copy'
+    }
+    if (!this._internalDuplicateEmitter(name, duplicateName)) {
+      return
+    }
+    this.sendAddEmitterNotification(duplicateName)
+    this.changeCurrentEmitter(duplicateName)
+  }
+
+  _internalDuplicateEmitter (name, newName, force = false) {
+    while (this.isEmitterNameExist(newName)) {
+      if (force) {
+        newName += 'Copy'
+      } else {
+        return false
+      }
+    }
+    const duplicateEmitter = Object.assign({}, this.vo.emitters[name])
+    duplicateEmitter[newName] = duplicateEmitter[name]
+    delete duplicateEmitter[name]
+    this.vo.emitters[newName] = duplicateEmitter
+    return true
+  }
+
   renameEmitter (nameOld, nameNew) {
-    this.vo.emitters[nameOld][nameNew] = this.vo.emitters[nameOld][nameOld]
-    delete this.vo.emitters[nameOld][nameOld]
-    this.vo.emitters[nameNew] = this.vo.emitters[nameOld]
+    if (!this._internalDuplicateEmitter(nameOld, nameNew)) {
+      return
+    }
     delete this.vo.emitters[nameOld]
-    this.changeCurrentEmitter(nameNew)
     this.sendRenameNotification(nameOld, nameNew)
+    this.changeCurrentEmitter(nameNew)
   }
 
   getCurrentEmitter () {
@@ -222,12 +250,17 @@ export default class ParticleProxy extends Proxy {
   sendPropertyChangeNotification () {
     this.sendNotification(ParticleProxy.PROPERTY_CHANGE, this.currentEmitterName)
   }
+
   sendInternalDataCHangeNotification () {
     this.sendNotification(ParticleProxy.INTERNAL_DATA_CHANGE, this.currentEmitterName)
   }
 
   sendAddEmitterNotification (emitterName) {
     this.sendNotification(ParticleProxy.EMITTER_ADD, emitterName)
+  }
+
+  sendChangedCurrentEmitter (emitterName) {
+    this.sendNotification(ParticleProxy.CURRENT_EMITTER_CHANGE, emitterName)
   }
 
   sendRenameNotification (oldName, newName) {
@@ -250,12 +283,7 @@ export default class ParticleProxy extends Proxy {
     this.sendNotification(ParticleProxy.EMITTER_IMAGE_CHANGE, this.currentEmitterName)
   }
 
-  isNotExist (emitterName) {
-    for (let name in this.vo.emitters) {
-      if (emitterName === name) {
-        return false
-      }
-    }
-    return true
+  isEmitterNameExist (emitterName) {
+    return this.vo.emitters.hasOwnProperty(emitterName)
   }
 }

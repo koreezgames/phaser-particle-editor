@@ -1,6 +1,6 @@
 {
   "name": "phaser-particle-editor",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "description": "This tool helps to create phaser particle effects visually",
   "author": "Koreez LLC <hello@koreez.com>",
   "main": "index.js",

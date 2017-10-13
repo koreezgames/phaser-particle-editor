@@ -223,6 +223,12 @@ export default class ParticleEditorView {
     $('#' + emitterName + 'Duplicate')
       .on('click',
         this.onEmitterTabNestedButtonClick.bind(this, emitterName, null, this.onEmitterTabNestedButtonClick.bind(this, emitterName, this.onEmitterDuplicate, null)))
+      .on('click', () => {
+        $('.dropdown').removeClass('show')
+        $('.dropdown-menu').removeClass('show')
+        $('#' + emitterName + 'Dropdown').attr('aria-expanded', false)
+        return false
+      })
     $('#' + emitterName + 'Trash')
       .on('click',
         this.onEmitterTabNestedButtonClick.bind(this, emitterName, null, this.updateRemoveEmitterModalText.bind(this)))

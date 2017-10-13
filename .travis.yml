@@ -4,7 +4,7 @@ deploy:
   provider: firebase
   skip_cleanup: true
   on:
-    branch: master
+    tags: true
   token:
     secure: dQWEDBq2W8j5szO8mzs/p8abbEtykmQM7AOQc+43de9tculBIM1AH2KouWORd3iOtg80QJgFQjKNVZ3BabnNFyH4XIfo9dg+G1uctSU645S9Dg4+POmnyAAnxVe1iKqnj/e2I6Z7FFrfmEHKn1oSVTLvBglgTCNG2SkwuA2tnZO1h/+hUUXEYnJTrK/IvvX3xc17u6ZlOqfQwS4ZM1TYUVUVWlTPsRfKM2rlT569jUdGhFQxWw3vSkDR2t7CWI+gQPAM9GNJUUlchyiMjtI5AFWzx6zOUXLEIlK1yZelTfbg8GnZgwYAl8I2xegrJaLRMV6SouqyEVWHGIM/UY2XZagC+awLPcszwkT3BoTzw9CQ8zvCQG0nMuPbjfjCjw+X3LnKJWyGkXYTYQSYiFDAOxHvOv9InyJQ0CHNgsIDRcQ7f3e/OH/C9tkRqaT3yrWQXR4pPpuFqpEPqnxoONhWA6H2DYdsjtvSNCFuOnQxkOwtFwPyCXsIBfxV0NDko8Y2WkPea2tiJlyW7dXGYmBS0Puw4ktzQuEcm2q786DfivMMZn5udWZBwdAhYNYR6p26DILzyKrS0x6HoaZFejeolpcD8FTv+EDI6Ba5SOF6/tGJMvQgs5kcPIp6XNhlwMbRioJX/5duXQt/F21EH+Zi1AUBkQsHGH6IieaVmblfcg0=
 script:

@@ -305,6 +305,7 @@ export default class ParticleEditorView {
     this.toggleScaleMode()
     this.toggleFlow()
     this.toggleExplode()
+    this.toggleColorSection()
     this.enableTabButtons(emitterName)
     $('#' + this.targetEmitterName).tab('show')
   }
@@ -376,6 +377,16 @@ export default class ParticleEditorView {
       quantity.prop('disabled', true)
       immediate.prop('disabled', true)
     }
+  }
+
+  toggleColorSection () {
+    const  status = $('#colorStatus').prop('checked')
+    $('#startColor').prop('disabled', !status)
+    $('#endColor').prop('disabled', !status)
+    $('#colorEasing').prop('disabled', !status)
+    $('#colorEasingMode').prop('disabled', !status)
+    $('#colorDelay').prop('disabled', !status)
+    $('#colorRate').prop('disabled', !status)
   }
 
   toggleExplode () {

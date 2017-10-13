@@ -241,6 +241,11 @@ export default class ParticleProxy extends Proxy {
     obj[`${key}${ease}`] = property.ease
   }
 
+  changeColorStatus () {
+    this.currentEmitter.particleArguments.colorStatus = !this.currentEmitter.particleArguments.colorStatus
+    this.sendOptionChangeNotification()
+  }
+
   changeColor (color) {
     if (!this.currentEmitter.particleArguments.hasOwnProperty('color')) {
       this.currentEmitter.particleArguments.color = {}

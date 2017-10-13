@@ -24,6 +24,7 @@ export default class ParticleEmitterView {
   static ROTATION_CHANGE = ParticleEmitterView.NAME + 'RotationChange'
   static SPEED_CHANGE = ParticleEmitterView.NAME + 'SpeedChange'
   static ALPHA_CHANGE = ParticleEmitterView.NAME + 'AlphaChange'
+  static COLOR_STATUS_CHANGE = ParticleEmitterView.NAME + 'ColorStatusChange'
   static COLOR_CHANGE = ParticleEmitterView.NAME + 'ColorChange'
 
   constructor () {
@@ -72,6 +73,7 @@ export default class ParticleEmitterView {
     this.onAlphaYoyoChange = new Phaser.Signal()
     this.onStartColorChange = new Phaser.Signal()
     this.onEndColorChange = new Phaser.Signal()
+    this.onColorStatusChange = new Phaser.Signal()
     this.onColorEaseChange = new Phaser.Signal()
     this.onColorEaseModeChange = new Phaser.Signal()
     this.onColorDelayChange = new Phaser.Signal()
@@ -320,6 +322,8 @@ export default class ParticleEmitterView {
       .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onAlphaYoyoChange))
 
     this._color = {}
+    this._color.colorStatus = $('#colorStatus')
+      .on('click', this.onEmitterPropertyValueChange.bind(this, this.onColorStatusChange))
     this._color.start = $('#startColor')
       .on('change', () => { this.onEmitterPropertyValueChange.bind(this, this.onStartColorChange) })
     this._color.end = $('#endColor')
@@ -380,6 +384,7 @@ export default class ParticleEmitterView {
     this._alpha.easeMode.text(currentEmitter.alphaEaseMode)
     this._alpha.rate.val(currentEmitter.alphaRate)
     this._alpha.yoyo.val(currentEmitter.alphaYoyo)
+    this._color.colorStatus.prop('checked', currentEmitter.particleArguments.colorStatus)
     const color = currentEmitter.particleArguments.color
     if (color) {
       let startColor = Phaser.Color.RGBtoString(color.start.r, color.start.g, color.start.b)
@@ -391,8 +396,8 @@ export default class ParticleEmitterView {
       this._color.delay.val(color.delay)
       this._color.rate.val(color.rate)
     } else {
-      $('#startColorDiv').colorpicker()
-      $('#endColorDiv').colorpicker()
+      $('#startColorDiv').colorpicker('setValue', '#ffffff')
+      $('#endColorDiv').colorpicker('setValue', '#ffffff')
     }
 
     $('#particleImagePreview').css('background-image', 'url(' + currentEmitter[currentEmitterName] + ')')

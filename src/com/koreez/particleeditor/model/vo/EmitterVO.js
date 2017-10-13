@@ -32,14 +32,6 @@ export default class EmitterVO {
     this.alphaEaseMode = 'None'
     this.alphaYoyo = false
     this.particleArguments = {
-      color: {
-        start: {r: 255, g: 0, b: 0},
-        end: {r: 255, g: 0, b: 255},
-        ease: 'Linear',
-        easeMode: 'None',
-        delay: 0,
-        rate: 5000
-      }
     }
     this.rotationMin = -360
     this.rotationMax = 360

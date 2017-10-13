@@ -73,7 +73,7 @@ export default class ParticleEditorViewMediator extends Mediator {
         this.facade.registerMediator(new SandboxStateMediator())
         this.particleEditorView.hideCreateSandboxModal()
         this.particleEditorView.showControls()
-        this.particleEditorView.setProjectName(notification.getBody().name)
+        this.particleEditorView.setValues(notification.getBody())
         this.particleEditorView.setInputMinimalWidth()
         break
       case ParticleEditorView.SHOW_OPENED_PROJECT_INFO:

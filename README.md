@@ -1,5 +1,5 @@
 # Phaser Particle Editor
-[![Build Status](https://travis-ci.org/koreezgames/phaser-particle-editor.svg?branch=dev)](https://travis-ci.org/koreezgames/phaser-particle-editor)  [![Project status](https://img.shields.io/badge/status-active-brightgreen.svg)](#status) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal@koreez.com&lc=US&item_name=Koreez%20LLC&no_note=0&currency_code=USD&bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest)
+[![Build Status](https://travis-ci.org/koreezgames/phaser-particle-editor.svg?branch=master)](https://travis-ci.org/koreezgames/phaser-particle-editor)  [![Project status](https://img.shields.io/badge/status-active-brightgreen.svg)](#status) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal@koreez.com&lc=US&item_name=Koreez%20LLC&no_note=0&currency_code=USD&bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest)
 
 This tool helps to create phaser particle effects visually. 
 

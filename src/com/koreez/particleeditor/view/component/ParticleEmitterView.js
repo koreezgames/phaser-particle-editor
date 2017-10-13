@@ -384,7 +384,7 @@ export default class ParticleEmitterView {
     this._alpha.easeMode.text(currentEmitter.alphaEaseMode)
     this._alpha.rate.val(currentEmitter.alphaRate)
     this._alpha.yoyo.val(currentEmitter.alphaYoyo)
-    this._color.colorStatus.prop('checked', currentEmitter.particleArguments.colorStatus)
+    this._color.colorStatus.prop('checked', currentEmitter.particleArguments.colorEnabled)
     const color = currentEmitter.particleArguments.color
     if (color) {
       let startColor = Phaser.Color.RGBtoString(color.start.r, color.start.g, color.start.b)

@@ -242,7 +242,7 @@ export default class ParticleProxy extends Proxy {
   }
 
   changeColorStatus () {
-    this.currentEmitter.particleArguments.colorStatus = !this.currentEmitter.particleArguments.colorStatus
+    this.currentEmitter.particleArguments.colorEnabled = !this.currentEmitter.particleArguments.colorEnabled
     this.sendOptionChangeNotification()
   }
 

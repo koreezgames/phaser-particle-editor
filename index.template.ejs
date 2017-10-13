@@ -538,6 +538,92 @@
                                     </fieldset>
                                     <fieldset class="option-group-fieldset">
                                         <legend class="option-group-title">
+                                            <span>Color</span>
+                                        </legend>
+                                        <div class="row">
+                                            <div class="col-md-6 option">
+                                                <div class="input-group input-group-sm">
+                                                    <span class="input-group-addon">start</span>
+                                                    <div id="startColorDiv"
+                                                         class="input-group input-group-sm colorpicker-component">
+                                                        <input id="startColor" type="text" class="form-control"
+                                                               title="">
+                                                        <span class="input-group-addon">
+                                                        <i></i>
+                                                </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 option">
+                                                <div class="input-group input-group-sm">
+                                                    <span class="input-group-addon">end</span>
+                                                    <div id="endColorDiv"
+                                                         class="input-group input-group-sm colorpicker-component">
+                                                        <input id="endColor" type="text" class="form-control"
+                                                               title="">
+                                                        <span class="input-group-addon">
+                                                        <i></i>
+                                                </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <fieldset class="option-group-fieldset option-group-nested-fieldset">
+                                            <legend class="option-group-title">
+                                                <span>Easing</span>
+                                            </legend>
+                                            <div class="row">
+                                                <div class="col-md-6 option">
+                                                    <div class="dropdown" id="colorEasingDropdown">
+                                                        <a class="btn btn-secondary btn-sm dropdown-toggle form-control"
+                                                           id="colorEasing" data-toggle="dropdown"
+                                                           aria-expanded="false">Easing</a>
+                                                        <div class="dropdown-menu" aria-labelledby="alphaEasing">
+                                                            <a class="dropdown-item">Back</a>
+                                                            <a class="dropdown-item">Bounce</a>
+                                                            <a class="dropdown-item">Circular</a>
+                                                            <a class="dropdown-item">Cubic</a>
+                                                            <a class="dropdown-item">Elastic</a>
+                                                            <a class="dropdown-item">Exponential</a>
+                                                            <a class="dropdown-item">Linear</a>
+                                                            <a class="dropdown-item">Quadratic</a>
+                                                            <a class="dropdown-item">Quartic</a>
+                                                            <a class="dropdown-item">Quintic</a>
+                                                            <a class="dropdown-item">Sinusoidal</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 option">
+                                                    <div class="dropdown" id="colorEasingModeDropdown">
+                                                        <a class="btn btn-secondary btn-sm dropdown-toggle form-control"
+                                                           id="colorEasingMode" data-toggle="dropdown"
+                                                           aria-expanded="false">Mode</a>
+                                                        <div class="dropdown-menu" aria-labelledby="colorEasingMode">
+                                                            <a class="dropdown-item">In</a>
+                                                            <a class="dropdown-item">Out</a>
+                                                            <a class="dropdown-item">InOut</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 option">
+                                                    <div class="input-group input-group-sm">
+                                                        <span class="input-group-addon">Delay</span>
+                                                        <input id="colorDelay" type="number" class="form-control"
+                                                               placeholder="delay">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 option">
+                                                    <div class="input-group input-group-sm">
+                                                        <span class="input-group-addon">Rate</span>
+                                                        <input id="colorRate" type="number" class="form-control"
+                                                               placeholder="rate" value="0">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </fieldset>
+                                    <fieldset class="option-group-fieldset">
+                                        <legend class="option-group-title">
                                             <span>Image</span>
                                         </legend>
                                         <div class="row">
@@ -619,10 +705,10 @@
                                             <span class="input-group-addon">BG Color</span>
                                             <div id="canvasBgColorDiv"
                                                  class="input-group input-group-sm colorpicker-component">
-                                                <input id="canvasBGColorInput" type="text" class="form-control">
+                                                <input id="canvasBGColorInput" type="text" class="form-control" >
                                                 <span class="input-group-addon">
                                                         <i></i>
-                                                    </span>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>

@@ -3,6 +3,10 @@ $(function () {
     format: 'hex',
     color: '#000000'
   })
+  $('#startColorDiv, #endColorDiv').colorpicker({
+    format: 'hex',
+    color: '#000000'
+  })
 
   $('#emittersTabsGroup').find('a:first').tab('show')
 

@@ -22,6 +22,7 @@ import FlowChangeCommand from './emitter/FlowChangeCommand'
 import CollideChangeCommand from './emitter/CollideChangeCommand'
 import ImmediateChangeCommand from './emitter/ImmediateChangeCommand'
 import MaxParticlesChangeCommand from './emitter/MaxParticlesChangeCommand'
+import ColorChangeCommand from './emitter/ColorChangeCommand'
 
 export default class RegisterEmitterCommands extends SimpleCommand {
   execute (notification) {
@@ -41,6 +42,7 @@ export default class RegisterEmitterCommands extends SimpleCommand {
     this.facade.registerCommand(ParticleEmitterView.ROTATION_CHANGE, RotationChangeCommand)
     this.facade.registerCommand(ParticleEmitterView.SPEED_CHANGE, SpeedChangeCommand)
     this.facade.registerCommand(ParticleEmitterView.ALPHA_CHANGE, AlphaChangeCommand)
+    this.facade.registerCommand(ParticleEmitterView.COLOR_CHANGE, ColorChangeCommand)
     this.facade.registerCommand(ParticleEmitterView.EXPLODE_CHANGE, ExplodeChangeCommand)
     this.facade.registerCommand(ParticleEmitterView.QUANTITY_CHANGE, QuantityChangeCommand)
     this.facade.registerCommand(ParticleEmitterView.TOTAL_CHANGE, TotalChangeCommand)

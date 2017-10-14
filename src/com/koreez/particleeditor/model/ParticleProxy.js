@@ -167,7 +167,7 @@ export default class ParticleProxy extends Proxy {
     } else {
       this.currentEmitter.total = this.currentEmitter.total === -1 ? 0 : this.currentEmitter.total
     }
-    this.sendInternalDataCHangeNotification()
+    this.sendInternalDataChangeNotification()
     this.sendOptionChangeNotification()
   }
 
@@ -200,15 +200,7 @@ export default class ParticleProxy extends Proxy {
     this.currentEmitter.scaleToY = Number.parseFloat(scale.toY)
     this.currentEmitter.scaleRate = Number.parseFloat(scale.rate)
     this.currentEmitter.scaleYoyo = Boolean(scale.yoyo)
-    if (scale.ease !== 'Easing' && scale.easeMode !== 'Mode') {
-      if (scale.ease !== 'Linear') {
-        this.currentEmitter.scaleEase = scale.ease
-        this.currentEmitter.scaleEaseMode = scale.easeMode
-      } else {
-        this.currentEmitter.scaleEase = scale.ease
-        this.currentEmitter.scaleEaseMode = 'None'
-      }
-    }
+    this.setEasing(this.currentEmitter, scale, 'scale')
     this.sendPropertyChangeNotification()
   }
 
@@ -230,17 +222,40 @@ export default class ParticleProxy extends Proxy {
     this.currentEmitter.alphaMin = Number.parseFloat(alpha.min)
     this.currentEmitter.alphaMax = Number.parseFloat(alpha.max)
     this.currentEmitter.alphaRate = Number.parseFloat(alpha.rate)
-    if (alpha.ease !== 'Easing' && alpha.easeMode !== 'Mode') {
-      if (alpha.ease !== 'Linear') {
-        this.currentEmitter.alphaEase = alpha.ease
-        this.currentEmitter.alphaEaseMode = alpha.easeMode
-      } else {
-        this.currentEmitter.alphaEase = alpha.ease
-        this.currentEmitter.alphaEaseMode = 'None'
-      }
-    }
+    this.setEasing(this.currentEmitter, alpha, 'alpha')
     this.currentEmitter.alphaYoyo = Boolean(alpha.yoyo)
     this.sendPropertyChangeNotification()
+  }
+
+  setEasing (obj, property, key) {
+    if (property.ease !== 'Easing' && property.easeMode !== 'Mode') {
+      if (property.ease === 'Linear') {
+        property.easeMode = 'None'
+      }
+    } else {
+      property.ease = 'Linear'
+      property.easeMode = 'None'
+    }
+    const ease = key === '' ? 'ease' : 'Ease'
+    obj[`${key}${ease}Mode`] = property.easeMode
+    obj[`${key}${ease}`] = property.ease
+  }
+
+  changeColorStatus () {
+    this.currentEmitter.particleArguments.colorEnabled = !this.currentEmitter.particleArguments.colorEnabled
+    this.sendOptionChangeNotification()
+  }
+
+  changeColor (color) {
+    if (!this.currentEmitter.particleArguments.hasOwnProperty('color')) {
+      this.currentEmitter.particleArguments.color = {}
+    }
+    this.currentEmitter.particleArguments.color.start = Phaser.Color.hexToColor(color.start)
+    this.currentEmitter.particleArguments.color.end = Phaser.Color.hexToColor(color.end)
+    this.setEasing(this.currentEmitter.particleArguments.color, color, '')
+    this.currentEmitter.particleArguments.color.delay = Number.parseFloat(color.delay)
+    this.currentEmitter.particleArguments.color.rate = Number.parseFloat(color.rate)
+    this.sendOptionChangeNotification()
   }
 
   sendOptionChangeNotification () {
@@ -250,8 +265,7 @@ export default class ParticleProxy extends Proxy {
   sendPropertyChangeNotification () {
     this.sendNotification(ParticleProxy.PROPERTY_CHANGE, this.currentEmitterName)
   }
-
-  sendInternalDataCHangeNotification () {
+  sendInternalDataChangeNotification () {
     this.sendNotification(ParticleProxy.INTERNAL_DATA_CHANGE, this.currentEmitterName)
   }
 

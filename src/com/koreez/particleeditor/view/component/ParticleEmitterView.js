@@ -24,6 +24,8 @@ export default class ParticleEmitterView {
   static ROTATION_CHANGE = ParticleEmitterView.NAME + 'RotationChange'
   static SPEED_CHANGE = ParticleEmitterView.NAME + 'SpeedChange'
   static ALPHA_CHANGE = ParticleEmitterView.NAME + 'AlphaChange'
+  static COLOR_STATUS_CHANGE = ParticleEmitterView.NAME + 'ColorStatusChange'
+  static COLOR_CHANGE = ParticleEmitterView.NAME + 'ColorChange'
 
   constructor () {
     this.onParticleImageChange = new Phaser.Signal()
@@ -69,6 +71,13 @@ export default class ParticleEmitterView {
     this.onAlphaEaseModeChange = new Phaser.Signal()
     this.onAlphaRateChange = new Phaser.Signal()
     this.onAlphaYoyoChange = new Phaser.Signal()
+    this.onStartColorChange = new Phaser.Signal()
+    this.onEndColorChange = new Phaser.Signal()
+    this.onColorStatusChange = new Phaser.Signal()
+    this.onColorEaseChange = new Phaser.Signal()
+    this.onColorEaseModeChange = new Phaser.Signal()
+    this.onColorDelayChange = new Phaser.Signal()
+    this.onColorRateChange = new Phaser.Signal()
     this.initProperties()
   }
 
@@ -195,6 +204,17 @@ export default class ParticleEmitterView {
     }
   }
 
+  get color () {
+    return {
+      start: this._color.start.val(),
+      end: this._color.end.val(),
+      ease: this._color.ease.text(),
+      easeMode: this._color.easeMode.text(),
+      delay: this._color.delay.val(),
+      rate: this._color.rate.val()
+    }
+  }
+
   initProperties () {
     this.temp = 1
     this._particleImage = $('#particleImageBrowser')
@@ -270,6 +290,7 @@ export default class ParticleEmitterView {
     $('#scaleEasingDropdown').on('hidden.bs.dropdown', this.onEmitterPropertyValueChange.bind(this, this.onScaleEaseChange))
     this._scale.easeMode = $('#scaleEasingMode')
     $('#scaleEasingModeDropdown').on('hidden.bs.dropdown', this.onEmitterPropertyValueChange.bind(this, this.onScaleEaseModeChange))
+
     this._rotation = {}
     this._rotation.min = $('#rotationMin')
       .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onRotationMinChange))
@@ -285,6 +306,7 @@ export default class ParticleEmitterView {
       .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onMaxSpeedXChange))
     this._speed.maxY = $('#maxSpeedY')
       .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onMaxSpeedyChange))
+
     this._alpha = {}
     this._alpha.min = $('#alphaMin')
       .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onAlphaMinChange))
@@ -298,6 +320,22 @@ export default class ParticleEmitterView {
       .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onAlphaRateChange))
     this._alpha.yoyo = $('#alphaYoyo')
       .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onAlphaYoyoChange))
+
+    this._color = {}
+    this._color.colorStatus = $('#colorStatus')
+      .on('click', this.onEmitterPropertyValueChange.bind(this, this.onColorStatusChange))
+    this._color.start = $('#startColor')
+      .on('change', () => { this.onEmitterPropertyValueChange.bind(this, this.onStartColorChange) })
+    this._color.end = $('#endColor')
+      .on('change', () => { this.onEmitterPropertyValueChange.bind(this, this.onEndColorChange) })
+    this._color.ease = $('#colorEasing')
+    $('#colorEasingDropdown').on('hidden.bs.dropdown', this.onEmitterPropertyValueChange.bind(this, this.onColorEaseChange))
+    this._color.easeMode = $('#colorEasingMode')
+    $('#colorEasingModeDropdown').on('hidden.bs.dropdown', this.onEmitterPropertyValueChange.bind(this, this.onColorEaseModeChange))
+    this._color.delay = $('#colorDelay')
+      .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onColorDelayChange))
+    this._color.rate = $('#colorRate')
+      .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onColorRateChange))
   }
 
   onEmitterPropertyValueChange (eventToDispatch, event) {
@@ -332,8 +370,8 @@ export default class ParticleEmitterView {
     this._scale.toY.val(currentEmitter.scaleToY)
     this._scale.rate.val(currentEmitter.scaleRate)
     this._scale.yoyo.val(currentEmitter.yoyo)
-    this._scale.ease.val(currentEmitter.ease)
-    this._scale.easeMode.val(currentEmitter.easeMode)
+    this._scale.ease.text(currentEmitter.scaleEase)
+    this._scale.easeMode.text(currentEmitter.scaleEaseMode)
     this._rotation.min.val(currentEmitter.rotationMin)
     this._rotation.max.val(currentEmitter.rotationMax)
     this._speed.minX.val(currentEmitter.minSpeedX)
@@ -342,10 +380,26 @@ export default class ParticleEmitterView {
     this._speed.maxY.val(currentEmitter.maxSpeedY)
     this._alpha.min.val(currentEmitter.alphaMin)
     this._alpha.max.val(currentEmitter.alphaMax)
-    this._alpha.ease.val(currentEmitter.alphaEase)
-    this._alpha.easeMode.val(currentEmitter.alphaEaseMode)
+    this._alpha.ease.text(currentEmitter.alphaEase)
+    this._alpha.easeMode.text(currentEmitter.alphaEaseMode)
     this._alpha.rate.val(currentEmitter.alphaRate)
     this._alpha.yoyo.val(currentEmitter.alphaYoyo)
+    this._color.colorStatus.prop('checked', currentEmitter.particleArguments.colorEnabled)
+    const color = currentEmitter.particleArguments.color
+    if (color) {
+      let startColor = Phaser.Color.RGBtoString(color.start.r, color.start.g, color.start.b)
+      let endColor = Phaser.Color.RGBtoString(color.end.r, color.end.g, color.end.b)
+      $('#startColorDiv').colorpicker('setValue', startColor)
+      $('#endColorDiv').colorpicker('setValue', endColor)
+      this._color.ease.text(color.ease)
+      this._color.easeMode.text(color.easeMode)
+      this._color.delay.val(color.delay)
+      this._color.rate.val(color.rate)
+    } else {
+      $('#startColorDiv').colorpicker('setValue', '#ffffff')
+      $('#endColorDiv').colorpicker('setValue', '#ffffff')
+    }
+
     $('#particleImagePreview').css('background-image', 'url(' + currentEmitter[currentEmitterName] + ')')
   }
 }

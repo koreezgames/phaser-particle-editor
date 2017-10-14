@@ -32,6 +32,7 @@ export default class ParticleEditorViewMediator extends Mediator {
       ParticleProxy.CURRENT_EMITTER_CHANGE,
       SandboxState.STATE_READY,
       ParticleEmitterView.SCALE_TYPE_CHANGE,
+      ParticleEmitterView.COLOR_STATUS_CHANGE,
       ParticleEmitterView.EXPLODE_CHANGE,
       ParticleEmitterView.FLOW_CHANGE,
       ParticleEditorView.SHOW_OPENED_PROJECT_INFO
@@ -115,6 +116,9 @@ export default class ParticleEditorViewMediator extends Mediator {
         break
       case ParticleEmitterView.SCALE_TYPE_CHANGE:
         this.particleEditorView.toggleScaleMode()
+        break
+      case ParticleEmitterView.COLOR_STATUS_CHANGE:
+        this.particleEditorView.toggleColorSection()
         break
       case ParticleEmitterView.FLOW_CHANGE:
         this.particleEditorView.toggleFlow()

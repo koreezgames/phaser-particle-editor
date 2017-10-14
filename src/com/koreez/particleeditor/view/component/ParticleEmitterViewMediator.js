@@ -70,6 +70,14 @@ export default class ParticleEmitterViewMediator extends Mediator {
     this.particleEmitterView.onAlphaRateChange.add(this.onAlphaChange, this)
     this.particleEmitterView.onAlphaYoyoChange.add(this.onAlphaChange, this)
 
+    this.particleEmitterView.onColorStatusChange.add(this.onColorStatusChange, this)
+    this.particleEmitterView.onStartColorChange.add(this.onColorChange, this)
+    this.particleEmitterView.onEndColorChange.add(this.onColorChange, this)
+    this.particleEmitterView.onColorEaseChange.add(this.onColorChange, this)
+    this.particleEmitterView.onColorEaseModeChange.add(this.onColorChange, this)
+    this.particleEmitterView.onColorDelayChange.add(this.onColorChange, this)
+    this.particleEmitterView.onColorRateChange.add(this.onColorChange, this)
+
     const particleProxy = this.facade.retrieveProxy(ParticleProxy.NAME)
     this.particleEmitterView.setValues(particleProxy.getCurrentEmitterName(), particleProxy.getCurrentEmitter())
   }
@@ -166,6 +174,14 @@ export default class ParticleEmitterViewMediator extends Mediator {
 
   onAlphaChange () {
     this.sendNotification(ParticleEmitterView.ALPHA_CHANGE, this.particleEmitterView.alpha)
+  }
+
+  onColorStatusChange () {
+    this.sendNotification(ParticleEmitterView.COLOR_STATUS_CHANGE)
+  }
+
+  onColorChange () {
+    this.sendNotification(ParticleEmitterView.COLOR_CHANGE, this.particleEmitterView.color)
   }
 
   listNotificationInterests () {

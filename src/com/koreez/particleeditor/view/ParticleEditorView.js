@@ -128,7 +128,7 @@ export default class ParticleEditorView {
     $('#createEmitterModalButtonOK').on('click', this.onCreateEmitterButtonClick.bind(this, this.onEmitterAdd))
     $('#projectName').on('change', this.onEditorPropertyValueChange.bind(this, this.onProjectNameChange))
     this._bgColor = $('#canvasBGColorInput')
-      .on('change', this.onEditorPropertyValueChange.bind(this, this.onBgColorChange))
+      .on('change', () => { this.onEditorPropertyValueChange.bind(this, this.onBgColorChange) })
     this._bgImage = $('#canvasBgImage').on('change', this.onEditorPropertyValueChange.bind(this, this.onBgImageChange))
     $('#removeBgImage').on('click', this.onEditorPropertyValueChange.bind(this, this.onBgImageRemove))
     $('#sandboxContainer').on('click', this.onEditorPropertyValueChange.bind(this, this.onMouseClick))
@@ -292,6 +292,9 @@ export default class ParticleEditorView {
       callback()
     }
   }
+  f () {
+    $('#ur').val($('#vortexic').text())
+  }
 
   setActiveEmitter (emitterName) {
     this.disableTabButons()
@@ -302,6 +305,7 @@ export default class ParticleEditorView {
     this.toggleScaleMode()
     this.toggleFlow()
     this.toggleExplode()
+    this.toggleColorSection()
     this.enableTabButtons(emitterName)
     $('#' + this.targetEmitterName).tab('show')
   }
@@ -375,6 +379,16 @@ export default class ParticleEditorView {
     }
   }
 
+  toggleColorSection () {
+    const  status = $('#colorStatus').prop('checked')
+    $('#startColor').prop('disabled', !status)
+    $('#endColor').prop('disabled', !status)
+    $('#colorEasing').prop('disabled', !status)
+    $('#colorEasingMode').prop('disabled', !status)
+    $('#colorDelay').prop('disabled', !status)
+    $('#colorRate').prop('disabled', !status)
+  }
+
   toggleExplode () {
     const explodeStatus = $('#explode').prop('checked')
     const flow = $('#flow')
@@ -431,7 +445,7 @@ export default class ParticleEditorView {
   setValues (vo) {
     $('#projectName').val(vo.name)
     console.log(vo)
-    $('#canvasBGColorInput').val(vo.bgColor)
+    $('#canvasBGColorInputDiv').colorpicker('setValue', vo.bgColor)
   }
 
   showControls () {

@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import { setColorpickerValueWithoutTriggeringChangeEvent } from '../utils/utils'
 
 export default class ParticleEditorView {
   static NAME = 'ParticleEditorView'
@@ -52,7 +53,7 @@ export default class ParticleEditorView {
   }
 
   get bgColor () {
-    return this._bgColor.val()
+    return this._bgColor.colorpicker('getValue')
   }
 
   get bgImage () {
@@ -128,7 +129,7 @@ export default class ParticleEditorView {
     $('#createEmitterModalButtonOK').on('click', this.onCreateEmitterButtonClick.bind(this, this.onEmitterAdd))
     $('#projectName').on('change', this.onEditorPropertyValueChange.bind(this, this.onProjectNameChange))
     this._bgColor = $('#canvasBGColorInput')
-      .on('change', () => { this.onEditorPropertyValueChange.bind(this, this.onBgColorChange) })
+      .colorpicker().on('changeColor', this.onEditorPropertyValueChange.bind(this, this.onBgColorChange))
     this._bgImage = $('#canvasBgImage').on('change', this.onEditorPropertyValueChange.bind(this, this.onBgImageChange))
     $('#removeBgImage').on('click', this.onEditorPropertyValueChange.bind(this, this.onBgImageRemove))
     $('#sandboxContainer').on('click', this.onEditorPropertyValueChange.bind(this, this.onMouseClick))
@@ -389,8 +390,7 @@ export default class ParticleEditorView {
 
   setValues (vo) {
     $('#projectName').val(vo.name)
-    console.log(vo)
-    $('#canvasBGColorInputDiv').colorpicker('setValue', vo.bgColor)
+    setColorpickerValueWithoutTriggeringChangeEvent(this._bgColor, vo.bgColor)
   }
 
   showControls () {

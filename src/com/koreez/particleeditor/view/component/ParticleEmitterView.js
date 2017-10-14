@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import { setColorpickerValueWithoutTriggeringChangeEvent } from '../../utils/utils'
 
 export default class ParticleEmitterView {
   static NAME = 'ParticleEmitterView'
@@ -204,6 +205,10 @@ export default class ParticleEmitterView {
     }
   }
 
+  get colorStatus () {
+    return this._color.status.prop('checked')
+  }
+
   get color () {
     return {
       start: this._color.start.colorpicker('getValue'),
@@ -216,7 +221,6 @@ export default class ParticleEmitterView {
   }
 
   initProperties () {
-    this.temp = 1
     this._particleImage = $('#particleImageBrowser')
       .on('change', this.onEmitterPropertyValueChange.bind(this, this.onParticleImageChange))
     this._dimension = {}
@@ -326,12 +330,12 @@ export default class ParticleEmitterView {
       .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onAlphaYoyoChange))
 
     this._color = {}
-    this._color.colorStatus = $('#colorStatus')
+    this._color.status = $('#colorStatus')
       .on('click', this.onEmitterPropertyValueChange.bind(this, this.onColorStatusChange))
     this._color.start = $('#startColor')
-      .on('changeColor', () => { this.onEmitterPropertyValueChange.bind(this, this.onStartColorChange) })
+      .colorpicker().on('changeColor', this.onEmitterPropertyValueChange.bind(this, this.onStartColorChange))
     this._color.end = $('#endColor')
-      .on('changeColor', () => { this.onEmitterPropertyValueChange.bind(this, this.onEndColorChange) })
+      .colorpicker().on('changeColor', this.onEmitterPropertyValueChange.bind(this, this.onEndColorChange))
     this._color.ease = $('#colorEasing')
     $('#colorEasingDropdown')
       .on('hidden.bs.dropdown', this.onEmitterPropertyValueChange.bind(this, this.onColorEaseChange))
@@ -390,21 +394,21 @@ export default class ParticleEmitterView {
     this._alpha.easeMode.text(currentEmitter.alphaEaseMode)
     this._alpha.rate.val(currentEmitter.alphaRate)
     this._alpha.yoyo.val(currentEmitter.alphaYoyo)
-    this._color.colorStatus.prop('checked', currentEmitter.particleArguments.colorEnabled)
+    this._color.status.prop('checked', currentEmitter.particleArguments.color !== undefined)
     this._quantity.prop('disabled', true)
     const color = currentEmitter.particleArguments.color
     if (color) {
       const startColor = Phaser.Color.RGBtoString(color.start.r, color.start.g, color.start.b)
       const endColor = Phaser.Color.RGBtoString(color.end.r, color.end.g, color.end.b)
-      $('#startColor').colorpicker('setValue', startColor)
-      $('#endColor').colorpicker('setValue', endColor)
+      setColorpickerValueWithoutTriggeringChangeEvent(this._color.start, startColor)
+      setColorpickerValueWithoutTriggeringChangeEvent(this._color.end, endColor)
       this._color.ease.text(color.ease)
       this._color.easeMode.text(color.easeMode)
       this._color.delay.val(color.delay)
       this._color.rate.val(color.rate)
     } else {
-      $('#startColor').colorpicker('setValue', '#00ff0b')
-      $('#endColor').colorpicker('setValue', '#0003ff')
+      setColorpickerValueWithoutTriggeringChangeEvent(this._color.start, '#00ff0b')
+      setColorpickerValueWithoutTriggeringChangeEvent(this._color.end, '#ec00ff')
     }
     $('#particleImagePreview').css('background-image', `url(${currentEmitter[currentEmitterName]})`)
     this.toggleScaleMode()
@@ -428,7 +432,7 @@ export default class ParticleEmitterView {
   }
 
   toggleColorSection () {
-    const status = this._color.colorStatus.prop('checked')
+    const status = this._color.status.prop('checked')
     this._color.start.colorpicker(status ? 'enable' : 'disable')
     this._color.end.colorpicker(status ? 'enable' : 'disable')
     this._color.ease.prop('disabled', !status)
@@ -438,7 +442,6 @@ export default class ParticleEmitterView {
   }
 
   toggleFlow () {
-    console.error('toggleFlow')
     const flowStatus = this._flow.prop('checked')
     this._immediate.prop('disabled', !flowStatus)
     this._quantity.prop('disabled', !flowStatus)

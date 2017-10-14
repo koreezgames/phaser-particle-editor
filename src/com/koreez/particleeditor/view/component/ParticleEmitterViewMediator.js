@@ -177,7 +177,8 @@ export default class ParticleEmitterViewMediator extends Mediator {
   }
 
   onColorStatusChange () {
-    this.sendNotification(ParticleEmitterView.COLOR_STATUS_CHANGE)
+    this.sendNotification(ParticleEmitterView.COLOR_STATUS_CHANGE,
+      {status: this.particleEmitterView.colorStatus, color: this.particleEmitterView.color})
   }
 
   onColorChange () {

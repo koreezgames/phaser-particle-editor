@@ -9,7 +9,7 @@ export default class EmitterVO {
     this.maxParticles = 50
     this.frames = 1
     this.quantity = 1
-    this.total = -1
+    this.total = 0
     this.immediate = true
     this.collide = false
     this.collideWorldBounds = false

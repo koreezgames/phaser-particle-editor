@@ -1,6 +1,7 @@
 import { Proxy } from 'pure-mvc'
 import ParticleVO from './vo/ParticleVO'
 import EmitterVO from './vo/EmitterVO'
+import Phaser from 'phaser'
 
 export default class ParticleProxy extends Proxy {
   static NAME = 'ParticleProxy'
@@ -126,6 +127,7 @@ export default class ParticleProxy extends Proxy {
 
   changeScaleType () {
     this.currentEmitter.proportional = !this.currentEmitter.proportional
+    this.sendInternalDataChangeNotification()
     this.sendOptionChangeNotification()
   }
 
@@ -141,7 +143,14 @@ export default class ParticleProxy extends Proxy {
   }
 
   changeExplode (status) {
+    this.currentEmitter.total = this.currentEmitter.total === 0 || this.currentEmitter.total === -1
+      ? this.currentEmitter.maxParticles
+      : this.currentEmitter.total
     this.currentEmitter.explode = status
+    if (status) {
+      this.currentEmitter.flow = false
+    }
+    this.sendInternalDataChangeNotification()
     this.sendOptionChangeNotification()
   }
 
@@ -152,6 +161,16 @@ export default class ParticleProxy extends Proxy {
 
   changeTotal (total) {
     this.currentEmitter.total = Number.parseFloat(total)
+    if (!this.currentEmitter.explode && !this.currentEmitter.flow && this.currentEmitter.total < 0) {
+      this.currentEmitter.total = 0
+      this.sendInternalDataChangeNotification()
+    } else if (this.currentEmitter.explode && this.currentEmitter.total < 0) {
+      this.currentEmitter.total = Math.abs(this.currentEmitter.total)
+      this.sendInternalDataChangeNotification()
+    } else if (this.currentEmitter && this.currentEmitter.total < -1) {
+      this.currentEmitter.total = -1
+      this.sendInternalDataChangeNotification()
+    }
     this.sendOptionChangeNotification()
   }
 
@@ -164,6 +183,7 @@ export default class ParticleProxy extends Proxy {
     this.currentEmitter.flow = flow
     if (flow) {
       this.currentEmitter.total = this.currentEmitter.total === 0 ? -1 : this.currentEmitter.total
+      this.currentEmitter.explode = false
     } else {
       this.currentEmitter.total = this.currentEmitter.total === -1 ? 0 : this.currentEmitter.total
     }
@@ -243,6 +263,7 @@ export default class ParticleProxy extends Proxy {
 
   changeColorStatus () {
     this.currentEmitter.particleArguments.colorEnabled = !this.currentEmitter.particleArguments.colorEnabled
+    this.sendInternalDataChangeNotification()
     this.sendOptionChangeNotification()
   }
 
@@ -265,6 +286,7 @@ export default class ParticleProxy extends Proxy {
   sendPropertyChangeNotification () {
     this.sendNotification(ParticleProxy.PROPERTY_CHANGE, this.currentEmitterName)
   }
+
   sendInternalDataChangeNotification () {
     this.sendNotification(ParticleProxy.INTERNAL_DATA_CHANGE, this.currentEmitterName)
   }

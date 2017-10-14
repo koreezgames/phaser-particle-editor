@@ -31,10 +31,6 @@ export default class ParticleEditorViewMediator extends Mediator {
       ParticleProxy.PROPERTY_CHANGE,
       ParticleProxy.CURRENT_EMITTER_CHANGE,
       SandboxState.STATE_READY,
-      ParticleEmitterView.SCALE_TYPE_CHANGE,
-      ParticleEmitterView.COLOR_STATUS_CHANGE,
-      ParticleEmitterView.EXPLODE_CHANGE,
-      ParticleEmitterView.FLOW_CHANGE,
       ParticleEditorView.SHOW_OPENED_PROJECT_INFO
     ]
   }
@@ -113,18 +109,6 @@ export default class ParticleEditorViewMediator extends Mediator {
         const name = notification.getBody()
         const vo = this.facade.retrieveProxy(ParticleProxy.NAME).getData()
         this.particleEditorView.setEmitterTabEyeIcon(name, vo.emitters[name].enabled)
-        break
-      case ParticleEmitterView.SCALE_TYPE_CHANGE:
-        this.particleEditorView.toggleScaleMode()
-        break
-      case ParticleEmitterView.COLOR_STATUS_CHANGE:
-        this.particleEditorView.toggleColorSection()
-        break
-      case ParticleEmitterView.FLOW_CHANGE:
-        this.particleEditorView.toggleFlow()
-        break
-      case ParticleEmitterView.EXPLODE_CHANGE:
-        this.particleEditorView.toggleExplode()
         break
     }
   }

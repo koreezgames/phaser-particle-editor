@@ -22,6 +22,8 @@ export default class ParticleEditorView {
   static REMOVE_BG_IMAGE = ParticleEditorView.NAME + 'BgImageRemove'
   static DOWNLOAD_JSON = ParticleEditorView.NAME + 'DownloadJSON'
 
+  static SANDBOX_DEFAULT_COLOR = '#4e4e4e'
+
   constructor () {
     this.tabButtonTargetName = null
     this.targetEmitterName = null

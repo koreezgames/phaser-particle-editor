@@ -1,8 +1,7 @@
-import {Mediator} from 'pure-mvc'
+import { Mediator } from 'pure-mvc'
 import ParticleEditorView from './ParticleEditorView'
 import ParticleEmitterViewMediator from './component/ParticleEmitterViewMediator'
 import ParticleProxy from '../model/ParticleProxy'
-import ParticleEmitterView from './component/ParticleEmitterView'
 import EditorProxy from '../model/EditorProxy'
 import SandboxStateMediator from './sandbox/state/SandboxStateMediator'
 import SandboxState from './sandbox/state/SandboxState'
@@ -112,6 +111,7 @@ export default class ParticleEditorViewMediator extends Mediator {
         break
     }
   }
+
   onProjectChoose () {
     this.sendNotification(ParticleEditorView.CHOSE_PROJECT, this.particleEditorView.choseProject)
   }
@@ -125,7 +125,8 @@ export default class ParticleEditorViewMediator extends Mediator {
       file: this.particleEditorView.choseProject,
       name: this.particleEditorView.createProjectName,
       height: this.particleEditorView.sandboxHeight,
-      width: this.particleEditorView.sandboxWidth
+      width: this.particleEditorView.sandboxWidth,
+      color: ParticleEditorView.SANDBOX_DEFAULT_COLOR
     })
     this.particleEditorView.setInputMinimalWidth()
   }
@@ -164,6 +165,7 @@ export default class ParticleEditorViewMediator extends Mediator {
   onEmitterEdit () {
     this.particleEditorView.editEmitterTabName(this.particleEditorView.tabButtonTargetName)
   }
+
   onEmitterRename () {
     this.sendNotification(ParticleEditorView.RENAME_EMITTER, {
       oldName: this.particleEditorView.targetEmitterName,

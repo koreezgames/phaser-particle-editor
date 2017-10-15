@@ -252,38 +252,9 @@
                                         <legend class="option-group-title">
                                             <span>Scale</span>
                                         </legend>
-                                        <div class="col-md-12 option">
-                                            <div class="input-group">
-                                                <label class="custom-control custom-checkbox">
-                                                    <input id="proportionalScale" type="checkbox"
-                                                           class="custom-control-input">
-                                                    <span class="custom-control-indicator"></span>
-                                                    <span class="custom-control-description">Proportional</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <fieldset class="option-group-fieldset option-group-nested-fieldset">
-                                            <legend class="option-group-title">Proportional</legend>
-                                            <div class="row">
-                                                <div class="col-md-6 option">
-                                                    <div class="input-group input-group-sm">
-                                                        <span class="input-group-addon">Min</span>
-                                                        <input id="minScale" type="number" class="form-control"
-                                                               placeholder="min" step="0.1">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 option">
-                                                    <div class="input-group  input-group-sm">
-                                                        <span class="input-group-addon">Max</span>
-                                                        <input id="maxScale" type="number" class="form-control"
-                                                               placeholder="max" step="0.1">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </fieldset>
                                         <fieldset class="option-group-fieldset option-group-nested-fieldset">
                                             <legend class="option-group-title">
-                                                <span>Disproportional</span>
+                                                <span>Specific</span>
                                             </legend>
                                             <fieldset class="option-group-fieldset option-group-nested-fieldset">
                                                 <legend class="option-group-title">
@@ -385,6 +356,35 @@
                                                     </div>
                                                 </div>
                                             </fieldset>
+                                        </fieldset>
+                                        <div class="col-md-12 option">
+                                            <div class="input-group">
+                                                <label class="custom-control custom-checkbox">
+                                                    <input id="randomScale" type="checkbox"
+                                                           class="custom-control-input">
+                                                    <span class="custom-control-indicator"></span>
+                                                    <span class="custom-control-description">Random</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <fieldset class="option-group-fieldset option-group-nested-fieldset">
+                                            <legend class="option-group-title">Random</legend>
+                                            <div class="row">
+                                                <div class="col-md-6 option">
+                                                    <div class="input-group input-group-sm">
+                                                        <span class="input-group-addon">Min</span>
+                                                        <input id="minScale" type="number" class="form-control"
+                                                               placeholder="min" step="0.1">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 option">
+                                                    <div class="input-group  input-group-sm">
+                                                        <span class="input-group-addon">Max</span>
+                                                        <input id="maxScale" type="number" class="form-control"
+                                                               placeholder="max" step="0.1">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </fieldset>
                                     </fieldset>
                                     <fieldset class="option-group-fieldset">
@@ -626,16 +626,16 @@
                                                 </div>
                                                 <div class="col-md-6 option">
                                                     <div class="input-group input-group-sm">
-                                                        <span class="input-group-addon">Delay</span>
-                                                        <input id="colorDelay" type="number" class="form-control"
-                                                               placeholder="delay" value="0">
+                                                        <span class="input-group-addon">Rate</span>
+                                                        <input id="colorRate" type="number" class="form-control"
+                                                               placeholder="rate" value="1500">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 option">
                                                     <div class="input-group input-group-sm">
-                                                        <span class="input-group-addon">Rate</span>
-                                                        <input id="colorRate" type="number" class="form-control"
-                                                               placeholder="rate" value="1400">
+                                                        <span class="input-group-addon">Delay</span>
+                                                        <input id="colorDelay" type="number" class="form-control"
+                                                               placeholder="delay" value="0">
                                                     </div>
                                                 </div>
                                             </div>

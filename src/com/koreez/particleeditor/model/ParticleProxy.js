@@ -2,6 +2,7 @@ import { Proxy } from 'pure-mvc'
 import ParticleVO from './vo/ParticleVO'
 import EmitterVO from './vo/EmitterVO'
 import Phaser from 'phaser'
+import NestedProperty from 'nested-property'
 
 export default class ParticleProxy extends Proxy {
   static NAME = 'ParticleProxy'
@@ -126,7 +127,7 @@ export default class ParticleProxy extends Proxy {
   }
 
   changeScaleType () {
-    this.currentEmitter.proportional = !this.currentEmitter.proportional
+    this.currentEmitter.randomScale = !this.currentEmitter.randomScale
     this.sendInternalDataChangeNotification()
     this.sendOptionChangeNotification()
   }
@@ -207,21 +208,37 @@ export default class ParticleProxy extends Proxy {
   }
 
   // --End Options--
-  changeScaleProportional (scale) {
+  changeRandomScale (scale) {
     this.currentEmitter.minScale = Number.parseFloat(scale.min)
     this.currentEmitter.maxScale = Number.parseFloat(scale.max)
     this.sendPropertyChangeNotification()
   }
 
-  changeScaleDisproportional (scale) {
+  changeScale (scale) {
     this.currentEmitter.scaleFromX = Number.parseFloat(scale.fromX)
     this.currentEmitter.scaleFromY = Number.parseFloat(scale.fromY)
     this.currentEmitter.scaleToX = Number.parseFloat(scale.toX)
     this.currentEmitter.scaleToY = Number.parseFloat(scale.toY)
-    this.currentEmitter.scaleRate = Number.parseFloat(scale.rate)
     this.currentEmitter.scaleYoyo = Boolean(scale.yoyo)
-    this.setEasing(this.currentEmitter, scale, 'scale')
+    this.adjustEasing(scale, 'scaleEase')
+    if (this.adjustRate(scale.rate, 'scaleRate')) {
+      this.sendInternalDataChangeNotification()
+    }
     this.sendPropertyChangeNotification()
+  }
+
+  adjustRate (rateString, propertyName) {
+    let rate = Number.parseFloat(rateString)
+    if (rate < 0) {
+      NestedProperty.set(this.currentEmitter, propertyName, 0)
+      return true
+    }
+    if (rate > 0 && rate < 20) {
+      NestedProperty.set(this.currentEmitter, propertyName, 20)
+      return true
+    }
+    NestedProperty.set(this.currentEmitter, propertyName, rate)
+    return false
   }
 
   changeRotation (rotation) {
@@ -241,9 +258,11 @@ export default class ParticleProxy extends Proxy {
   changeAlpha (alpha) {
     this.currentEmitter.alphaMin = Number.parseFloat(alpha.min)
     this.currentEmitter.alphaMax = Number.parseFloat(alpha.max)
-    this.currentEmitter.alphaRate = Number.parseFloat(alpha.rate)
-    this.setEasing(this.currentEmitter, alpha, 'alpha')
+    this.adjustEasing(alpha, 'alphaEase')
     this.currentEmitter.alphaYoyo = Boolean(alpha.yoyo)
+    if (this.adjustRate(alpha.rate, 'alphaRate')) {
+      this.sendInternalDataChangeNotification()
+    }
     this.sendPropertyChangeNotification()
   }
 
@@ -252,20 +271,19 @@ export default class ParticleProxy extends Proxy {
     this.sendPropertyChangeNotification()
   }
 
-  setEasing (obj, property, key) {
-    const cleanEase = property.ease.replace(/[\n\r]/g, '').trim()
-    const cleanEaseMode = property.easeMode.replace(/[\n\r]/g, '').trim()
+  adjustEasing (easeArguments, key) {
+    const cleanEase = easeArguments.ease.replace(/[\n\r]/g, '').trim()
+    const cleanEaseMode = easeArguments.easeMode.replace(/[\n\r]/g, '').trim()
     if (cleanEase !== 'Easing' && cleanEaseMode !== 'Mode') {
-      if (property.ease === 'Linear') {
-        property.easeMode = 'None'
+      if (easeArguments.ease === 'Linear') {
+        easeArguments.easeMode = 'None'
       }
     } else {
-      property.ease = 'Linear'
-      property.easeMode = 'None'
+      easeArguments.ease = 'Linear'
+      easeArguments.easeMode = 'None'
     }
-    const ease = key === '' ? 'ease' : 'Ease'
-    obj[`${key}${ease}Mode`] = property.easeMode
-    obj[`${key}${ease}`] = property.ease
+    NestedProperty.set(this.currentEmitter, key, easeArguments.ease)
+    NestedProperty.set(this.currentEmitter, `${key}Mode`, easeArguments.easeMode)
   }
 
   changeColorStatus (status, color) {
@@ -285,12 +303,14 @@ export default class ParticleProxy extends Proxy {
     }
   }
 
-  updateColor (color) {
+  updateColor (color, preventInternalDataChange = false) {
     this.currentEmitter.particleArguments.color.start = Phaser.Color.hexToColor(color.start)
     this.currentEmitter.particleArguments.color.end = Phaser.Color.hexToColor(color.end)
-    this.setEasing(this.currentEmitter.particleArguments.color, color, '')
+    this.adjustEasing(color, 'particleArguments.color.ease')
     this.currentEmitter.particleArguments.color.delay = Number.parseFloat(color.delay)
-    this.currentEmitter.particleArguments.color.rate = Number.parseFloat(color.rate)
+    if (this.adjustRate(color.rate, 'particleArguments.color.rate') && !preventInternalDataChange) {
+      this.sendInternalDataChangeNotification()
+    }
   }
 
   changeColor (color) {

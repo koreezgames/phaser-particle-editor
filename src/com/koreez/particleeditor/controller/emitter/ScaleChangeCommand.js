@@ -1,9 +1,9 @@
 import EmitterPropertyChangeCommand from './EmitterPropertyChangeCommand'
 
-export default class ScaleDisproportionalChangeCommand extends EmitterPropertyChangeCommand {
+export default class ScaleChangeCommand extends EmitterPropertyChangeCommand {
   execute (notification) {
     const scale = notification.getBody()
-    this.proxy.changeScaleDisproportional(scale)
+    this.proxy.changeScale(scale)
     super.execute(notification)
   }
 }

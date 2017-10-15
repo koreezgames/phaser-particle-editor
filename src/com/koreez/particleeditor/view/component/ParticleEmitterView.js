@@ -20,8 +20,8 @@ export default class ParticleEmitterView {
   static IMMEDIATE_CHANGE = ParticleEmitterView.NAME + 'ImmediateChange'
   static FLOW_CHANGE = ParticleEmitterView.NAME + 'FlowChange'
   static EXPLODE_CHANGE = ParticleEmitterView.NAME + 'ExplodeChange'
-  static SCALE_CHANGE_PROPORTIONAL = ParticleEmitterView.NAME + 'ScaleChangeProportional'
-  static SCALE_CHANGE_DISPROPORTIONAL = ParticleEmitterView.NAME + 'ScaleChangeDisproportional'
+  static SCALE_CHANGE_RANDOM = ParticleEmitterView.NAME + 'ScaleChangeProportional'
+  static SCALE_CHANGE = ParticleEmitterView.NAME + 'ScaleChangeDisproportional'
   static SCALE_TYPE_CHANGE = ParticleEmitterView.NAME + 'ScaleTypeChange'
   static ROTATION_CHANGE = ParticleEmitterView.NAME + 'RotationChange'
   static SPEED_CHANGE = ParticleEmitterView.NAME + 'SpeedChange'
@@ -302,7 +302,7 @@ export default class ParticleEmitterView {
       .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onMinScaleChange))
     this._scale.maxScale = $('#maxScale')
       .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onMaxScaleChange))
-    this._scale.proportionalStatus = $('#proportionalScale')
+    this._scale.randomScale = $('#randomScale')
       .on('click', this.onEmitterPropertyValueChange.bind(this, this.onScaleTypeChange))
     this._scale.fromX = $('#scaleFromX')
       .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onScaleXChange))
@@ -401,7 +401,7 @@ export default class ParticleEmitterView {
     this._explode.prop('checked', currentEmitter.explode)
     this._collide.prop('checked', currentEmitter.collide)
     this._collideWorldBounds.prop('checked', currentEmitter.collideWorldBounds)
-    this._scale.proportionalStatus.prop('checked', currentEmitter.proportional)
+    this._scale.randomScale.prop('checked', currentEmitter.randomScale)
     this._scale.minScale.val(currentEmitter.minScale)
     this._scale.maxScale.val(currentEmitter.maxScale)
     this._scale.fromX.val(currentEmitter.scaleFromX)
@@ -449,7 +449,7 @@ export default class ParticleEmitterView {
   }
 
   toggleScaleMode () {
-    const status = this._scale.proportionalStatus.prop('checked')
+    const status = this._scale.randomScale.prop('checked')
     this._scale.fromX.prop('disabled', status)
     this._scale.fromY.prop('disabled', status)
     this._scale.toX.prop('disabled', status)

@@ -12,8 +12,6 @@ import SpeedChangeCommand from './emitter/SpeedChangeCommand'
 import AlphaChangeCommand from './emitter/AlphaChangeCommand'
 import CollideWorldBoundsChangeCommand from './emitter/CollideWorldBoundsChangeCommand'
 import ScaleTypeChangeCommand from './emitter/ScaleTypeChangeCommand'
-import ScaleProportionalChangeCommand from './emitter/ScaleProportionalChangeCommand'
-import ScaleDisproportionalChangeCommand from './emitter/ScaleDisproportionalChangeCommand'
 import ParticleImageChangeCommand from './emitter/ParticleImageChangeCommand'
 import ExplodeChangeCommand from './emitter/ExplodeChangeCommand'
 import QuantityChangeCommand from './emitter/QuantityChangeCommand'
@@ -25,6 +23,8 @@ import MaxParticlesChangeCommand from './emitter/MaxParticlesChangeCommand'
 import ColorChangeCommand from './emitter/ColorChangeCommand'
 import ColorStatusChangeCommand from './emitter/ColorStatusChangeCommand'
 import BlendModeChangeCommand from './emitter/BlendModeChangeCommand'
+import ScaleChangeCommand from './emitter/ScaleChangeCommand'
+import ScaleRandomChangeCommand from './emitter/ScaleRandomChangeCommand'
 
 export default class RegisterEmitterCommands extends SimpleCommand {
   execute (notification) {
@@ -36,8 +36,8 @@ export default class RegisterEmitterCommands extends SimpleCommand {
     this.facade.registerCommand(ParticleEmitterView.BOUNCE_CHANGE, BounceChangeCommand)
     this.facade.registerCommand(ParticleEmitterView.ANGULAR_DRAG_CHANGE, AngularDragChangeCommand)
     this.facade.registerCommand(ParticleEmitterView.SCALE_TYPE_CHANGE, ScaleTypeChangeCommand)
-    this.facade.registerCommand(ParticleEmitterView.SCALE_CHANGE_DISPROPORTIONAL, ScaleDisproportionalChangeCommand)
-    this.facade.registerCommand(ParticleEmitterView.SCALE_CHANGE_PROPORTIONAL, ScaleProportionalChangeCommand)
+    this.facade.registerCommand(ParticleEmitterView.SCALE_CHANGE, ScaleChangeCommand)
+    this.facade.registerCommand(ParticleEmitterView.SCALE_CHANGE_RANDOM, ScaleRandomChangeCommand)
     this.facade.registerCommand(ParticleEmitterView.LIFESPAN_CHANGE, LifespanChangeCommand)
     this.facade.registerCommand(ParticleEmitterView.FREQUENCY_CHANGE, FrequencyChangeCommand)
     this.facade.registerCommand(ParticleEmitterView.COLLIDE_WORLD_BOUNDS_CHANGE, CollideWorldBoundsChangeCommand)

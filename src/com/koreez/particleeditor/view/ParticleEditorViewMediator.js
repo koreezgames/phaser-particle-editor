@@ -1,8 +1,7 @@
-import {Mediator} from 'pure-mvc'
+import { Mediator } from 'pure-mvc'
 import ParticleEditorView from './ParticleEditorView'
 import ParticleEmitterViewMediator from './component/ParticleEmitterViewMediator'
 import ParticleProxy from '../model/ParticleProxy'
-import ParticleEmitterView from './component/ParticleEmitterView'
 import EditorProxy from '../model/EditorProxy'
 import SandboxStateMediator from './sandbox/state/SandboxStateMediator'
 import SandboxState from './sandbox/state/SandboxState'
@@ -31,10 +30,6 @@ export default class ParticleEditorViewMediator extends Mediator {
       ParticleProxy.PROPERTY_CHANGE,
       ParticleProxy.CURRENT_EMITTER_CHANGE,
       SandboxState.STATE_READY,
-      ParticleEmitterView.SCALE_TYPE_CHANGE,
-      ParticleEmitterView.COLOR_STATUS_CHANGE,
-      ParticleEmitterView.EXPLODE_CHANGE,
-      ParticleEmitterView.FLOW_CHANGE,
       ParticleEditorView.SHOW_OPENED_PROJECT_INFO
     ]
   }
@@ -114,20 +109,9 @@ export default class ParticleEditorViewMediator extends Mediator {
         const vo = this.facade.retrieveProxy(ParticleProxy.NAME).getData()
         this.particleEditorView.setEmitterTabEyeIcon(name, vo.emitters[name].enabled)
         break
-      case ParticleEmitterView.SCALE_TYPE_CHANGE:
-        this.particleEditorView.toggleScaleMode()
-        break
-      case ParticleEmitterView.COLOR_STATUS_CHANGE:
-        this.particleEditorView.toggleColorSection()
-        break
-      case ParticleEmitterView.FLOW_CHANGE:
-        this.particleEditorView.toggleFlow()
-        break
-      case ParticleEmitterView.EXPLODE_CHANGE:
-        this.particleEditorView.toggleExplode()
-        break
     }
   }
+
   onProjectChoose () {
     this.sendNotification(ParticleEditorView.CHOSE_PROJECT, this.particleEditorView.choseProject)
   }
@@ -141,7 +125,8 @@ export default class ParticleEditorViewMediator extends Mediator {
       file: this.particleEditorView.choseProject,
       name: this.particleEditorView.createProjectName,
       height: this.particleEditorView.sandboxHeight,
-      width: this.particleEditorView.sandboxWidth
+      width: this.particleEditorView.sandboxWidth,
+      color: ParticleEditorView.SANDBOX_DEFAULT_COLOR
     })
     this.particleEditorView.setInputMinimalWidth()
   }
@@ -180,6 +165,7 @@ export default class ParticleEditorViewMediator extends Mediator {
   onEmitterEdit () {
     this.particleEditorView.editEmitterTabName(this.particleEditorView.tabButtonTargetName)
   }
+
   onEmitterRename () {
     this.sendNotification(ParticleEditorView.RENAME_EMITTER, {
       oldName: this.particleEditorView.targetEmitterName,

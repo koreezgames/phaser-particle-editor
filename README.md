@@ -22,7 +22,7 @@ $ npm i --save @koreez/phaser-particle-editor-plugin
 ```
 
 ## News & Community
-We have a [forum](#) so you can always be up to date with latest news!
+We have a [forum](http://www.html5gamedevs.com/topic/33387-phaser-particle-editor) so you can always be up to date with latest news!
 
 ## Contributing
 Coming soon!

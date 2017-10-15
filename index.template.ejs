@@ -252,38 +252,9 @@
                                         <legend class="option-group-title">
                                             <span>Scale</span>
                                         </legend>
-                                        <div class="col-md-12 option">
-                                            <div class="input-group">
-                                                <label class="custom-control custom-checkbox">
-                                                    <input id="proportionalScale" type="checkbox"
-                                                           class="custom-control-input">
-                                                    <span class="custom-control-indicator"></span>
-                                                    <span class="custom-control-description">Proportional</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <fieldset class="option-group-fieldset option-group-nested-fieldset">
-                                            <legend class="option-group-title">Proportional</legend>
-                                            <div class="row">
-                                                <div class="col-md-6 option">
-                                                    <div class="input-group input-group-sm">
-                                                        <span class="input-group-addon">Min</span>
-                                                        <input id="minScale" type="number" class="form-control"
-                                                               placeholder="min" step="0.1">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 option">
-                                                    <div class="input-group  input-group-sm">
-                                                        <span class="input-group-addon">Max</span>
-                                                        <input id="maxScale" type="number" class="form-control"
-                                                               placeholder="max" step="0.1">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </fieldset>
                                         <fieldset class="option-group-fieldset option-group-nested-fieldset">
                                             <legend class="option-group-title">
-                                                <span>Disproportional</span>
+                                                <span>Specific</span>
                                             </legend>
                                             <fieldset class="option-group-fieldset option-group-nested-fieldset">
                                                 <legend class="option-group-title">
@@ -334,9 +305,10 @@
                                                 <div class="row">
                                                     <div class="col-md-6 option">
                                                         <div class="dropdown" id="scaleEasingDropdown">
-                                                            <a class="btn btn-secondary btn-sm dropdown-toggle form-control"
-                                                               id="scaleEasing" data-toggle="dropdown"
-                                                               aria-expanded="false">Easing</a>
+                                                            <button class="btn btn-sm dropdown-toggle form-control"
+                                                                    id="scaleEasing" data-toggle="dropdown"
+                                                                    aria-expanded="false">Easing
+                                                            </button>
                                                             <div class="dropdown-menu" aria-labelledby="scaleEasing">
                                                                 <a class="dropdown-item scaleEase">Back</a>
                                                                 <a class="dropdown-item scaleEase">Bounce</a>
@@ -354,9 +326,10 @@
                                                     </div>
                                                     <div class="col-md-6 option" id="scaleEasingModeDropdown">
                                                         <div class="dropdown">
-                                                            <a class="btn btn-secondary btn-sm dropdown-toggle form-control"
-                                                               id="scaleEasingMode" data-toggle="dropdown"
-                                                               aria-expanded="false">Mode</a>
+                                                            <button class="btn btn-sm dropdown-toggle form-control"
+                                                                    id="scaleEasingMode" data-toggle="dropdown"
+                                                                    aria-expanded="false">Mode
+                                                            </button>
                                                             <div class="dropdown-menu"
                                                                  aria-labelledby="scaleEasingMode">
                                                                 <a class="dropdown-item scaleEaseMode">In</a>
@@ -383,6 +356,35 @@
                                                     </div>
                                                 </div>
                                             </fieldset>
+                                        </fieldset>
+                                        <div class="col-md-12 option">
+                                            <div class="input-group">
+                                                <label class="custom-control custom-checkbox">
+                                                    <input id="randomScale" type="checkbox"
+                                                           class="custom-control-input">
+                                                    <span class="custom-control-indicator"></span>
+                                                    <span class="custom-control-description">Random</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <fieldset class="option-group-fieldset option-group-nested-fieldset">
+                                            <legend class="option-group-title">Random</legend>
+                                            <div class="row">
+                                                <div class="col-md-6 option">
+                                                    <div class="input-group input-group-sm">
+                                                        <span class="input-group-addon">Min</span>
+                                                        <input id="minScale" type="number" class="form-control"
+                                                               placeholder="min" step="0.1">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 option">
+                                                    <div class="input-group  input-group-sm">
+                                                        <span class="input-group-addon">Max</span>
+                                                        <input id="maxScale" type="number" class="form-control"
+                                                               placeholder="max" step="0.1">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </fieldset>
                                     </fieldset>
                                     <fieldset class="option-group-fieldset">
@@ -487,9 +489,10 @@
                                             <div class="row">
                                                 <div class="col-md-6 option">
                                                     <div class="dropdown" id="alphaEasingDropdown">
-                                                        <a class="btn btn-secondary btn-sm dropdown-toggle form-control"
-                                                           id="alphaEasing" data-toggle="dropdown"
-                                                           aria-expanded="false">Easing</a>
+                                                        <button class="btn btn-sm dropdown-toggle form-control"
+                                                                id="alphaEasing" data-toggle="dropdown"
+                                                                aria-expanded="false">Easing
+                                                        </button>
                                                         <div class="dropdown-menu" aria-labelledby="alphaEasing">
                                                             <a class="dropdown-item">Back</a>
                                                             <a class="dropdown-item">Bounce</a>
@@ -507,9 +510,10 @@
                                                 </div>
                                                 <div class="col-md-6 option">
                                                     <div class="dropdown" id="alphaEasingModeDropdown">
-                                                        <a class="btn btn-secondary btn-sm dropdown-toggle form-control"
-                                                           id="alphaEasingMode" data-toggle="dropdown"
-                                                           aria-expanded="false">Mode</a>
+                                                        <button class="btn btn-sm dropdown-toggle form-control"
+                                                                id="alphaEasingMode" data-toggle="dropdown"
+                                                                aria-expanded="false">Mode
+                                                        </button>
                                                         <div class="dropdown-menu" aria-labelledby="alphaEasingMode">
                                                             <a class="dropdown-item">In</a>
                                                             <a class="dropdown-item">Out</a>
@@ -536,27 +540,30 @@
                                             </div>
                                         </fieldset>
                                     </fieldset>
-                                    <div class="col-md-12">
-                                        <div class="input-group">
-                                            <label class="custom-control custom-checkbox">
-                                                <input id="colorStatus" type="checkbox"
-                                                       class="custom-control-input">
-                                                <span class="custom-control-indicator"></span>
-                                                <span class="custom-control-description">Control color channels</span>
-                                            </label>
-                                        </div>
-                                    </div>
+
                                     <fieldset class="option-group-fieldset">
                                         <legend class="option-group-title">
                                             <span>Color</span>
                                         </legend>
                                         <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="input-group">
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input id="colorStatus" type="checkbox"
+                                                               class="custom-control-input">
+                                                        <span class="custom-control-indicator"></span>
+                                                        <span class="custom-control-description">Enabled</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
                                             <div class="col-md-6 option">
                                                 <div class="input-group input-group-sm">
                                                     <span class="input-group-addon">start</span>
-                                                    <div id="startColorDiv"
+                                                    <div id="startColor"
                                                          class="input-group input-group-sm colorpicker-component">
-                                                        <input id="startColor" type="text" class="form-control"
+                                                        <input type="text" class="form-control"
                                                                title="">
                                                         <span class="input-group-addon">
                                                         <i></i>
@@ -567,9 +574,9 @@
                                             <div class="col-md-6 option">
                                                 <div class="input-group input-group-sm">
                                                     <span class="input-group-addon">end</span>
-                                                    <div id="endColorDiv"
+                                                    <div id="endColor"
                                                          class="input-group input-group-sm colorpicker-component">
-                                                        <input id="endColor" type="text" class="form-control"
+                                                        <input type="text" class="form-control"
                                                                title="">
                                                         <span class="input-group-addon">
                                                         <i></i>
@@ -585,9 +592,10 @@
                                             <div class="row">
                                                 <div class="col-md-6 option">
                                                     <div class="dropdown" id="colorEasingDropdown">
-                                                        <a class="btn btn-secondary btn-sm dropdown-toggle form-control"
-                                                           id="colorEasing" data-toggle="dropdown"
-                                                           aria-expanded="false">Easing</a>
+                                                        <button class="btn btn-sm dropdown-toggle form-control"
+                                                                id="colorEasing" data-toggle="dropdown"
+                                                                aria-expanded="false">Easing
+                                                        </button>
                                                         <div class="dropdown-menu" aria-labelledby="alphaEasing">
                                                             <a class="dropdown-item">Back</a>
                                                             <a class="dropdown-item">Bounce</a>
@@ -605,9 +613,10 @@
                                                 </div>
                                                 <div class="col-md-6 option">
                                                     <div class="dropdown" id="colorEasingModeDropdown">
-                                                        <a class="btn btn-secondary btn-sm dropdown-toggle form-control"
-                                                           id="colorEasingMode" data-toggle="dropdown"
-                                                           aria-expanded="false">Mode</a>
+                                                        <button class="btn btn-sm dropdown-toggle form-control"
+                                                                id="colorEasingMode" data-toggle="dropdown"
+                                                                aria-expanded="false">Mode
+                                                        </button>
                                                         <div class="dropdown-menu" aria-labelledby="colorEasingMode">
                                                             <a class="dropdown-item">In</a>
                                                             <a class="dropdown-item">Out</a>
@@ -617,16 +626,16 @@
                                                 </div>
                                                 <div class="col-md-6 option">
                                                     <div class="input-group input-group-sm">
-                                                        <span class="input-group-addon">Delay</span>
-                                                        <input id="colorDelay" type="number" class="form-control"
-                                                               placeholder="delay" value="0">
+                                                        <span class="input-group-addon">Rate</span>
+                                                        <input id="colorRate" type="number" class="form-control"
+                                                               placeholder="rate" value="1500">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 option">
                                                     <div class="input-group input-group-sm">
-                                                        <span class="input-group-addon">Rate</span>
-                                                        <input id="colorRate" type="number" class="form-control"
-                                                               placeholder="rate" value="1500">
+                                                        <span class="input-group-addon">Delay</span>
+                                                        <input id="colorDelay" type="number" class="form-control"
+                                                               placeholder="delay" value="0">
                                                     </div>
                                                 </div>
                                             </div>
@@ -659,26 +668,29 @@
                                         </legend>
                                         <div class="row">
                                             <div class="col-md-12 option">
-                                                <div class="dropdown" id="alphaEasingModeDropdown">
-                                                    <a class="btn btn-secondary btn-sm dropdown-toggle form-control"
-                                                       id="blendMode" data-toggle="dropdown"
-                                                       aria-expanded="false">NORMAL</a>
-                                                    <div class="dropdown-menu" aria-labelledby="alphaEasingMode">
+                                                <div class="dropdown" id="blendModeDropdown">
+                                                    <button class="btn btn-sm dropdown-toggle form-control"
+                                                            id="blendMode" data-toggle="dropdown"
+                                                            aria-expanded="false">Blend Mode
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="blendModeDropdown">
+                                                        <a class="dropdown-item">NORMAL</a>
                                                         <a class="dropdown-item">ADD</a>
-                                                        <a class="dropdown-item">COLOR</a>
-                                                        <a class="dropdown-item">COLOR_DODGE</a>
+                                                        <a class="dropdown-item">MULTIPLY</a>
+                                                        <a class="dropdown-item">SCREEN</a>
+                                                        <a class="dropdown-item">OVERLAY</a>
                                                         <a class="dropdown-item">DARKEN</a>
+                                                        <a class="dropdown-item">LIGHTEN</a>
+                                                        <a class="dropdown-item">COLOR_DODGE</a>
+                                                        <a class="dropdown-item">COLOR_BURN</a>
+                                                        <a class="dropdown-item">HARD_LIGHT</a>
+                                                        <a class="dropdown-item">SOFT_LIGHT</a>
                                                         <a class="dropdown-item">DIFFERENCE</a>
                                                         <a class="dropdown-item">EXCLUSION</a>
-                                                        <a class="dropdown-item">HARD_LIGHT</a>
-                                                        <a class="dropdown-item">LIGHTEN</a>
-                                                        <a class="dropdown-item">LUMINOSITY</a>
-                                                        <a class="dropdown-item">MULTIPLY</a>
-                                                        <a class="dropdown-item">NORMAL</a>
-                                                        <a class="dropdown-item">OVERLAY</a>
+                                                        <a class="dropdown-item">HUE</a>
                                                         <a class="dropdown-item">SATURATION</a>
-                                                        <a class="dropdown-item">SCREEN</a>
-                                                        <a class="dropdown-item">SOFT_LIGHT</a>
+                                                        <a class="dropdown-item">COLOR</a>
+                                                        <a class="dropdown-item">LUMINOSITY</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -713,9 +725,9 @@
                                     <div class="col-md-12 option">
                                         <div class="input-group input-group-sm">
                                             <span class="input-group-addon">BG Color</span>
-                                            <div id="canvasBGColorInputDiv"
+                                            <div id="canvasBGColorInput"
                                                  class="input-group input-group-sm colorpicker-component">
-                                                <input id="canvasBGColorInput" type="text" class="form-control" >
+                                                <input type="text" class="form-control">
                                                 <span class="input-group-addon">
                                                         <i></i>
                                                 </span>

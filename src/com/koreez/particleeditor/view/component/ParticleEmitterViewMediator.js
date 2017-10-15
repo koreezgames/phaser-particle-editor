@@ -78,6 +78,8 @@ export default class ParticleEmitterViewMediator extends Mediator {
     this.particleEmitterView.onColorDelayChange.add(this.onColorChange, this)
     this.particleEmitterView.onColorRateChange.add(this.onColorChange, this)
 
+    this.particleEmitterView.onBlendModeChange.add(this.onBlendModeChange, this)
+
     const particleProxy = this.facade.retrieveProxy(ParticleProxy.NAME)
     this.particleEmitterView.setValues(particleProxy.getCurrentEmitterName(), particleProxy.getCurrentEmitter())
   }
@@ -183,6 +185,10 @@ export default class ParticleEmitterViewMediator extends Mediator {
 
   onColorChange () {
     this.sendNotification(ParticleEmitterView.COLOR_CHANGE, this.particleEmitterView.color)
+  }
+
+  onBlendModeChange () {
+    this.sendNotification(ParticleEmitterView.BLEND_MODE_CHANGE, this.particleEmitterView.blendMode)
   }
 
   listNotificationInterests () {

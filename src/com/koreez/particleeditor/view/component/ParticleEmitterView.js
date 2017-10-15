@@ -3,6 +3,7 @@ import { setColorpickerValueWithoutTriggeringChangeEvent } from '../../utils/uti
 
 export default class ParticleEmitterView {
   static NAME = 'ParticleEmitterView'
+
   static PARTICLE_IMAGE_CHANGE = ParticleEmitterView.NAME + 'ParticleImageChange'
   static DIMENSION_CHANGE = ParticleEmitterView.NAME + 'DimensionChange'
   static POSITION_OFFSET_CHANGE = ParticleEmitterView.NAME + 'PositionOffsetChange'
@@ -27,6 +28,26 @@ export default class ParticleEmitterView {
   static ALPHA_CHANGE = ParticleEmitterView.NAME + 'AlphaChange'
   static COLOR_STATUS_CHANGE = ParticleEmitterView.NAME + 'ColorStatusChange'
   static COLOR_CHANGE = ParticleEmitterView.NAME + 'ColorChange'
+  static BLEND_MODE_CHANGE = ParticleEmitterView.NAME + 'BlendModeChange'
+  static BLEND_MODES = [
+    'NORMAL',
+    'ADD',
+    'MULTIPLY',
+    'SCREEN',
+    'OVERLAY',
+    'DARKEN',
+    'LIGHTEN',
+    'COLOR_DODGE',
+    'COLOR_BURN',
+    'HARD_LIGHT',
+    'SOFT_LIGHT',
+    'DIFFERENCE',
+    'EXCLUSION',
+    'HUE',
+    'SATURATION',
+    'COLOR',
+    'LUMINOSITY'
+  ]
 
   constructor () {
     this.onParticleImageChange = new Phaser.Signal()
@@ -79,6 +100,7 @@ export default class ParticleEmitterView {
     this.onColorEaseModeChange = new Phaser.Signal()
     this.onColorDelayChange = new Phaser.Signal()
     this.onColorRateChange = new Phaser.Signal()
+    this.onBlendModeChange = new Phaser.Signal()
     this.initProperties()
   }
 
@@ -220,6 +242,10 @@ export default class ParticleEmitterView {
     }
   }
 
+  get blendMode () {
+    return ParticleEmitterView.BLEND_MODES.indexOf(this._blendMode.text())
+  }
+
   initProperties () {
     this._particleImage = $('#particleImageBrowser')
       .on('change', this.onEmitterPropertyValueChange.bind(this, this.onParticleImageChange))
@@ -346,6 +372,10 @@ export default class ParticleEmitterView {
       .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onColorDelayChange))
     this._color.rate = $('#colorRate')
       .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onColorRateChange))
+
+    this._blendMode = $('#blendMode')
+    $('#blendModeDropdown')
+      .on('hidden.bs.dropdown', this.onEmitterPropertyValueChange.bind(this, this.onBlendModeChange))
   }
 
   onEmitterPropertyValueChange (eventToDispatch, event) {
@@ -410,6 +440,7 @@ export default class ParticleEmitterView {
       setColorpickerValueWithoutTriggeringChangeEvent(this._color.start, '#00ff0b')
       setColorpickerValueWithoutTriggeringChangeEvent(this._color.end, '#ec00ff')
     }
+    this._blendMode.text(ParticleEmitterView.BLEND_MODES[currentEmitter.blendMode])
     $('#particleImagePreview').css('background-image', `url(${currentEmitter[currentEmitterName]})`)
     this.toggleScaleMode()
     this.toggleColorSection()

@@ -247,8 +247,15 @@ export default class ParticleProxy extends Proxy {
     this.sendPropertyChangeNotification()
   }
 
+  changeBlendMode (blendMode) {
+    this.currentEmitter.blendMode = blendMode
+    this.sendPropertyChangeNotification()
+  }
+
   setEasing (obj, property, key) {
-    if (property.ease !== 'Easing' && property.easeMode !== 'Mode') {
+    const cleanEase = property.ease.replace(/[\n\r]/g, '').trim()
+    const cleanEaseMode = property.easeMode.replace(/[\n\r]/g, '').trim()
+    if (cleanEase !== 'Easing' && cleanEaseMode !== 'Mode') {
       if (property.ease === 'Linear') {
         property.easeMode = 'None'
       }

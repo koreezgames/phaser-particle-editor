@@ -1,3 +1,5 @@
+import Phaser from 'phaser'
+
 export default class EmitterVO {
   constructor (name) {
     this.width = 0
@@ -31,8 +33,7 @@ export default class EmitterVO {
     this.alphaEase = 'Linear'
     this.alphaEaseMode = 'None'
     this.alphaYoyo = false
-    this.particleArguments = {
-    }
+    this.particleArguments = {}
     this.rotationMin = -360
     this.rotationMax = 360
     this.bounceX = 0
@@ -47,7 +48,7 @@ export default class EmitterVO {
     this.enabled = true
     this.explode = false
     this.flow = false
-    this.blendMode = 'NORMAL'
+    this.blendMode = Phaser.blendModes.NORMAL
     this[name] = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAAHklEQVQ4jWP8////ZgYKAROlBow' +
       'aMmrIqCGjhkABADAjA9Lg9zWpAAAAAElFTkSuQmCC'
   }

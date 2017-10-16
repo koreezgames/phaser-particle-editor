@@ -44,16 +44,16 @@ export default class ParticleEmitterViewMediator extends Mediator {
     this.particleEmitterView.onCollideWorldBoundsChange.add(this.onCollideWorldBoundsChange, this)
 
     this.particleEmitterView.onScaleTypeChange.add(this.onScaleTypeChange, this)
-    this.particleEmitterView.onMinScaleChange.add(this.onProportionalScaleChange, this)
-    this.particleEmitterView.onMaxScaleChange.add(this.onProportionalScaleChange, this)
-    this.particleEmitterView.onScaleXChange.add(this.onDisproportionalScaleChange, this)
-    this.particleEmitterView.onScaleYChange.add(this.onDisproportionalScaleChange, this)
-    this.particleEmitterView.onScaleToXChange.add(this.onDisproportionalScaleChange, this)
-    this.particleEmitterView.onScaleToYChange.add(this.onDisproportionalScaleChange, this)
-    this.particleEmitterView.onScaleRateChange.add(this.onDisproportionalScaleChange, this)
-    this.particleEmitterView.onScaleYoyoChange.add(this.onDisproportionalScaleChange, this)
-    this.particleEmitterView.onScaleEaseChange.add(this.onDisproportionalScaleChange, this)
-    this.particleEmitterView.onScaleEaseModeChange.add(this.onDisproportionalScaleChange, this)
+    this.particleEmitterView.onMinScaleChange.add(this.onRandomScaleChange, this)
+    this.particleEmitterView.onMaxScaleChange.add(this.onRandomScaleChange, this)
+    this.particleEmitterView.onScaleXChange.add(this.onScaleChange, this)
+    this.particleEmitterView.onScaleYChange.add(this.onScaleChange, this)
+    this.particleEmitterView.onScaleToXChange.add(this.onScaleChange, this)
+    this.particleEmitterView.onScaleToYChange.add(this.onScaleChange, this)
+    this.particleEmitterView.onScaleRateChange.add(this.onScaleChange, this)
+    this.particleEmitterView.onScaleYoyoChange.add(this.onScaleChange, this)
+    this.particleEmitterView.onScaleEaseChange.add(this.onScaleChange, this)
+    this.particleEmitterView.onScaleEaseModeChange.add(this.onScaleChange, this)
 
     this.particleEmitterView.onRotationMinChange.add(this.onRotationChange, this)
     this.particleEmitterView.onRotationMaxChange.add(this.onRotationChange, this)
@@ -77,6 +77,8 @@ export default class ParticleEmitterViewMediator extends Mediator {
     this.particleEmitterView.onColorEaseModeChange.add(this.onColorChange, this)
     this.particleEmitterView.onColorDelayChange.add(this.onColorChange, this)
     this.particleEmitterView.onColorRateChange.add(this.onColorChange, this)
+
+    this.particleEmitterView.onBlendModeChange.add(this.onBlendModeChange, this)
 
     const particleProxy = this.facade.retrieveProxy(ParticleProxy.NAME)
     this.particleEmitterView.setValues(particleProxy.getCurrentEmitterName(), particleProxy.getCurrentEmitter())
@@ -155,13 +157,12 @@ export default class ParticleEmitterViewMediator extends Mediator {
     this.sendNotification(ParticleEmitterView.SCALE_TYPE_CHANGE)
   }
 
-  onProportionalScaleChange () {
-    this.sendNotification(ParticleEmitterView.SCALE_CHANGE_PROPORTIONAL, this.particleEmitterView.scaleProportional)
+  onRandomScaleChange () {
+    this.sendNotification(ParticleEmitterView.SCALE_CHANGE_RANDOM, this.particleEmitterView.scaleProportional)
   }
 
-  onDisproportionalScaleChange () {
-    this.sendNotification(ParticleEmitterView.SCALE_CHANGE_DISPROPORTIONAL,
-      this.particleEmitterView.scaleDisproportional)
+  onScaleChange () {
+    this.sendNotification(ParticleEmitterView.SCALE_CHANGE, this.particleEmitterView.scaleDisproportional)
   }
 
   onRotationChange () {
@@ -177,11 +178,16 @@ export default class ParticleEmitterViewMediator extends Mediator {
   }
 
   onColorStatusChange () {
-    this.sendNotification(ParticleEmitterView.COLOR_STATUS_CHANGE)
+    this.sendNotification(ParticleEmitterView.COLOR_STATUS_CHANGE,
+      {status: this.particleEmitterView.colorStatus, color: this.particleEmitterView.color})
   }
 
   onColorChange () {
     this.sendNotification(ParticleEmitterView.COLOR_CHANGE, this.particleEmitterView.color)
+  }
+
+  onBlendModeChange () {
+    this.sendNotification(ParticleEmitterView.BLEND_MODE_CHANGE, this.particleEmitterView.blendMode)
   }
 
   listNotificationInterests () {

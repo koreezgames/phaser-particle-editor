@@ -1,3 +1,5 @@
+import Phaser from 'phaser'
+
 export default class EmitterVO {
   constructor (name) {
     this.width = 0
@@ -9,31 +11,29 @@ export default class EmitterVO {
     this.maxParticles = 50
     this.frames = 1
     this.quantity = 1
-    this.total = -1
+    this.total = 0
     this.immediate = true
     this.collide = false
     this.collideWorldBounds = false
     this.enableBody = false
-    this.proportional = true
+    this.randomScale = false
     this.minScale = 0.5
     this.maxScale = 1.5
-    this.scaleFromX = 1
-    this.scaleFromY = 1
-    this.scaleToX = 1
-    this.scaleToY = 1
-    this.scaleRate = 0
+    this.scaleFromX = 0
+    this.scaleFromY = 0
+    this.scaleToX = 1.5
+    this.scaleToY = 1.5
+    this.scaleRate = 1500
     this.scaleEase = 'Linear'
     this.scaleEaseMode = 'None'
     this.scaleYoyo = false
     this.alphaMin = 0
     this.alphaMax = 1
-    this.alphaRate = 0
+    this.alphaRate = 1500
     this.alphaEase = 'Linear'
     this.alphaEaseMode = 'None'
     this.alphaYoyo = false
-    this.particleArguments = {
-      colorEnabled: false
-    }
+    this.particleArguments = {}
     this.rotationMin = -360
     this.rotationMax = 360
     this.bounceX = 0
@@ -48,7 +48,7 @@ export default class EmitterVO {
     this.enabled = true
     this.explode = false
     this.flow = false
-    this.blendMode = 'NORMAL'
+    this.blendMode = Phaser.blendModes.NORMAL
     this[name] = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAAHklEQVQ4jWP8////ZgYKAROlBow' +
       'aMmrIqCGjhkABADAjA9Lg9zWpAAAAAElFTkSuQmCC'
   }

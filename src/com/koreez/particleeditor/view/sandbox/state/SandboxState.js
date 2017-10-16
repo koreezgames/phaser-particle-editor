@@ -25,7 +25,7 @@ export default class SandboxState extends Phaser.State {
     this.followCursorStatus = false
     this.particleProxy = this.facade.retrieveProxy(ParticleProxy.NAME)
     const particleVO = this.particleProxy.getData()
-    this.particle = this.game.add.particle(this.world.centerX, this.world.centerY, particleVO)
+    this.particle = this.game.add.particleEffect(this.world.centerX, this.world.centerY, particleVO)
     this.game.input.addMoveCallback(this.followCursor, this)
     this.facade.sendNotification(SandboxState.STATE_READY)
   }

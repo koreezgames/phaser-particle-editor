@@ -27,3 +27,12 @@ export const loadImageFile = (file, key, onload, onerror) => {
     createImageFromBitmapData(window.sandbox, bitmapData, key, onload, onerror)
   })
 }
+
+export const setColorpickerValueWithoutTriggeringChangeEvent = (colorpicker, value) => {
+  const data = colorpicker.data('colorpicker')
+  data.color = data.createColor(value)
+  data.updateComponent()
+  data.input.prop('value', value)
+  data.updateData(value)
+  data.updatePicker(value)
+}

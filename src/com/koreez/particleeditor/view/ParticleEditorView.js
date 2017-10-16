@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import { setColorpickerValueWithoutTriggeringChangeEvent } from '../utils/utils'
 
 export default class ParticleEditorView {
   static NAME = 'ParticleEditorView'
@@ -20,6 +21,8 @@ export default class ParticleEditorView {
   static CHANGE_BG_IMAGE = ParticleEditorView.NAME + 'BgImageChange'
   static REMOVE_BG_IMAGE = ParticleEditorView.NAME + 'BgImageRemove'
   static DOWNLOAD_JSON = ParticleEditorView.NAME + 'DownloadJSON'
+
+  static SANDBOX_DEFAULT_COLOR = '#4e4e4e'
 
   constructor () {
     this.tabButtonTargetName = null
@@ -52,7 +55,7 @@ export default class ParticleEditorView {
   }
 
   get bgColor () {
-    return this._bgColor.val()
+    return this._bgColor.colorpicker('getValue')
   }
 
   get bgImage () {
@@ -128,13 +131,14 @@ export default class ParticleEditorView {
     $('#createEmitterModalButtonOK').on('click', this.onCreateEmitterButtonClick.bind(this, this.onEmitterAdd))
     $('#projectName').on('change', this.onEditorPropertyValueChange.bind(this, this.onProjectNameChange))
     this._bgColor = $('#canvasBGColorInput')
-      .on('change', () => { this.onEditorPropertyValueChange.bind(this, this.onBgColorChange) })
+      .colorpicker().on('changeColor', this.onEditorPropertyValueChange.bind(this, this.onBgColorChange))
     this._bgImage = $('#canvasBgImage').on('change', this.onEditorPropertyValueChange.bind(this, this.onBgImageChange))
     $('#removeBgImage').on('click', this.onEditorPropertyValueChange.bind(this, this.onBgImageRemove))
     $('#sandboxContainer').on('click', this.onEditorPropertyValueChange.bind(this, this.onMouseClick))
     $('#followCursor').on('change', this.onEditorPropertyValueChange.bind(this, this.onFollowCursorChange))
     $('#removeEmitter').on('click', this.onEditorPropertyValueChange.bind(this, this.onEmitterRemove))
-    $('#createEmitterModal').on('hide.bs.modal', this.onEditorPropertyValueChange.bind(this, this.onCloseCreateEmitterModal))
+    $('#createEmitterModal')
+      .on('hide.bs.modal', this.onEditorPropertyValueChange.bind(this, this.onCloseCreateEmitterModal))
   }
 
   onEditorPropertyValueChange (eventToDispatch, event) {
@@ -216,17 +220,20 @@ export default class ParticleEditorView {
     // $('#' + emitterName + '').on('click', this.onEmitterTabChange.bind(this, emitterName))
     $('#' + emitterName + 'TabEye')
       .on('click', this.onEmitterTabNestedButtonClick.bind(this, emitterName, this.onTurnEmitterOnOff, null))
-    $('#' + emitterName + 'Field').on('change', this.onEmitterTabNestedButtonClick.bind(this, emitterName, this.onEmitterRename, null))
+    $('#' + emitterName + 'Field')
+      .on('change', this.onEmitterTabNestedButtonClick.bind(this, emitterName, this.onEmitterRename, null))
     $('#' + emitterName + 'Field').on('focusout', () => {
       $('#' + emitterName + 'Field').prop('disabled', true)
       this.onEditorPropertyValueChange.bind(this, this.onEmitterRename)
     })
     $('#' + emitterName + 'Rename')
       .on('click',
-        this.onEmitterTabNestedButtonClick.bind(this, emitterName, null, this.onEmitterTabNestedButtonClick.bind(this, emitterName, this.onEmitterEdit), null))
+        this.onEmitterTabNestedButtonClick.bind(this, emitterName, null,
+          this.onEmitterTabNestedButtonClick.bind(this, emitterName, this.onEmitterEdit), null))
     $('#' + emitterName + 'Duplicate')
       .on('click',
-        this.onEmitterTabNestedButtonClick.bind(this, emitterName, null, this.onEmitterTabNestedButtonClick.bind(this, emitterName, this.onEmitterDuplicate, null)))
+        this.onEmitterTabNestedButtonClick.bind(this, emitterName, null,
+          this.onEmitterTabNestedButtonClick.bind(this, emitterName, this.onEmitterDuplicate, null)))
       .on('click', () => {
         $('.dropdown').removeClass('show')
         $('.dropdown-menu').removeClass('show')
@@ -292,9 +299,6 @@ export default class ParticleEditorView {
       callback()
     }
   }
-  f () {
-    $('#ur').val($('#vortexic').text())
-  }
 
   setActiveEmitter (emitterName) {
     this.disableTabButons()
@@ -302,10 +306,6 @@ export default class ParticleEditorView {
       this.targetEmitterName = emitterName
       this.tabButtonTargetName = emitterName
     }
-    this.toggleScaleMode()
-    this.toggleFlow()
-    this.toggleExplode()
-    this.toggleColorSection()
     this.enableTabButtons(emitterName)
     $('#' + this.targetEmitterName).tab('show')
   }
@@ -350,58 +350,6 @@ export default class ParticleEditorView {
     $('#followCursor').prop('checked', !status)
   }
 
-  toggleScaleMode () {
-    const status = $('#proportionalScale').prop('checked')
-    $('#scaleFromX').prop('disabled', status)
-    $('#scaleFromY').prop('disabled', status)
-    $('#scaleToX').prop('disabled', status)
-    $('#scaleToY').prop('disabled', status)
-    $('#scaleEasing').prop('disabled', status)
-    $('#scaleEasingMode').prop('disabled', status)
-    $('#scaleRate').prop('disabled', status)
-    $('#scaleYoyo').prop('disabled', status)
-    $('#minScale').prop('disabled', !status)
-    $('#maxScale').prop('disabled', !status)
-  }
-
-  toggleFlow () {
-    const flowStatus = $('#flow').prop('checked')
-    const explode = $('#explode')
-    const quantity = $('#quantity')
-    const immediate = $('#immediate')
-    if (flowStatus) {
-      immediate.prop('disabled', false)
-      quantity.prop('disabled', false)
-      explode.prop('checked', false)
-    } else {
-      quantity.prop('disabled', true)
-      immediate.prop('disabled', true)
-    }
-  }
-
-  toggleColorSection () {
-    const  status = $('#colorStatus').prop('checked')
-    $('#startColor').prop('disabled', !status)
-    $('#endColor').prop('disabled', !status)
-    $('#colorEasing').prop('disabled', !status)
-    $('#colorEasingMode').prop('disabled', !status)
-    $('#colorDelay').prop('disabled', !status)
-    $('#colorRate').prop('disabled', !status)
-  }
-
-  toggleExplode () {
-    const explodeStatus = $('#explode').prop('checked')
-    const flow = $('#flow')
-    const quantity = $('#quantity')
-    const immediate = $('#immediate')
-    if (explodeStatus) {
-      immediate.prop('disabled', true)
-      quantity.prop('disabled', true)
-      flow.prop('checked', false)
-      immediate.prop('checked', false)
-    }
-  }
-
   // Other methods
   refreshPage () {
     window.location.reload(true)
@@ -426,7 +374,7 @@ export default class ParticleEditorView {
   }
 
   setInputMinimalWidth (inputID = 'projectName') {
-    const element = $('#' + inputID)
+    const element = $(`#${inputID}`)
     element.css('width', (element.val().length + 1) * 8 + 'px')
   }
 
@@ -444,8 +392,7 @@ export default class ParticleEditorView {
 
   setValues (vo) {
     $('#projectName').val(vo.name)
-    console.log(vo)
-    $('#canvasBGColorInputDiv').colorpicker('setValue', vo.bgColor)
+    setColorpickerValueWithoutTriggeringChangeEvent(this._bgColor, vo.bgColor)
   }
 
   showControls () {
@@ -460,16 +407,17 @@ export default class ParticleEditorView {
 
   editEmitterTabName (emitterName) {
     if (this.tabButtonTargetName !== this.targetEmitterName) { return }
-    $('#' + emitterName + 'Field').prop('disabled', false)
-    $('#' + emitterName + 'Field').focus()
+    $(`#${emitterName}Field`).prop('disabled', false)
+    $(`#${emitterName}Field`).focus()
   }
+
   disableTabButons () {
-    $('#' + this.targetEmitterName + 'Dropdown').prop('disabled', true)
-    $('#' + this.targetEmitterName + 'TabEye').prop('disabled', true)
+    $(`#${this.targetEmitterName}Dropdown`).prop('disabled', true)
+    $(`#${this.targetEmitterName}TabEye`).prop('disabled', true)
   }
 
   enableTabButtons (emitterName) {
-    $('#' + emitterName + 'Dropdown').prop('disabled', false)
-    $('#' + emitterName + 'TabEye').prop('disabled', false)
+    $(`#${emitterName}Dropdown`).prop('disabled', false)
+    $(`#${emitterName}TabEye`).prop('disabled', false)
   }
 }

@@ -3,8 +3,8 @@ import SandboxState from './state/SandboxState.js'
 import ParticleEditorFacade from '../../ParticleEditorFacade'
 
 export default class Sandbox extends Phaser.Game {
-  static NAME = 'SandboxState'
-  static SANDBOX_READY = Sandbox.NAME + 'SandboxReady'
+  static NAME = 'Sandbox'
+  static SANDBOX_READY = Sandbox.NAME + 'Ready'
 
   constructor (config) {
     super(config.width, config.height, Phaser.CANVAS, 'sandboxContainer')

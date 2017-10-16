@@ -9,6 +9,10 @@ export default class ParticleEmitterView {
   static POSITION_OFFSET_CHANGE = ParticleEmitterView.NAME + 'PositionOffsetChange'
   static GRAVITY_CHANGE = ParticleEmitterView.NAME + 'GravityChange'
   static BOUNCE_CHANGE = ParticleEmitterView.NAME + 'BounceChange'
+  static START_ROTATION_CHANGE = ParticleEmitterView.NAME + 'StartRotationChange'
+  static START_ROTATION_STATUS_CHANGE = ParticleEmitterView.NAME + 'StartRotationStatusChange'
+  static ANCHOR_CHANGE = ParticleEmitterView.NAME + 'AnchorChange'
+  static ANCHOR_STATUS_CHANGE = ParticleEmitterView.NAME + 'AnchorStatusChange'
   static ANGULAR_DRAG_CHANGE = ParticleEmitterView.NAME + 'AngularDragChange'
   static LIFESPAN_CHANGE = ParticleEmitterView.NAME + 'LifespanChange'
   static FREQUENCY_CHANGE = ParticleEmitterView.NAME + 'FrequencyChange'
@@ -59,6 +63,12 @@ export default class ParticleEmitterView {
     this.onGravityYChange = new Phaser.Signal()
     this.onBounceXChange = new Phaser.Signal()
     this.onBounceYChange = new Phaser.Signal()
+    this.onStartRotationStatusChange = new Phaser.Signal()
+    this.onStartRotationMinChange = new Phaser.Signal()
+    this.onStartRotationMaxChange = new Phaser.Signal()
+    this.onAnchorStatusChange = new Phaser.Signal()
+    this.onAnchorXChange = new Phaser.Signal()
+    this.onAnchorYChange = new Phaser.Signal()
     this.onAngularDragChange = new Phaser.Signal()
     this.onLifespanChange = new Phaser.Signal()
     this.onFrequencyChange = new Phaser.Signal()
@@ -133,6 +143,28 @@ export default class ParticleEmitterView {
     return {
       x: this._bounce.x.val(),
       y: this._bounce.y.val()
+    }
+  }
+
+  get startRotationStatus () {
+    return this._startRotation.status.prop('checked')
+  }
+
+  get startRotation () {
+    return {
+      min: this._startRotation.min.val(),
+      max: this._startRotation.max.val()
+    }
+  }
+
+  get anchorStatus () {
+    return this._anchor.status.prop('checked')
+  }
+
+  get anchor () {
+    return {
+      x: this._anchor.x.val(),
+      y: this._anchor.y.val()
     }
   }
 
@@ -272,6 +304,22 @@ export default class ParticleEmitterView {
       .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onBounceXChange))
     this._bounce.y = $('#bounceY')
       .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onBounceYChange))
+
+    this._startRotation = {}
+    this._startRotation.status = $('#startRotationStatus')
+      .on('click', this.onEmitterPropertyValueChange.bind(this, this.onStartRotationStatusChange))
+    this._startRotation.min = $('#startRotationMin')
+      .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onStartRotationMinChange))
+    this._startRotation.max = $('#startRotationMax')
+      .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onStartRotationMaxChange))
+
+    this._anchor = {}
+    this._anchor.status = $('#anchorStatus')
+      .on('click', this.onEmitterPropertyValueChange.bind(this, this.onAnchorStatusChange))
+    this._anchor.x = $('#anchorX')
+      .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onAnchorXChange))
+    this._anchor.y = $('#anchorY')
+      .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onAnchorYChange))
 
     this._angularDrag = $('#angularDrag')
       .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onAngularDragChange))
@@ -426,6 +474,16 @@ export default class ParticleEmitterView {
     this._alpha.yoyo.val(currentEmitter.alphaYoyo)
     this._color.status.prop('checked', currentEmitter.particleArguments.color !== undefined)
     this._quantity.prop('disabled', true)
+    const startRotation = currentEmitter.particleArguments.startRotation
+    if (startRotation) {
+      this._startRotation.max.val(startRotation.max)
+      this._startRotation.min.val(startRotation.min)
+    }
+    const anchor = currentEmitter.particleArguments.anchor
+    if (anchor) {
+      this._anchor.x.val(anchor.x)
+      this._anchor.y.val(anchor.y)
+    }
     const color = currentEmitter.particleArguments.color
     if (color) {
       const startColor = Phaser.Color.RGBtoString(color.start.r, color.start.g, color.start.b)
@@ -442,10 +500,24 @@ export default class ParticleEmitterView {
     }
     this._blendMode.text(ParticleEmitterView.BLEND_MODES[currentEmitter.blendMode])
     $('#particleImagePreview').css('background-image', `url(${currentEmitter[currentEmitterName]})`)
+    this.toggleStartRotationSection()
+    this.toggleAnchorSection()
     this.toggleScaleMode()
     this.toggleColorSection()
     this.toggleFlow()
     this.toggleExplode()
+  }
+
+  toggleStartRotationSection () {
+    const status = this._startRotation.status.prop('checked')
+    this._startRotation.min.prop('disabled', !status)
+    this._startRotation.max.prop('disabled', !status)
+  }
+
+  toggleAnchorSection () {
+    const status = this._anchor.status.prop('checked')
+    this._anchor.x.prop('disabled', !status)
+    this._anchor.y.prop('disabled', !status)
   }
 
   toggleScaleMode () {

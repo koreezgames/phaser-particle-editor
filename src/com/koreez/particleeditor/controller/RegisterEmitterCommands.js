@@ -4,6 +4,10 @@ import DimensionChangeCommand from './emitter/DimensionChangeCommand'
 import PositionOffsetChangeCommand from './emitter/PositionOffsetChangeCommand'
 import GravityChangeCommand from './emitter/GravityChangeCommand'
 import BounceChangeCommand from './emitter/BounceChangeCommand'
+import StartRotationStatusChangeCommand from './emitter/StartRotationStatusChangeCommand'
+import StartRotationChangeCommand from './emitter/StartRotationChangeCommand'
+import AnchorStatusChangeCommand from './emitter/AnchorStatusChangeCommand'
+import AnchorChangeCommand from './emitter/AnchorChangeCommand'
 import AngularDragChangeCommand from './emitter/AngularDragChangeCommand'
 import LifespanChangeCommand from './emitter/LifespanChangeCommand'
 import FrequencyChangeCommand from './emitter/FrequencyChangeCommand'
@@ -34,6 +38,10 @@ export default class RegisterEmitterCommands extends SimpleCommand {
     this.facade.registerCommand(ParticleEmitterView.POSITION_OFFSET_CHANGE, PositionOffsetChangeCommand)
     this.facade.registerCommand(ParticleEmitterView.GRAVITY_CHANGE, GravityChangeCommand)
     this.facade.registerCommand(ParticleEmitterView.BOUNCE_CHANGE, BounceChangeCommand)
+    this.facade.registerCommand(ParticleEmitterView.START_ROTATION_STATUS_CHANGE, StartRotationStatusChangeCommand)
+    this.facade.registerCommand(ParticleEmitterView.START_ROTATION_CHANGE, StartRotationChangeCommand)
+    this.facade.registerCommand(ParticleEmitterView.ANCHOR_STATUS_CHANGE, AnchorStatusChangeCommand)
+    this.facade.registerCommand(ParticleEmitterView.ANCHOR_CHANGE, AnchorChangeCommand)
     this.facade.registerCommand(ParticleEmitterView.ANGULAR_DRAG_CHANGE, AngularDragChangeCommand)
     this.facade.registerCommand(ParticleEmitterView.SCALE_TYPE_CHANGE, ScaleTypeChangeCommand)
     this.facade.registerCommand(ParticleEmitterView.SCALE_CHANGE, ScaleChangeCommand)

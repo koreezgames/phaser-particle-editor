@@ -41,8 +41,6 @@ export default class ParticleEditorView {
     this.onBgColorChange = new Phaser.Signal()
     this.onBgImageChange = new Phaser.Signal()
     this.onBgImageRemove = new Phaser.Signal()
-    this.onMouseClick = new Phaser.Signal()
-    this.onFollowCursorChange = new Phaser.Signal()
     this.onDownload = new Phaser.Signal()
     this.onProjectNameChange = new Phaser.Signal()
     this.onSave = new Phaser.Signal()
@@ -134,8 +132,6 @@ export default class ParticleEditorView {
       .colorpicker().on('changeColor', this.onEditorPropertyValueChange.bind(this, this.onBgColorChange))
     this._bgImage = $('#canvasBgImage').on('change', this.onEditorPropertyValueChange.bind(this, this.onBgImageChange))
     $('#removeBgImage').on('click', this.onEditorPropertyValueChange.bind(this, this.onBgImageRemove))
-    $('#sandboxContainer').on('click', this.onEditorPropertyValueChange.bind(this, this.onMouseClick))
-    $('#followCursor').on('change', this.onEditorPropertyValueChange.bind(this, this.onFollowCursorChange))
     $('#removeEmitter').on('click', this.onEditorPropertyValueChange.bind(this, this.onEmitterRemove))
     $('#createEmitterModal')
       .on('hide.bs.modal', this.onEditorPropertyValueChange.bind(this, this.onCloseCreateEmitterModal))
@@ -166,7 +162,6 @@ export default class ParticleEditorView {
     $('#createCanvasModalButtonOK').text('Create')
   }
 
-  // Follow cursor
 
   setOpenedProjectInfo (config) {
     $('#modalProjectInfo').show()
@@ -343,11 +338,6 @@ export default class ParticleEditorView {
   updateRemoveEmitterModalText () {
     $('#removeEmitterModal span').text(this.tabButtonTargetName)
     $('#removeEmitterModal').modal({show: true})
-  }
-
-  changeFollowCursorCheckboxStatus () {
-    const status = $('#followCursor').prop('checked')
-    $('#followCursor').prop('checked', !status)
   }
 
   // Other methods

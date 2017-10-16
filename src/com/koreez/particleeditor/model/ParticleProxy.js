@@ -121,6 +121,43 @@ export default class ParticleProxy extends Proxy {
     this.sendPropertyChangeNotification()
   }
 
+  changeParticleArgumentStatus (status, argument, argumentName, hook) {
+    if (status) {
+      this.addArgument(argumentName)
+      if (hook) {
+        hook()
+      }
+    } else {
+      delete this.currentEmitter.particleArguments[argumentName]
+    }
+    this.sendInternalDataChangeNotification()
+    this.sendOptionChangeNotification()
+  }
+
+  addArgument (argumentName) {
+    if (!this.currentEmitter.particleArguments.hasOwnProperty(argumentName)) {
+      this.currentEmitter.particleArguments[argumentName] = {}
+    }
+  }
+
+  changeAnchorStatus (status, anchor) {
+    this.changeParticleArgumentStatus(status, anchor, 'anchor', this.changeAnchor.bind(this, anchor))
+  }
+
+  changeAnchor (anchor) {
+    this.currentEmitter.particleArguments.anchor.x = Number(anchor.x)
+    this.currentEmitter.particleArguments.anchor.y = Number(anchor.y)
+  }
+
+  changeStartRotationStatus (status, startRotation) {
+    this.changeParticleArgumentStatus(status, startRotation, 'startRotation', this.changeStartRotation.bind(this, startRotation))
+  }
+
+  changeStartRotation (startRotation) {
+    this.currentEmitter.particleArguments.startRotation.min = Number.parseFloat(startRotation.min)
+    this.currentEmitter.particleArguments.startRotation.max = Number.parseFloat(startRotation.max)
+  }
+
   changeAngularDrag (angularDrag) {
     this.currentEmitter.angularDrag = Number.parseFloat(angularDrag)
     this.sendPropertyChangeNotification()
@@ -220,7 +257,6 @@ export default class ParticleProxy extends Proxy {
     this.currentEmitter.scaleToX = Number.parseFloat(scale.toX)
     this.currentEmitter.scaleToY = Number.parseFloat(scale.toY)
     this.currentEmitter.scaleYoyo = Boolean(scale.yoyo)
-    this.adjustEasing(scale, 'scaleEase')
     if (this.adjustRate(scale.rate, 'scaleRate')) {
       this.sendInternalDataChangeNotification()
     }
@@ -258,7 +294,6 @@ export default class ParticleProxy extends Proxy {
   changeAlpha (alpha) {
     this.currentEmitter.alphaMin = Number.parseFloat(alpha.min)
     this.currentEmitter.alphaMax = Number.parseFloat(alpha.max)
-    this.adjustEasing(alpha, 'alphaEase')
     this.currentEmitter.alphaYoyo = Boolean(alpha.yoyo)
     if (this.adjustRate(alpha.rate, 'alphaRate')) {
       this.sendInternalDataChangeNotification()
@@ -287,20 +322,7 @@ export default class ParticleProxy extends Proxy {
   }
 
   changeColorStatus (status, color) {
-    if (status) {
-      this.addColor()
-      this.updateColor(color)
-    } else {
-      delete this.currentEmitter.particleArguments.color
-    }
-    this.sendInternalDataChangeNotification()
-    this.sendOptionChangeNotification()
-  }
-
-  addColor () {
-    if (!this.currentEmitter.particleArguments.hasOwnProperty('color')) {
-      this.currentEmitter.particleArguments.color = {}
-    }
+    this.changeParticleArgumentStatus(status, color, 'color', this.updateColor.bind(this, color, true))
   }
 
   updateColor (color, preventInternalDataChange = false) {
@@ -314,7 +336,6 @@ export default class ParticleProxy extends Proxy {
   }
 
   changeColor (color) {
-    this.addColor()
     this.updateColor(color)
     this.sendOptionChangeNotification()
   }
@@ -340,7 +361,7 @@ export default class ParticleProxy extends Proxy {
   }
 
   sendRenameNotification (oldName, newName) {
-    this.sendNotification(ParticleProxy.EMITTER_RENAME, {oldName, newName})
+    this.sendNotification(ParticleProxy.EMITTER_RENAME, { oldName, newName })
   }
 
   removeEmitter (emitterName) {

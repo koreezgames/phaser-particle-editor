@@ -15,7 +15,6 @@ export default class SandboxState extends Phaser.State {
 
   create () {
     this.stage.backgroundColor = '#000000'
-    // setBodyColor('#999999')
     this.game.renderer.renderSession.roundPixels = true
     this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL
     this.scale.pageAlignHorizontally = true
@@ -23,11 +22,12 @@ export default class SandboxState extends Phaser.State {
 
     this.followCursorStatus = false
     this.bgImage = this.game.add.sprite()
-    this.game.input.onDown.add(this.enableFollowCursor, this)
-    this.game.input.onUp.add(this.disableFollowCursor, this)
     this.particleProxy = this.facade.retrieveProxy(ParticleProxy.NAME)
     const particleVO = this.particleProxy.getData()
     this.particle = this.game.add.particleEffect(this.world.centerX, this.world.centerY, particleVO)
+    this.game.input.onDown.add(this.enableFollowCursor, this)
+    this.game.input.onUp.add(this.disableFollowCursor, this)
+    this.game.input.mouse.mouseOutCallback = this.centerParticle.bind(this)
     this.game.input.addMoveCallback(this.followCursor, this)
     this.facade.sendNotification(SandboxState.STATE_READY)
   }
@@ -38,6 +38,11 @@ export default class SandboxState extends Phaser.State {
 
   disableFollowCursor () {
     this.followCursorStatus = false
+  }
+
+  centerParticle () {
+    this.particle.emitX = 0
+    this.particle.emitY = 0
   }
 
   followCursor () {

@@ -69,14 +69,14 @@ body {
 
 /*Main Containers*/
 div#sandboxContainer {
-    width: 70vw;
+    width: 75vw;
     position: fixed;
     height: 100vh;
 }
 
 div#controlsContainer {
     background-color: #fafafa;
-    width: 30%;
+    width: 25%;
     float: right;
     visibility: hidden;
 }

@@ -6,7 +6,7 @@ import { ParticleEditorPlugin } from '@koreez/phaser-particle-editor-plugin'
 
 export default class SandboxState extends Phaser.State {
   static NAME = 'SandboxState'
-  static STATE_READY = SandboxState.NAME + 'StateReady'
+  static STATE_READY = SandboxState.NAME + 'Ready'
 
   init (...args) {
     this.facade = Facade.getInstance(ParticleEditorFacade.KEY)

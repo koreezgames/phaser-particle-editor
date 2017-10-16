@@ -29,6 +29,14 @@ export default class ParticleEmitterViewMediator extends Mediator {
     this.particleEmitterView.onBounceXChange.add(this.onBounceChange, this)
     this.particleEmitterView.onBounceYChange.add(this.onBounceChange, this)
 
+    this.particleEmitterView.onStartRotationStatusChange.add(this.onStartRotationStatusChange, this)
+    this.particleEmitterView.onStartRotationMinChange.add(this.onStartRotationChange, this)
+    this.particleEmitterView.onStartRotationMaxChange.add(this.onStartRotationChange, this)
+
+    this.particleEmitterView.onAnchorStatusChange.add(this.onAnchorStatusChange, this)
+    this.particleEmitterView.onAnchorXChange.add(this.onAnchorChange, this)
+    this.particleEmitterView.onAnchorYChange.add(this.onAnchorChange, this)
+
     this.particleEmitterView.onAngularDragChange.add(this.onAngularDragChange, this)
 
     this.particleEmitterView.onFlowChange.add(this.onFlowChange, this)
@@ -109,6 +117,30 @@ export default class ParticleEmitterViewMediator extends Mediator {
     this.sendNotification(ParticleEmitterView.BOUNCE_CHANGE, this.particleEmitterView.bounce)
   }
 
+  onStartRotationStatusChange () {
+    this.sendNotification(ParticleEmitterView.START_ROTATION_STATUS_CHANGE,
+      {
+        status: this.particleEmitterView.startRotationStatus,
+        startRotation: this.particleEmitterView.startRotation
+      })
+  }
+
+  onStartRotationChange () {
+    this.sendNotification(ParticleEmitterView.START_ROTATION_CHANGE, this.particleEmitterView.startRotation)
+  }
+
+  onAnchorStatusChange () {
+    this.sendNotification(ParticleEmitterView.ANCHOR_STATUS_CHANGE,
+      {
+        status: this.particleEmitterView.anchorStatus,
+        anchor: this.particleEmitterView.anchor
+      })
+  }
+
+  onAnchorChange () {
+    this.sendNotification(ParticleEmitterView.ANCHOR_CHANGE, this.particleEmitterView.anchor)
+  }
+
   onAngularDragChange () {
     this.sendNotification(ParticleEmitterView.ANGULAR_DRAG_CHANGE, this.particleEmitterView.angularDrag)
   }
@@ -179,7 +211,7 @@ export default class ParticleEmitterViewMediator extends Mediator {
 
   onColorStatusChange () {
     this.sendNotification(ParticleEmitterView.COLOR_STATUS_CHANGE,
-      {status: this.particleEmitterView.colorStatus, color: this.particleEmitterView.color})
+      { status: this.particleEmitterView.colorStatus, color: this.particleEmitterView.color })
   }
 
   onColorChange () {

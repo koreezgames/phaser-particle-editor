@@ -21,13 +21,23 @@ export default class SandboxState extends Phaser.State {
     this.scale.pageAlignHorizontally = true
     this.scale.pageAlignVertically = true
 
-    this.bgImage = this.game.add.sprite()
     this.followCursorStatus = false
+    this.bgImage = this.game.add.sprite()
+    this.game.input.onDown.add(this.enableFollowCursor, this)
+    this.game.input.onUp.add(this.disableFollowCursor, this)
     this.particleProxy = this.facade.retrieveProxy(ParticleProxy.NAME)
     const particleVO = this.particleProxy.getData()
     this.particle = this.game.add.particleEffect(this.world.centerX, this.world.centerY, particleVO)
     this.game.input.addMoveCallback(this.followCursor, this)
     this.facade.sendNotification(SandboxState.STATE_READY)
+  }
+
+  enableFollowCursor () {
+    this.followCursorStatus = true
+  }
+
+  disableFollowCursor () {
+    this.followCursorStatus = false
   }
 
   followCursor () {
@@ -80,9 +90,5 @@ export default class SandboxState extends Phaser.State {
 
   removeBgImage () {
     this.bgImage.loadTexture(null)
-  }
-
-  changeFollowCursorStatus () {
-    this.followCursorStatus = !this.followCursorStatus
   }
 }

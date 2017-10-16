@@ -53,8 +53,6 @@ export default class ParticleEditorViewMediator extends Mediator {
     this.particleEditorView.onBgColorChange.add(this.onBgColorChange, this)
     this.particleEditorView.onBgImageChange.add(this.onBgImageChange, this)
     this.particleEditorView.onBgImageRemove.add(this.onBgImageRemove, this)
-    this.particleEditorView.onMouseClick.add(this.onMouseClick, this)
-    this.particleEditorView.onFollowCursorChange.add(this.onFollowCursorChange, this)
     this.particleEditorView.onCloseCreateEmitterModal.add(this.onCloseCreateEmitterModal, this)
     const editorProxy = this.facade.retrieveProxy(EditorProxy.NAME)
     const vo = editorProxy.vo
@@ -198,15 +196,6 @@ export default class ParticleEditorViewMediator extends Mediator {
   onBgImageRemove () {
     this.particleEditorView.disableRemoveBgImageButton()
     this.sendNotification(ParticleEditorView.REMOVE_BG_IMAGE)
-  }
-
-  onMouseClick () {
-    this.particleEditorView.changeFollowCursorCheckboxStatus()
-    this.onFollowCursorChange()
-  }
-
-  onFollowCursorChange () {
-    this.currentState.changeFollowCursorStatus()
   }
 
   onCloseCreateEmitterModal () {

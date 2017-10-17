@@ -70,7 +70,8 @@ export default class ParticleEmitterView {
     this.onAnchorXChange = new Phaser.Signal()
     this.onAnchorYChange = new Phaser.Signal()
     this.onAngularDragChange = new Phaser.Signal()
-    this.onLifespanChange = new Phaser.Signal()
+    this.onLifespanMinChange = new Phaser.Signal()
+    this.onLifespanMaxChange = new Phaser.Signal()
     this.onFrequencyChange = new Phaser.Signal()
     this.onQuantityChange = new Phaser.Signal()
     this.onTotalChange = new Phaser.Signal()
@@ -173,7 +174,10 @@ export default class ParticleEmitterView {
   }
 
   get lifespan () {
-    return this._lifespan.val()
+    return {
+      min: this._lifespan.min.val(),
+      max: this._lifespan.max.val()
+    }
   }
 
   get frequency () {
@@ -328,8 +332,13 @@ export default class ParticleEmitterView {
       .on('change', this.onEmitterPropertyValueChange.bind(this, this.onFlowChange))
     this._explode = $('#explode')
       .on('change', this.onEmitterPropertyValueChange.bind(this, this.onExplodeChange))
-    this._lifespan = $('#lifespan')
-      .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onLifespanChange))
+
+    this._lifespan = {}
+    this._lifespan.min = $('#lifespanMin')
+      .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onLifespanMinChange))
+    this._lifespan.max = $('#lifespanMax')
+      .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onLifespanMaxChange))
+
     this._frequency = $('#frequency')
       .on('input change', this.onEmitterPropertyValueChange.bind(this, this.onFrequencyChange))
     this._quantity = $('#quantity')
@@ -440,7 +449,8 @@ export default class ParticleEmitterView {
     this._bounce.x.val(currentEmitter.bounceX)
     this._bounce.y.val(currentEmitter.bounceY)
     this._angularDrag.val(currentEmitter.angularDrag)
-    this._lifespan.val(currentEmitter.lifespan)
+    this._lifespan.min.val(currentEmitter.particleArguments.lifespan.min)
+    this._lifespan.max.val(currentEmitter.particleArguments.lifespan.max)
     this._frequency.val(currentEmitter.frequency)
     this._quantity.val(currentEmitter.quantity)
     this._total.val(currentEmitter.total)

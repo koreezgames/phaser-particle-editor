@@ -63,11 +63,10 @@ export default class ParticleProxy extends Proxy {
         return false
       }
     }
-    const duplicateEmitter = Object.assign({}, this.vo.emitters[name])
+    const duplicateEmitterString = JSON.stringify(this.vo.emitters[name])
+    const duplicateEmitter = JSON.parse(duplicateEmitterString)
     duplicateEmitter[newName] = duplicateEmitter[name]
     delete duplicateEmitter[name]
-    const duplicateEmitterParticleArguments = Object.assign({}, this.vo.emitters[name].particleArguments)
-    duplicateEmitter.particleArguments = duplicateEmitterParticleArguments
     this.vo.emitters[newName] = duplicateEmitter
     return true
   }

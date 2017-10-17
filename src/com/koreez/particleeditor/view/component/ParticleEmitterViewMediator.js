@@ -41,7 +41,9 @@ export default class ParticleEmitterViewMediator extends Mediator {
 
     this.particleEmitterView.onFlowChange.add(this.onFlowChange, this)
     this.particleEmitterView.onExplodeChange.add(this.onExplodeChange, this)
-    this.particleEmitterView.onLifespanChange.add(this.onLifespanChange, this)
+
+    this.particleEmitterView.onLifespanMinChange.add(this.onLifespanChange, this)
+    this.particleEmitterView.onLifespanMaxChange.add(this.onLifespanChange, this)
 
     this.particleEmitterView.onFrequencyChange.add(this.onFrequencyChange, this)
     this.particleEmitterView.onQuantityChange.add(this.onQuantityChange, this)

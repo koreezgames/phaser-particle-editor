@@ -172,7 +172,8 @@ export default class ParticleProxy extends Proxy {
 
   // --Start Options--
   changeLifespan (lifespan) {
-    this.currentEmitter.lifespan = Number.parseFloat(lifespan)
+    this.currentEmitter.particleArguments.lifespan.min = Number.parseFloat(lifespan.min)
+    this.currentEmitter.particleArguments.lifespan.max = Number.parseFloat(lifespan.max)
     this.sendOptionChangeNotification()
   }
 

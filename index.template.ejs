@@ -97,11 +97,26 @@
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6 option">
-                                                    <div class="input-group input-group-sm">
-                                                        <span class="input-group-addon">Lifespan</span>
-                                                        <input id="lifespan" type="number" class="form-control" placeholder="Lifespan">
-                                                    </div>
+                                                <div class="col-md-12 option">
+                                                    <fieldset class="option-group-fieldset option-group-nested-fieldset">
+                                                        <legend class="option-group-title">
+                                                            <span>Lifespan</span>
+                                                        </legend>
+                                                        <div class="row">
+                                                            <div class="col-md-6 option">
+                                                                <div class="input-group input-group-sm">
+                                                                    <span class="input-group-addon">Min</span>
+                                                                    <input id="lifespanMin" type="number" class="form-control" placeholder="min" step="1">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 option">
+                                                                <div class="input-group input-group-sm">
+                                                                    <span class="input-group-addon">Max</span>
+                                                                    <input id="lifespanMax" type="number" class="form-control" placeholder="max" step="1">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
                                                 </div>
                                                 <div class="col-md-6 option">
                                                     <div class="input-group input-group-sm">
@@ -121,7 +136,7 @@
                                                         <input id="quantity" type="text" class="form-control" placeholder="Quantity">
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 option">
+                                                <div class="col-md-6 option">
                                                     <div class="input-group input-group-sm">
                                                         <span class="input-group-addon">Max Particles</span>
                                                         <input id="maxParticles" type="text" class="form-control" placeholder="Max particles">

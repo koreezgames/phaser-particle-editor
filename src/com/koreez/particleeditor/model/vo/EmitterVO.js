@@ -33,7 +33,12 @@ export default class EmitterVO {
     this.alphaEase = 'Linear'
     this.alphaEaseMode = 'None'
     this.alphaYoyo = false
-    this.particleArguments = {}
+    this.particleArguments = {
+      lifespan: {
+        min: 1000,
+        max: 1000
+      }
+    }
     this.rotationMin = -360
     this.rotationMax = 360
     this.bounceX = 0

@@ -212,7 +212,6 @@ export default class ParticleEditorView {
         this.onEmitterTabChange(emitterName)
       }
     })
-    // $('#' + emitterName + '').on('click', this.onEmitterTabChange.bind(this, emitterName))
     $('#' + emitterName + 'TabEye')
       .on('click', this.onEmitterTabNestedButtonClick.bind(this, emitterName, this.onTurnEmitterOnOff, null))
     $('#' + emitterName + 'Field')

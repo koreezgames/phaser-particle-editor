@@ -472,19 +472,21 @@ export default class ParticleEmitterView {
     this._alpha.easeMode.text(currentEmitter.alphaEaseMode)
     this._alpha.rate.val(currentEmitter.alphaRate)
     this._alpha.yoyo.val(currentEmitter.alphaYoyo)
-    this._color.status.prop('checked', currentEmitter.particleArguments.color !== undefined)
     this._quantity.prop('disabled', true)
     const startRotation = currentEmitter.particleArguments.startRotation
+    this._startRotation.status.prop('checked', startRotation !== undefined)
     if (startRotation) {
       this._startRotation.max.val(startRotation.max)
       this._startRotation.min.val(startRotation.min)
     }
     const anchor = currentEmitter.particleArguments.anchor
+    this._anchor.status.prop('checked', anchor !== undefined)
     if (anchor) {
       this._anchor.x.val(anchor.x)
       this._anchor.y.val(anchor.y)
     }
     const color = currentEmitter.particleArguments.color
+    this._color.status.prop('checked', color !== undefined)
     if (color) {
       const startColor = Phaser.Color.RGBtoString(color.start.r, color.start.g, color.start.b)
       const endColor = Phaser.Color.RGBtoString(color.end.r, color.end.g, color.end.b)

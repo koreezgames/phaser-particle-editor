@@ -1,6 +1,6 @@
 {
   "name": "phaser-particle-editor",
-  "version": "1.0.0-alpha.5",
+  "version": "1.0.0-alpha.6",
   "description": "This tool helps to create phaser particle effects visually",
   "author": "Koreez LLC <hello@koreez.com>",
   "main": "index.js",
@@ -38,7 +38,7 @@
     "webpack-config": "^7.5.0"
   },
   "dependencies": {
-    "@koreez/phaser-particle-editor-plugin": "^1.0.0-alpha.12",
+    "@koreez/phaser-particle-editor-plugin": "^1.0.0-alpha.14",
     "nested-property": "0.0.7",
     "phaser-ce": "^2.9.1",
     "pure-mvc": "^1.0.4"

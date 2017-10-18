@@ -35,8 +35,8 @@ export default class EmitterVO {
     this.alphaYoyo = false
     this.particleArguments = {
       lifespan: {
-        min: 1000,
-        max: 1000
+        min: 1500,
+        max: 2000
       }
     }
     this.rotationMin = -360
@@ -48,7 +48,6 @@ export default class EmitterVO {
     this.minSpeedY = -200
     this.maxSpeedX = 200
     this.maxSpeedY = 200
-    this.lifespan = 2000
     this.frequency = 25
     this.enabled = true
     this.explode = false

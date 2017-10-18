@@ -1,5 +1,5 @@
 # Phaser Particle Editor
-[![Build Status](https://travis-ci.org/koreezgames/phaser-particle-editor.svg?branch=master)](https://travis-ci.org/koreezgames/phaser-particle-editor)  [![Project status](https://img.shields.io/badge/status-active-brightgreen.svg)](#status) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal@koreez.com&lc=US&item_name=Koreez%20LLC&no_note=0&currency_code=USD&bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest)
+[![Build Status](https://travis-ci.org/koreezgames/phaser-particle-editor.svg?branch=master)](https://travis-ci.org/koreezgames/phaser-particle-editor)  [![David](https://david-dm.org/koreezgames/phaser-particle-editor.svg)]() [![Project status](https://img.shields.io/badge/status-active-brightgreen.svg)](#status) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal@koreez.com&lc=US&item_name=Koreez%20LLC&no_note=0&currency_code=USD&bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest)
 
 This tool helps to create phaser particle effects visually. 
 
@@ -10,11 +10,15 @@ This tool helps to create phaser particle effects visually.
 
 ## Plugin
 Phaser Particle Editor has plugin which will easily render your content.
-It is of course open source: [phaser-particle-editor-runtime](https://github.com/koreezgames/phaser-particle-editor-runtime.git)
+It is of course open source: [phaser-particle-editor-plugin](https://github.com/koreezgames/phaser-particle-editor-plugin.git)
 
 #### Installation
-Using npm:
-
+#### ***Using script tag:***
+[![](https://data.jsdelivr.com/v1/package/npm/@koreez/phaser-particle-editor-plugin/badge?style=rounded)](https://www.jsdelivr.com/package/npm/@koreez/phaser-particle-editor-plugin/dist/plugin.min.js)
+```html
+<script src="//cdn.jsdelivr.net/npm/@koreez/phaser-particle-editor-plugin/dist/plugin.min.js"></script>
+```
+#### ***Using npm:***
 [![npm](https://img.shields.io/npm/dt/@koreez/phaser-particle-editor-plugin.svg)](https://www.npmjs.com/package/@koreez/phaser-particle-editor-plugin)
 ```shell
 $ npm i -g npm
@@ -40,12 +44,12 @@ Navigate to the cloned repo’s directory.
 
 Run:
 ```shell
-npm install 
+$ npm install 
 ```
 #### 3. Run the development server:
 Run:
 ```shell
-npm run dev
+$ npm run dev
 ```
 This will run a server so you can run the editor in a browser.
 

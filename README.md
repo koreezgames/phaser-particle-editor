@@ -61,5 +61,5 @@ Also this will start a watch process, so you can change the source and the proce
 Because the editor is open source, you can use the [issue tracker](https://github.com/koreezgames/phaser-particle-editor/issues) here on GitHub to report issues.
 
 ## Donation
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal@koreez.com&lc=US&item_name=Koreez%20LLC&no_note=0&currency_code=USD&bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest)
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal@koreez.com&lc=US&item_name=Koreez%20LLC&no_note=0&currency_code=USD&bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest) [![Greenkeeper badge](https://badges.greenkeeper.io/koreezgames/phaser-particle-editor.svg)](https://greenkeeper.io/)
 
